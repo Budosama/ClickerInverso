@@ -91,9 +91,7 @@ function breakGlass() {
 
         let coinsEarned = upgradeBenefits.coinsPerClick * 1;
 
-        if ((5000000 - clicks) % 10 === 0) {
-            coins += coinsEarned;
-        }
+        coins += coinsEarned;
 
         updateClicks();
         updateCoins();
