@@ -9,7 +9,10 @@
 </head>
 <body>
     <div class="container">
-        <h1 id="game-title">Glass Clicker</h1>
+        <div id="header">
+            <h1 id="game-title">Glass Clicker</h1>
+            <button id="mute-button" onclick="toggleMute()">🔇</button>
+        </div>
         
         <div id="upgrades">
             <h3>Upgrades</h3>
@@ -49,9 +52,9 @@
 
             <div id="ad-container" class="hidden">
                 <div id="ad-content">
-                    <p>¡Mira un anuncio para obtener una mejora especial!</p>
-                    <button onclick="watchAd()">Ver anuncio</button>
-                    <button onclick="rejectAd()">Rechazar</button>
+                    <p>Watch an ad to get a special upgrade!</p>
+                    <button onclick="watchAd()">Watch ad</button>
+                    <button onclick="rejectAd()">Reject ad</button>
                 </div>
             </div>
         </div>

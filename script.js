@@ -8,8 +8,15 @@ let adInterval = 5 * 60 * 1000; // 5 minutos
 let adShown = false;
 let clicksAcumulados = 0;
 const achievementSound = new Audio('sounds/logro.mp3');
+achievementSound.muted = true;
 const coinSound = new Audio('sounds/coin.mp3');
+coinSound.muted = true;
 const glassSound = new Audio('sounds/glass.wav');
+glassSound.muted = true;
+let backgroundMusic = new Audio('sounds/fondo.wav');
+backgroundMusic.loop = true;
+backgroundMusic.muted = true;
+backgroundMusic.volume = 0.5;
 
 window.onload = function() {
     loadGame();
@@ -25,22 +32,25 @@ window.onload = function() {
     setInterval(autoCoin, 10000);
 }
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    const backgroundMusic = new Audio('sounds/fondo.wav');
-    backgroundMusic.loop = true;
-    backgroundMusic.volume = 0.5;
-
-    function startBackgroundMusic() {
+function toggleMute() {
+    const muteButton = document.getElementById('mute-button');
+    if (backgroundMusic.muted) {
         backgroundMusic.play().catch(error => {
-            console.error('Error al reproducir la música:', error);
+            console.log('Autoplay was prevented:', error);
         });
+        achievementSound.muted = false;
+        coinSound.muted = false;
+        glassSound.muted = false;
+        backgroundMusic.muted = false;
+        muteButton.innerText = '🔊';
+    } else {
+        achievementSound.muted = true;
+        coinSound.muted = true;
+        glassSound.muted = true;
+        backgroundMusic.muted = true;
+        muteButton.innerText = '🔇';
     }
-
-    document.addEventListener('click', function onFirstInteraction() {
-        startBackgroundMusic();
-        document.removeEventListener('click', onFirstInteraction);
-    });
-});
+}
 
 function playAchievementSound() {
     achievementSound.play();
@@ -71,7 +81,6 @@ function updateCoins() {
 }
 
 function updateUpgrades() {
-    console.log(upgradeCosts.coinsPerSecond);
     document.getElementById('coinsPerClickUpgrade').innerText = `Coins/10 clicks: ${formatNumber(upgradeBenefits.coinsPerClick)}`;
     document.getElementById('coinsPerSecondUpgrade').innerText = `Coins/10 seconds: ${formatNumber(upgradeBenefits.coinsPerSecond)}`;
     document.getElementById('clickReductionUpgrade').innerText = `Reduction/click: ${formatNumber(upgradeBenefits.clickReduction)}`;
