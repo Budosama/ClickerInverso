@@ -37,6 +37,11 @@ function updateClicks() {
 
 function updateCoins() {
     document.getElementById('coins').innerText = formatNumber(coins);
+    const coinsSpan = document.getElementById('coins');
+    coinsSpan.classList.add('change-animation');
+    setTimeout(() => {
+        coinsSpan.classList.remove('change-animation');
+    }, 1000); // Duración de la animación en milisegundos
     updateUpgradeButtons(coins);
 }
 
@@ -45,9 +50,9 @@ function updateUpgrades() {
     document.getElementById('clickReductionUpgrade').innerText = `Reduction/click: ${formatNumber(upgradeBenefits.clickReduction)}`;
     document.getElementById('autoClickUpgrade').innerText = `Reduction/second: ${formatNumber(upgradeBenefits.autoClick)}`;
 
-    document.getElementById('coinsPerClickButton').innerText = `Mejorar Coins/10 clicks: (${formatNumber(upgradeCosts.coinsPerClick)} coins)`;
-    document.getElementById('clickReductionButton').innerText = `Mejorar Reduction/click: (${formatNumber(upgradeCosts.clickReduction)} coins)`;
-    document.getElementById('autoClickButton').innerText = `Mejorar Reduction/second: (${formatNumber(upgradeCosts.autoClick)} coins)`;
+    document.getElementById('coinsPerClickButton').innerText = `Upgrade Coins/10 clicks: (${formatNumber(upgradeCosts.coinsPerClick)} coins)`;
+    document.getElementById('clickReductionButton').innerText = `Upgrade Reduction/click: (${formatNumber(upgradeCosts.clickReduction)} coins)`;
+    document.getElementById('autoClickButton').innerText = `Upgrade Reduction/second: (${formatNumber(upgradeCosts.autoClick)} coins)`;
 }
 
 function updateUpgradeButtons(coins) {
@@ -270,7 +275,7 @@ function updateTimer() {
     const hours = timeElapsed.getUTCHours().toString().padStart(2, '0');
     const minutes = timeElapsed.getUTCMinutes().toString().padStart(2, '0');
     const seconds = timeElapsed.getUTCSeconds().toString().padStart(2, '0');
-    document.getElementById('timer').textContent = `Time: ${hours}:${minutes}:${seconds}`;
+    document.getElementById('time').innerText = `${hours}:${minutes}:${seconds}`;
 }
 
 function showAd() {

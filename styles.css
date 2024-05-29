@@ -22,7 +22,7 @@ body {
     color: #fff; /* Color blanco para resaltar */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra de texto para destacar */
     margin-bottom: 20px;
-    margin-top: 120px;
+    margin-top: 130px;
 }
 
 #upgrades, #achievements {
@@ -42,7 +42,7 @@ body {
 }
 
 #game {
-    background-color: #fff;
+    background-color: #ffffffe0;
     border-radius: 20px;
     padding: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
@@ -80,7 +80,8 @@ body {
 
 #glass-container {
     position: relative;
-    margin-bottom: 30px; /* Ajusta el valor según sea necesario */
+    margin-top: 20px; /* Ajusta el valor según sea necesario */
+    margin-bottom: 20px; /* Ajusta el valor según sea necesario */
 }
 
 #reset {
@@ -104,7 +105,7 @@ body {
 }
 
 #upgrades button {
-    background-color: #ff9800;
+    background-color: #055275;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -121,7 +122,7 @@ body {
 }
 
 #upgrades button:hover {
-    background-color: #f57c00;
+    background-color: #04374e;
 }
 
 #ad-container {
@@ -174,6 +175,60 @@ body {
         transform: translate(var(--translate-x), var(--translate-y)) scale(0.5);
         opacity: 0;
     }
+}
+
+#timer p,
+#currency p,
+#clicks-container p {
+    font-size: 1.2em;
+    margin: 10px 0;
+    color: #0c0202; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra de texto para destacar */
+}
+
+#timer span {
+    font-weight: bold;
+    font-size: 1.4em; /* Tamaño de fuente un poco más grande para destacar */
+    color: #1521cf; /* Color amarillo */
+}
+
+#currency span {
+    font-weight: bold;
+    font-size: 1.4em; /* Tamaño de fuente un poco más grande para destacar */
+    color: #ffcc00; /* Color amarillo */
+}
+
+#clicks-container span {
+    font-weight: bold;
+    font-size: 1.4em; /* Tamaño de fuente un poco más grande para destacar */
+    color: #a70513; /* Color amarillo */
+}
+
+/* Animación de cambio de color */
+@keyframes colorChange {
+    0% { color: #ffcc00; } /* Color inicial */
+    50% { color: #ff5722; } /* Color intermedio */
+    100% { color: #ffcc00; } /* Color final */
+}
+
+/* Animación de cambio de color */
+@keyframes colorChangeDurability {
+    0% { color: #a70513; } /* Color inicial */
+    50% { color: #6a0577; } /* Color intermedio */
+    100% { color: #a70513; } /* Color final */
+}
+
+/* Aplicar la animación a los spans */
+#timer span.change-animation {
+    animation: colorChange 1s;
+}
+
+#currency span.change-animation {
+    animation: colorChange 1s;
+}
+
+#clicks-container span {
+    animation: colorChangeDurability 1s infinite;
 }
 
 .hidden {
