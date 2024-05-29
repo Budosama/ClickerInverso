@@ -6,6 +6,7 @@ let upgradeBenefits = { coinsPerClick: 1, clickReduction: 1, autoClick: 0, speci
 let startTime;
 let adInterval = 5 * 60 * 1000; // 5 minutos
 let adShown = false;
+let clicksAcumulados = 0;
 
 window.onload = function() {
     loadGame();
@@ -37,11 +38,6 @@ function updateClicks() {
 
 function updateCoins() {
     document.getElementById('coins').innerText = formatNumber(coins);
-    const coinsSpan = document.getElementById('coins');
-    coinsSpan.classList.add('change-animation');
-    setTimeout(() => {
-        coinsSpan.classList.remove('change-animation');
-    }, 1000); // Duración de la animación en milisegundos
     updateUpgradeButtons(coins);
 }
 
@@ -84,14 +80,26 @@ function updateAchievements() {
     });
 }
 
+function animacionCoin(){
+    const coinsSpan = document.getElementById('coins');
+    coinsSpan.classList.add('change-animation');
+    setTimeout(() => {
+        coinsSpan.classList.remove('change-animation');
+    }, 1000); // Duración de la animación en milisegundos
+}
+
 function breakGlass() {
     if (clicks > 0) {
+        clicksAcumulados += 1;
         let clickReduction = upgradeBenefits.clickReduction * 1 + upgradeBenefits.special * 10;
         clicks = Math.max(0, clicks - clickReduction);
 
         let coinsEarned = upgradeBenefits.coinsPerClick * 1;
 
-        coins += coinsEarned;
+        if(clicksAcumulados % 10 === 0) {
+            coins += coinsEarned;
+            animacionCoin();
+        }
 
         updateClicks();
         updateCoins();
@@ -231,7 +239,8 @@ function buyUpgrade(type) {
             upgradeBenefits[type] = 1;
         } else {
             upgradeBenefits[type] = benefit * 2; // Aumento del 100% en el beneficio
-        }      
+        }    
+        animacionCoin();  
     }
 
     document.getElementById(`${type}Button`).setAttribute('data-cost', upgradeCosts[type]);
@@ -250,6 +259,7 @@ function saveGame() {
     localStorage.setItem('upgradeBenefits', JSON.stringify(upgradeBenefits));
     localStorage.setItem('startTime', startTime.toString());
     localStorage.setItem('adShown', JSON.stringify(adShown));
+    localStorage.setItem('clicksAcumulados', JSON.stringify(clicksAcumulados));
 }
 
 function loadGame() {
@@ -260,6 +270,7 @@ function loadGame() {
     upgradeBenefits = localStorage.getItem('upgradeBenefits') !== null ? JSON.parse(localStorage.getItem('upgradeBenefits')) : { coinsPerClick: 1, clickReduction: 1, autoClick: 0, special: 0 };
     startTime = localStorage.getItem('startTime') !== null ? new Date(localStorage.getItem('startTime')) : new Date();
     adShown = localStorage.getItem('adShown') !== null ? JSON.parse(localStorage.getItem('adShown')) : false;
+    clicksAcumulados = localStorage.getItem('clicksAcumulados') !== null ? JSON.parse(localStorage.getItem('clicksAcumulados')) : 0;
 }
 
 function startTimer() {
@@ -323,6 +334,7 @@ function resetGame() {
         upgradeBenefits = { coinsPerClick: 1, clickReduction: 1, autoClick: 0, special: 0 };
         startTime = new Date();
         adShown = false;
+        clicksAcumulados = 0;
 
         updateClicks();
         updateCoins();
