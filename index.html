@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glass Clicker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="game-title">Glass Clicker</h1>
+        
+        <div id="upgrades">
+            <h3>Upgrades</h3>
+            <hr/>
+            <button id="coinsPerClickButton" onclick="buyUpgrade('coinsPerClick')" data-cost="10">Mejorar Coins/10 clicks: (10 coins)</button>
+            <button id="clickReductionButton" onclick="buyUpgrade('clickReduction')" data-cost="20">Mejorar Reduction/click: (20 coins)</button>
+            <button id="autoClickButton" onclick="buyUpgrade('autoClick')" data-cost="50">Mejorar Reduction/second: (50 coins)</button>
+        </div>
+
+        <div id="game">
+            <div class="row">
+                <div id="timer" class="col">
+                    <p>Time: <span id="time">00:00:00</span></p>
+                </div>
+                <div id="currency" class="col">
+                    <p>Coins: <span id="coins"></span></p>
+                </div>
+                <div id="coinsPerClickUpgrade" class="col"></div>
+                <div id="clickReductionUpgrade" class="col"></div>
+                <div id="autoClickUpgrade" class="col"></div>
+            </div>
+
+            <div id="clicks-container">
+                <p>Durability: <span id="clicks"></span></p>
+            </div>
+
+            <div id="glass-container">
+                <img id="glass" src="img/glass.png" alt="Glass" onclick="breakGlass()">
+                <div id="shards-container"></div>
+            </div>
+
+            <div id="reset">
+                <button onclick="resetGame()">Reset Game</button>
+            </div>
+
+            <div id="ad-container" class="hidden">
+                <div id="ad-content">
+                    <p>¡Mira un anuncio para obtener una mejora especial!</p>
+                    <button onclick="watchAd()">Ver anuncio</button>
+                    <button onclick="rejectAd()">Rechazar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="achievements">
+            <h3>Achievements</h3>
+            <hr/>
+            <ul id="achievements-list"></ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
