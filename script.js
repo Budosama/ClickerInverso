@@ -194,7 +194,7 @@ function updateGlassImage() {
 function checkAchievements() {
     const achievementsList = document.getElementById('achievements-list');
 
-    if (clicks === 4990000 && !achievements.includes('First 10.000 clicks')) {
+    if (clicks <= 4990000 && !achievements.includes('First 10.000 clicks')) {
         achievements.push('First 10.000 clicks');
         const li = document.createElement('li');
         li.innerText = 'First 10.000 clicks';
@@ -202,7 +202,7 @@ function checkAchievements() {
         saveGame();
     }
 
-    if (clicks === 4999000 && !achievements.includes('First 1.000 clicks')) {
+    if (clicks <= 4999000 && !achievements.includes('First 1.000 clicks')) {
         achievements.push('First 1.000 clicks');
         const li = document.createElement('li');
         li.innerText = 'First 1.000 clicks';
