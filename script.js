@@ -42,13 +42,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 
-document.getElementById('glass').addEventListener('click', function() {
-    this.classList.add('hammering');
-    setTimeout(() => {
-        this.classList.remove('hammering');
-    }, 300); // Tiempo de duración de la animación en milisegundos
-});
-
 function playAchievementSound() {
     achievementSound.play();
 }
@@ -132,6 +125,47 @@ function animacionCoin(){
     playCoinSound(); 
 }
 
+function animacionGlass(){
+    const glass = document.getElementById('glass');
+    const shardsContainer = document.getElementById('shards-container');
+
+    // Iniciar la animación de rotura de vidrio
+    glass.classList.add('breaking');
+
+    // Remover la clase de animación después de que termine la animación
+    glass.addEventListener('animationend', () => {
+        glass.classList.remove('breaking');
+    });
+
+    // Generar fragmentos de vidrio
+    for (let i = 0; i < 20; i++) {
+        const shard = document.createElement('div');
+        shard.classList.add('shard');
+        
+        // Posiciones y movimientos aleatorios
+        const translateX = (Math.random() - 0.5) * 200;
+        const translateY = (Math.random() - 0.5) * 200;
+
+        shard.style.setProperty('--translate-x', `${translateX}px`);
+        shard.style.setProperty('--translate-y', `${translateY}px`);
+        shard.style.left = `${Math.random() * 100}%`;
+        shard.style.top = `${Math.random() * 100}%`;
+
+        shardsContainer.appendChild(shard);
+
+        // Iniciar animación
+        requestAnimationFrame(() => {
+            shard.style.opacity = '1';
+            shard.style.transform = `translate(${translateX}px, ${translateY}px) scale(0.5)`;
+        });
+
+        // Remover el fragmento después de la animación
+        shard.addEventListener('animationend', () => {
+            shard.remove();
+        });
+    }
+}
+
 function breakGlass() {
     if (clicks > 0) {
         clicksAcumulados += 1;
@@ -145,6 +179,7 @@ function breakGlass() {
             animacionCoin();
         }
 
+        animacionGlass();
         updateClicks();
         updateCoins();
         updateGlassImage();
