@@ -7,6 +7,9 @@ let startTime;
 let adInterval = 5 * 60 * 1000; // 5 minutos
 let adShown = false;
 let clicksAcumulados = 0;
+const achievementSound = new Audio('sounds/logro.mp3');
+const coinSound = new Audio('sounds/coin.mp3');
+const glassSound = new Audio('sounds/glass.wav');
 
 window.onload = function() {
     loadGame();
@@ -21,12 +24,44 @@ window.onload = function() {
     setInterval(autoClick, 1000);
 }
 
+document.addEventListener('DOMContentLoaded', (event) => {
+    const backgroundMusic = new Audio('sounds/fondo.wav');
+    backgroundMusic.loop = true;
+    backgroundMusic.volume = 0.5;
+
+    function startBackgroundMusic() {
+        backgroundMusic.play().catch(error => {
+            console.error('Error al reproducir la música:', error);
+        });
+    }
+
+    document.addEventListener('click', function onFirstInteraction() {
+        startBackgroundMusic();
+        document.removeEventListener('click', onFirstInteraction);
+    });
+});
+
 document.getElementById('glass').addEventListener('click', function() {
     this.classList.add('hammering');
     setTimeout(() => {
         this.classList.remove('hammering');
     }, 300); // Tiempo de duración de la animación en milisegundos
 });
+
+function playAchievementSound() {
+    achievementSound.play();
+}
+
+function playCoinSound() {
+    coinSound.volume = 0.4;
+    coinSound.play();
+}
+
+function playGlassSound() {
+    glassSound.volume = 0.2;
+    glassSound.currentTime = 0;
+    glassSound.play();
+}
 
 function formatNumber(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -86,6 +121,7 @@ function animacionCoin(){
     setTimeout(() => {
         coinsSpan.classList.remove('change-animation');
     }, 1000); // Duración de la animación en milisegundos
+    playCoinSound(); 
 }
 
 function breakGlass() {
@@ -107,6 +143,7 @@ function breakGlass() {
         checkAchievements();
         saveGame();
         createShards();
+        playGlassSound(); 
     }
 }
 
@@ -199,6 +236,7 @@ function checkAchievements() {
         const li = document.createElement('li');
         li.innerText = 'First 10.000 clicks';
         achievementsList.appendChild(li);
+        playAchievementSound();  // Reproducir el sonido del logro
         saveGame();
     }
 
@@ -207,6 +245,7 @@ function checkAchievements() {
         const li = document.createElement('li');
         li.innerText = 'First 1.000 clicks';
         achievementsList.appendChild(li);
+        playAchievementSound();  // Reproducir el sonido del logro
         saveGame();
     }
 
@@ -215,6 +254,7 @@ function checkAchievements() {
         const li = document.createElement('li');
         li.innerText = 'First 5.000 clicks';
         achievementsList.appendChild(li);
+        playAchievementSound();  // Reproducir el sonido del logro
         saveGame();
     }
 
@@ -223,6 +263,7 @@ function checkAchievements() {
         const li = document.createElement('li');
         li.innerText = 'First 500 clicks';
         achievementsList.appendChild(li);
+        playAchievementSound();  // Reproducir el sonido del logro
         saveGame();
     }
 }
