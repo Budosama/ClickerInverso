@@ -199,6 +199,7 @@ function breakGlass() {
             coins += coinsEarned;
             animacionCoin();
         }
+        showDamage(clickReduction);
         animacionGlass();
         updateClicks();
         updateCoins();
@@ -208,6 +209,21 @@ function breakGlass() {
         createShards();
         playGlassSound(); 
     }
+}
+
+function showDamage(damage) {
+    const glassContainer = document.getElementById('glass-container');
+    const damageDisplay = document.createElement('div');
+    damageDisplay.classList.add('damage-display');
+    const randomX = Math.random() * (glassContainer.offsetWidth); 
+    const randomY = Math.random() * (glassContainer.offsetHeight); 
+    damageDisplay.style.left = `${randomX}px`;
+    damageDisplay.style.top = `${randomY}px`;
+    damageDisplay.innerText = `-${damage}`;
+    glassContainer.appendChild(damageDisplay);
+    damageDisplay.addEventListener('animationend', () => {
+        damageDisplay.remove(); 
+    });
 }
 
 function autoClick() {

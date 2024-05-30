@@ -157,7 +157,21 @@ body {
     animation: colorChangeDurability 1s infinite;
 }
 
+.damage-display {
+    position: absolute;
+    font-size: 24px; /* Tamaño de fuente más grande */
+    color: rgba(17, 152, 206, 0.8); /* Un color naranja más llamativo */
+    text-shadow: 2px 2px 6px #ffffff; /* Sombra blanca más pronunciada */
+    font-family: "Impact", sans-serif; /* Fuente en negrita */
+    animation: moveUpAndFade 1s ease-out forwards; /* Animación de subida y desvanecimiento */
+    user-select: none; /* Hacer el elemento no seleccionable */
+    padding: 5px 10px; /* Añadir espacio alrededor del texto */
+    border-radius: 10px; /* Agregar bordes redondeados */
+    /* background-color: rgba(190, 204, 209, 0.8);  */
+}
+
 /* -------------------------------------------- Reset Button -------------------------------------------- */
+
 #reset {
     margin-top: 20px;
     text-align: center;
@@ -179,6 +193,7 @@ body {
 }
 
 /* -------------------------------------------- Ad Container -------------------------------------------- */
+
 #ad-container {
     position: fixed;
     top: 0;
@@ -201,6 +216,7 @@ body {
 }
 
 /* -------------------------------------------- Shards Container -------------------------------------------- */
+
 #shards-container {
     position: fixed; 
     top: 0;
@@ -222,6 +238,7 @@ body {
 }
 
 /* -------------------------------------------- Bonus Timer Container -------------------------------------------- */
+
 #bonus-timer-container {
     position: absolute;
     top: 10px;
@@ -262,6 +279,7 @@ body {
 }
 
 /* -------------------------------------------- Animations -------------------------------------------- */
+
 @keyframes glassBreak {
     0% {
         opacity: 1;
@@ -343,7 +361,19 @@ body {
     100% { color: #a70513; } 
 }
 
+@keyframes moveUpAndFade {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100px); /* Subir 100px */
+    }
+}
+
 /* -------------------------------------------- Classes -------------------------------------------- */
+
 .bonus-active {
     animation: deslize 0.5s infinite, flames 1s infinite;
     color: red;
