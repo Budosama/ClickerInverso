@@ -4,7 +4,7 @@ let achievements = [];
 let upgradeCosts = { coinsPerClick: 10, coinsPerSecond: 15, clickReduction: 20, autoClick: 50};
 let upgradeBenefits = { coinsPerClick: 1, coinsPerSecond: 0, clickReduction: 1, autoClick: 0, specialCoin: 0 , specialClick: 0};
 let startTime;
-let adInterval = 60 * 1000; // 1 minuto
+let adInterval = 2 * 60 * 1000; // 2 minutos
 let adShown = false;
 let clicksAcumulados = 0;
 let bonusInterval;
@@ -371,6 +371,12 @@ function watchAd() {
     showBonusTimer();
     let remainingTime = bonusDuration;
 
+    var clickReductionUpgrade = document.getElementById('clickReductionUpgrade');
+    clickReductionUpgrade.classList.add('bonus-active');
+    document.getElementById('bonus-time-remaining').innerText = '60 s';
+    const timerProgress = document.getElementById('timer-progress');
+    timerProgress.style.animation = `countdown ${bonusDuration}s linear forwards`;
+
     bonusTimerInterval = setInterval(() => {
         remainingTime--;
         updateBonusTimer(remainingTime);
@@ -380,7 +386,8 @@ function watchAd() {
             hideBonusTimer();
             adShown = false;
             upgradeBenefits.specialClick = 0;
-            document.getElementById('clickReductionUpgrade').innerText = `Reduction/click: ${formatNumber(upgradeBenefits.clickReduction)}`;          
+            document.getElementById('clickReductionUpgrade').innerText = `Reduction/click: ${formatNumber(upgradeBenefits.clickReduction)}`;   
+            clickReductionUpgrade.classList.remove('bonus-active');       
             // alert('The temporary special upgrade has ended.');
         }
     }, 1000);   
@@ -388,18 +395,12 @@ function watchAd() {
 }
 
 function updateBonusTimer(remainingTime) {
-    const timerProgress = document.getElementById('timer-progress');
     const bonusTimeRemaining = document.getElementById('bonus-time-remaining');
-    
-    // Calculate the new dash offset
-    const totalLength = 283; // 2 * Math.PI * 45 (radius of the circle)
-    const dashOffset = totalLength * (remainingTime / bonusDuration);
-    
-    // Update the stroke dash offset to show progress
-    timerProgress.style.strokeDashoffset = dashOffset;
-    
-    // Update the text showing the remaining time
     bonusTimeRemaining.innerText = `${remainingTime} s`;
+    bonusTimeRemaining.style.animation = 'none';
+        requestAnimationFrame(() => {
+            bonusTimeRemaining.style.animation = 'jump 0.5s';
+        });
 }
 
 function showAd() {
@@ -418,6 +419,8 @@ function showBonusTimer() {
 function hideBonusTimer() {
     const bonusTimerContainer = document.getElementById('bonus-timer-container');
     bonusTimerContainer.style.display = 'none';
+    const timerProgress = document.getElementById('timer-progress');
+    timerProgress.style.animation = 'none';
 }
 
 function showAdContainer() {
@@ -428,7 +431,6 @@ function showAdContainer() {
 function hideAdContainer() {
     const adContainer = document.getElementById('ad-container');
     adContainer.style.display = 'none';
-
 }
 
 function resetGame() {
@@ -440,8 +442,11 @@ function resetGame() {
         upgradeBenefits = { coinsPerClick: 1, coinsPerSecond: 0, clickReduction: 1, autoClick: 0, specialCoin: 0, specialClick: 0 };
         startTime = new Date();
         adShown = false;
+        bonusDuration = 60;
         clicksAcumulados = 0;
-
+        document.getElementById('clickReductionUpgrade').classList.remove('bonus-active'); 
+        document.getElementById('bonus-time-remaining').style.animation = 'none';  
+        hideBonusTimer();
         updateClicks();
         updateCoins();
         updateAchievements();

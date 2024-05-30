@@ -276,14 +276,78 @@ body {
     justify-content: center;
 }
 
-#bonus-time-remaining {
-    margin-left: 10px;
-    font-size: 20px;
-    font-weight: bold;
+#bonus-timer {
+    position: relative;
+}
+
+#timer-background {
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 #timer-progress {
-    transition: stroke-dashoffset 1s linear;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(-90deg);
+    transform-origin: center;
+}
+
+#bonus-time-remaining {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    font-family: Arial;
+    animation: none;
+}
+
+@keyframes countdown {
+    from {
+        stroke-dashoffset: 283;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes jump {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.5);
+    }
+}
+
+@keyframes deslize {
+    0%, 100% {
+        transform: translateX(+5px);
+    }
+    50% {
+        transform: translateX(-5px);
+    }
+}
+
+@keyframes flames {
+    0% {
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.5), 0 0 20px rgba(255, 165, 0, 0.5), 0 0 30px rgba(255, 255, 0, 0.5);
+    }
+    50% {
+        text-shadow: 0 0 20px rgba(255, 0, 0, 1), 0 0 30px rgba(255, 165, 0, 1), 0 0 40px rgba(255, 255, 0, 1);
+    }
+    100% {
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.5), 0 0 20px rgba(255, 165, 0, 0.5), 0 0 30px rgba(255, 255, 0, 0.5);
+    }
+}
+
+.bonus-active {
+    animation: deslize 0.5s infinite, flames 1s infinite;
+    color: red;
 }
 
 .hidden {

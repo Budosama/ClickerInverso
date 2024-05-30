@@ -59,13 +59,14 @@
             </div>
 
             <div id="bonus-timer-container" style="display: none;">
-                <svg id="bonus-timer" width="50" height="50" viewBox="0 0 100 100">
+                <svg id="bonus-timer" width="80" height="80" viewBox="0 0 100 100">
                     <circle cx="50" cy="50" r="45" stroke="black" stroke-width="5" fill="none" />
-                    <circle id="timer-progress" cx="50" cy="50" r="45" stroke="green" stroke-width="5" fill="none" stroke-dasharray="283" stroke-dashoffset="283" />
+                    <circle id="timer-background" cx="50" cy="50" r="45" fill="black" />
+                    <circle id="timer-progress" cx="50" cy="50" r="45" fill="none" stroke="red" stroke-width="10" stroke-dasharray="283" stroke-dashoffset="283" />
                 </svg>
-                <span id="bonus-time-remaining"></span>
-            </div>
-            
+                <div id="bonus-time-remaining">60 s</div>
+            </div>                          
+                            
         </div>
 
         <div id="achievements">
