@@ -85,19 +85,29 @@ function updateCoins() {
 }
 
 function updateUpgrades() {
-    document.getElementById('coinsPerClickUpgrade').innerText = `Coins/10 clicks: ${formatNumber(upgradeBenefits.coinsPerClick)}`;
-    document.getElementById('coinsPerSecondUpgrade').innerText = `Coins/10 seconds: ${formatNumber(upgradeBenefits.coinsPerSecond)}`;
+    document.getElementById('coinsPerClickUpgrade').innerHTML = `
+        <img src="img/coin.png" alt="Coin Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
+        Coins/10 Clicks: ${formatNumber(upgradeBenefits.coinsPerClick)}`;
+    document.getElementById('coinsPerSecondUpgrade').innerHTML = `
+        <img src="img/coin.png" alt="Coin Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
+        Coins/10 Seconds: ${formatNumber(upgradeBenefits.coinsPerSecond)}`;
     if(adShown){
-        document.getElementById('clickReductionUpgrade').innerText = `Reduction/click: ${formatNumber(upgradeBenefits.clickReduction)} (x2)`;
+        document.getElementById('clickReductionUpgrade').innerHTML = `
+        <img src="img/Hammer.cur" alt="Reduction Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
+        Reduction/Click: ${formatNumber(upgradeBenefits.clickReduction)} (x2)`;
     } else {
-        document.getElementById('clickReductionUpgrade').innerText = `Reduction/click: ${formatNumber(upgradeBenefits.clickReduction)}`;
+        document.getElementById('clickReductionUpgrade').innerHTML = `
+        <img src="img/Hammer.cur" alt="Reduction Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
+        Reduction/Click: ${formatNumber(upgradeBenefits.clickReduction)}`;
     } 
-    document.getElementById('autoClickUpgrade').innerText = `Reduction/second: ${formatNumber(upgradeBenefits.autoClick)}`;
+    document.getElementById('autoClickUpgrade').innerHTML = `
+        <img src="img/Hammer.cur" alt="Reduction Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
+        Reduction/Second: ${formatNumber(upgradeBenefits.autoClick)}`;
 
-    document.getElementById('coinsPerClickButton').innerText = `Upgrade Coins/10 clicks: (${formatNumber(upgradeCosts.coinsPerClick)} coins)`;
-    document.getElementById('coinsPerSecondButton').innerText = `Upgrade Coins/10 seconds: (${formatNumber(upgradeCosts.coinsPerSecond)} coins)`;
-    document.getElementById('clickReductionButton').innerText = `Upgrade Reduction/click: (${formatNumber(upgradeCosts.clickReduction)} coins)`;
-    document.getElementById('autoClickButton').innerText = `Upgrade Reduction/second: (${formatNumber(upgradeCosts.autoClick)} coins)`;
+    document.getElementById('coinsPerClickButton').innerText = `Upgrade Coins/10 Clicks: (${formatNumber(upgradeCosts.coinsPerClick)} coins)`;
+    document.getElementById('coinsPerSecondButton').innerText = `Upgrade Coins/10 Seconds: (${formatNumber(upgradeCosts.coinsPerSecond)} coins)`;
+    document.getElementById('clickReductionButton').innerText = `Upgrade Reduction/Click: (${formatNumber(upgradeCosts.clickReduction)} coins)`;
+    document.getElementById('autoClickButton').innerText = `Upgrade Reduction/Second: (${formatNumber(upgradeCosts.autoClick)} coins)`;
 }
 
 function updateUpgradeButtons(coins) {
@@ -371,7 +381,9 @@ function watchAd() {
     hideAdContainer();
     adShown = true;
     upgradeBenefits.specialClick = 1;
-    document.getElementById('clickReductionUpgrade').innerText = `Reduction/click: ${formatNumber(upgradeBenefits.clickReduction)} (x2)`;
+    document.getElementById('clickReductionUpgrade').innerHTML = `
+        <img src="img/Hammer.cur" alt="Reduction Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
+        Reduction/Click: ${formatNumber(upgradeBenefits.clickReduction)} (x2)`;
     showBonusTimer();
     let remainingTime = bonusDuration;
 
@@ -390,7 +402,9 @@ function watchAd() {
             hideBonusTimer();
             adShown = false;
             upgradeBenefits.specialClick = 0;
-            document.getElementById('clickReductionUpgrade').innerText = `Reduction/click: ${formatNumber(upgradeBenefits.clickReduction)}`;   
+            document.getElementById('clickReductionUpgrade').innerHTML = `
+                <img src="img/Hammer.cur" alt="Reduction Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
+                Reduction/Click: ${formatNumber(upgradeBenefits.clickReduction)}`;
             clickReductionUpgrade.classList.remove('bonus-active');       
             // alert('The temporary special upgrade has ended.');
         }
