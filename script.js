@@ -87,7 +87,11 @@ function updateCoins() {
 function updateUpgrades() {
     document.getElementById('coinsPerClickUpgrade').innerText = `Coins/10 clicks: ${formatNumber(upgradeBenefits.coinsPerClick)}`;
     document.getElementById('coinsPerSecondUpgrade').innerText = `Coins/10 seconds: ${formatNumber(upgradeBenefits.coinsPerSecond)}`;
-    document.getElementById('clickReductionUpgrade').innerText = `Reduction/click: ${formatNumber(upgradeBenefits.clickReduction)}`;
+    if(adShown){
+        document.getElementById('clickReductionUpgrade').innerText = `Reduction/click: ${formatNumber(upgradeBenefits.clickReduction)} (x2)`;
+    } else {
+        document.getElementById('clickReductionUpgrade').innerText = `Reduction/click: ${formatNumber(upgradeBenefits.clickReduction)}`;
+    } 
     document.getElementById('autoClickUpgrade').innerText = `Reduction/second: ${formatNumber(upgradeBenefits.autoClick)}`;
 
     document.getElementById('coinsPerClickButton').innerText = `Upgrade Coins/10 clicks: (${formatNumber(upgradeCosts.coinsPerClick)} coins)`;
