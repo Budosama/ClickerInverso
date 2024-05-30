@@ -1,3 +1,4 @@
+/* -------------------------------------------- General Styles -------------------------------------------- */
 body {
     display: flex;
     flex-direction: column;
@@ -20,6 +21,7 @@ body {
     overflow-y: flex;
 }
 
+/* -------------------------------------------- Header Styles -------------------------------------------- */
 #header {
     display: flex;
     align-items: center;
@@ -50,6 +52,7 @@ body {
     color: #ff5722;
 }
 
+/* -------------------------------------------- Upgrades and Achievements Styles -------------------------------------------- */
 #upgrades, #achievements {
     width: 400px; 
     background-color: #444;
@@ -66,6 +69,28 @@ body {
     text-align: center;
 }
 
+#upgrades button, #reset button {
+    background-color: #055275;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#upgrades button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#upgrades button:hover, #reset button:hover {
+    background-color: #04374e;
+}
+
+/* -------------------------------------------- Game Styles -------------------------------------------- */
 #game {
     background-color: #ffffff;
     border-radius: 20px;
@@ -89,32 +114,12 @@ body {
     transition: transform 0.2s ease;
 }
 
-@keyframes glassBreak {
-    0% {
-        opacity: 1;
-        transform: scale(1.2);
-    }
-    35% {
-        opacity: 0.7;
-        transform: scale(0.8) rotate(3deg);
-    }
-    70% {
-        opacity: 0.5;
-        transform: scale(1.1) rotate(-3deg);
-    }
-    100% {
-        opacity: 0;
-        transform: scale(0.9) rotate(0deg);
-    }
+#glass:hover {
+    transform: scale(1.1);
 }
 
 #glass.breaking {
     animation: glassBreak 0.3s ease-in-out;
-}
-
-#glass:hover {
-    transform: scale(1.1);
-    cursor: url('img/Hammer.cur'), auto;
 }
 
 #glass-container {
@@ -123,102 +128,7 @@ body {
     margin-bottom: 20px; 
 }
 
-#reset {
-    margin-top: 20px;
-    text-align: center;
-}
-
-#reset button {
-    background-color: #ff5722;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#reset button:hover {
-    background-color: #e64a19;
-}
-
-#upgrades button {
-    background-color: #055275;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 1em;
-    cursor: pointer;
-    margin-bottom: 10px;
-    transition: background-color 0.3s ease;
-}
-
-#upgrades button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-#upgrades button:hover {
-    background-color: #04374e;
-}
-
-#ad-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-#ad-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-}
-
-#shards-container {
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh; 
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.shard {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 2px;
-    opacity: 0;
-    pointer-events: none;
-}
-
-@keyframes shardAnimation {
-    0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(var(--translate-x), var(--translate-y)) scale(0.5);
-        opacity: 0;
-    }
-}
-
-#timer p,
-#currency p,
-#clicks-container p {
+#clicks-container p, #currency p, #timer p {
     font-size: 1.2em;
     margin: 10px 0;
     color: #0c0202; 
@@ -243,30 +153,75 @@ body {
     color: #a70513; 
 }
 
-@keyframes colorChange {
-    0% { color: #ffcc00; } 
-    50% { color: #ff5722; } 
-    100% { color: #ffcc00; } 
-}
-
-@keyframes colorChangeDurability {
-    0% { color: #a70513; } 
-    50% { color: #6a0577; } 
-    100% { color: #a70513; } 
-}
-
-#timer span.change-animation {
-    animation: colorChange 1s;
-}
-
-#currency span.change-animation {
-    animation: colorChange 1s;
-}
-
 #clicks-container span {
     animation: colorChangeDurability 1s infinite;
 }
 
+/* -------------------------------------------- Reset Button -------------------------------------------- */
+#reset {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#reset button {
+    background-color: #ff5722;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#reset button:hover {
+    background-color: #e64a19;
+}
+
+/* -------------------------------------------- Ad Container -------------------------------------------- */
+#ad-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#ad-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* -------------------------------------------- Shards Container -------------------------------------------- */
+#shards-container {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh; 
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.shard {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 2px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* -------------------------------------------- Bonus Timer Container -------------------------------------------- */
 #bonus-timer-container {
     position: absolute;
     top: 10px;
@@ -304,6 +259,37 @@ body {
     font-size: 16px;
     font-family: Arial;
     animation: none;
+}
+
+/* -------------------------------------------- Animations -------------------------------------------- */
+@keyframes glassBreak {
+    0% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+    35% {
+        opacity: 0.7;
+        transform: scale(0.8) rotate(3deg);
+    }
+    70% {
+        opacity: 0.5;
+        transform: scale(1.1) rotate(-3deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.9) rotate(0deg);
+    }
+}
+
+@keyframes shardAnimation {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--translate-x), var(--translate-y)) scale(0.5);
+        opacity: 0;
+    }
 }
 
 @keyframes countdown {
@@ -345,6 +331,19 @@ body {
     }
 }
 
+@keyframes colorChange {
+    0% { color: #ffcc00; } 
+    50% { color: #ff5722; } 
+    100% { color: #ffcc00; } 
+}
+
+@keyframes colorChangeDurability {
+    0% { color: #a70513; } 
+    50% { color: #6a0577; } 
+    100% { color: #a70513; } 
+}
+
+/* -------------------------------------------- Classes -------------------------------------------- */
 .bonus-active {
     animation: deslize 0.5s infinite, flames 1s infinite;
     color: red;
@@ -352,4 +351,16 @@ body {
 
 .hidden {
     display: none;
+}
+
+#timer span.change-animation {
+    animation: colorChange 1s;
+}
+
+#currency span.change-animation {
+    animation: colorChange 1s;
+}
+
+#clicks-container span {
+    animation: colorChangeDurability 1s infinite;
 }

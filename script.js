@@ -1,3 +1,5 @@
+/* -------------------------------------------- Variables y Configuración Inicial -------------------------------------------- */
+
 let clicks;
 let coins;
 let achievements = [];
@@ -9,6 +11,8 @@ let adShown = false;
 let clicksAcumulados = 0;
 let bonusInterval;
 let bonusDuration = 60; 
+let costFactor = 2.5; 
+let benefictFactor = 2; 
 
 let achievementSound = new Audio('sounds/logro.mp3');
 achievementSound.muted = true;
@@ -22,19 +26,7 @@ backgroundMusic.loop = true;
 backgroundMusic.muted = true;
 backgroundMusic.volume = 0.5;
 
-window.onload = function() {
-    loadGame();
-    updateClicks();
-    updateCoins();
-    updateAchievements();
-    updateUpgrades();
-    updateUpgradeButtons(coins);
-    updateGlassImage();
-    startTimer();
-    setInterval(showAd, adInterval);
-    setInterval(autoClick, 1000);
-    setInterval(autoCoin, 10000);
-}
+/* -------------------------------------------- Manejo de Sonido -------------------------------------------- */
 
 function toggleMute() {
     const muteButton = document.getElementById('mute-button');
@@ -71,9 +63,7 @@ function playGlassSound() {
     glassSound.play();
 }
 
-function formatNumber(num) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
+/* -------------------------------------------- Funciones de Actualización de UI -------------------------------------------- */
 
 function updateClicks() {
     document.getElementById('clicks').innerText = formatNumber(clicks);
@@ -143,77 +133,41 @@ function updateAchievements() {
     });
 }
 
+/* -------------------------------------------- Animaciones -------------------------------------------- */
+
 function animacionCoin(){
     const coinsSpan = document.getElementById('coins');
     coinsSpan.classList.add('change-animation');
     setTimeout(() => {
         coinsSpan.classList.remove('change-animation');
-    }, 1000); // Duración de la animación en milisegundos
+    }, 1000); 
     playCoinSound(); 
 }
 
 function animacionGlass(){
     const glass = document.getElementById('glass');
     const shardsContainer = document.getElementById('shards-container');
-
-    // Iniciar la animación de rotura de vidrio
     glass.classList.add('breaking');
-
-    // Remover la clase de animación después de que termine la animación
     glass.addEventListener('animationend', () => {
         glass.classList.remove('breaking');
     });
-
-    // Generar fragmentos de vidrio
     for (let i = 0; i < 20; i++) {
         const shard = document.createElement('div');
         shard.classList.add('shard');
-        
-        // Posiciones y movimientos aleatorios
         const translateX = (Math.random() - 0.5) * 200;
         const translateY = (Math.random() - 0.5) * 200;
-
         shard.style.setProperty('--translate-x', `${translateX}px`);
         shard.style.setProperty('--translate-y', `${translateY}px`);
         shard.style.left = `${Math.random() * 100}%`;
         shard.style.top = `${Math.random() * 100}%`;
-
         shardsContainer.appendChild(shard);
-
-        // Iniciar animación
         requestAnimationFrame(() => {
             shard.style.opacity = '1';
             shard.style.transform = `translate(${translateX}px, ${translateY}px) scale(0.5)`;
         });
-
-        // Remover el fragmento después de la animación
         shard.addEventListener('animationend', () => {
             shard.remove();
         });
-    }
-}
-
-function breakGlass() {
-    if (clicks > 0) {
-        clicksAcumulados += 1;
-        let clickReduction = upgradeBenefits.clickReduction * (1 + upgradeBenefits.specialClick);
-        clicks = Math.max(0, clicks - clickReduction);
-
-        let coinsEarned = upgradeBenefits.coinsPerClick * (1 + upgradeBenefits.specialCoin);
-
-        if(clicksAcumulados % 10 === 0) {
-            coins += coinsEarned;
-            animacionCoin();
-        }
-
-        animacionGlass();
-        updateClicks();
-        updateCoins();
-        updateGlassImage();
-        checkAchievements();
-        saveGame();
-        createShards();
-        playGlassSound(); 
     }
 }
 
@@ -230,6 +184,29 @@ function createShards() {
         shard.style.setProperty('--translate-y', `${(Math.random() - 0.5) * 300}px`);
         shard.style.animation = 'shardAnimation 1s forwards';
         shardsContainer.appendChild(shard);
+    }
+}
+
+/* -------------------------------------------- Funcionalidad del Juego -------------------------------------------- */
+
+function breakGlass() {
+    if (clicks > 0) {
+        clicksAcumulados += 1;
+        let clickReduction = upgradeBenefits.clickReduction * (1 + upgradeBenefits.specialClick);
+        clicks = Math.max(0, clicks - clickReduction);
+        let coinsEarned = upgradeBenefits.coinsPerClick * (1 + upgradeBenefits.specialCoin);
+        if(clicksAcumulados % 10 === 0) {
+            coins += coinsEarned;
+            animacionCoin();
+        }
+        animacionGlass();
+        updateClicks();
+        updateCoins();
+        updateGlassImage();
+        checkAchievements();
+        saveGame();
+        createShards();
+        playGlassSound(); 
     }
 }
 
@@ -270,7 +247,6 @@ function updateGlassImage() {
     }
 }
 
-//Test
 function checkAchievements() {
     const achievementsList = document.getElementById('achievements-list');
 
@@ -279,7 +255,7 @@ function checkAchievements() {
         const li = document.createElement('li');
         li.innerText = 'First 10.000 clicks';
         achievementsList.appendChild(li);
-        playAchievementSound();  // Reproducir el sonido del logro
+        playAchievementSound(); 
         saveGame();
     }
 
@@ -288,7 +264,7 @@ function checkAchievements() {
         const li = document.createElement('li');
         li.innerText = 'First 1.000 clicks';
         achievementsList.appendChild(li);
-        playAchievementSound();  // Reproducir el sonido del logro
+        playAchievementSound(); 
         saveGame();
     }
 
@@ -297,7 +273,7 @@ function checkAchievements() {
         const li = document.createElement('li');
         li.innerText = 'First 5.000 clicks';
         achievementsList.appendChild(li);
-        playAchievementSound();  // Reproducir el sonido del logro
+        playAchievementSound(); 
         saveGame();
     }
 
@@ -306,75 +282,49 @@ function checkAchievements() {
         const li = document.createElement('li');
         li.innerText = 'First 500 clicks';
         achievementsList.appendChild(li);
-        playAchievementSound();  // Reproducir el sonido del logro
+        playAchievementSound();  
         saveGame();
     }
 }
 
 function buyUpgrade(type) {
     let cost = upgradeCosts[type];
-    let benefit = upgradeBenefits[type];
-    let upgradeFactor = 2.5; // Factor de aumento para el costo y el beneficio
-
+    let benefit = upgradeBenefits[type]; 
     if (coins >= cost) {
         coins -= cost;
-        upgradeCosts[type] = Math.ceil(cost * upgradeFactor);
+        upgradeCosts[type] = Math.ceil(cost * costFactor);
         if(upgradeBenefits[type] == 0){
             upgradeBenefits[type] = 1;
         } else {
-            upgradeBenefits[type] = benefit * 2; // Aumento del 100% en el beneficio
+            upgradeBenefits[type] = benefit * benefictFactor;
         }    
         animacionCoin();  
     }
-
     document.getElementById(`${type}Button`).setAttribute('data-cost', upgradeCosts[type]);
-
     updateCoins();
     updateUpgrades();
-    updateUpgradeButtons(coins); // Asegúrate de actualizar los botones después de cada compra
+    updateUpgradeButtons(coins);
     saveGame();
 }
 
-function saveGame() {
-    localStorage.setItem('clicks', clicks);
-    localStorage.setItem('coins', coins);
-    localStorage.setItem('achievements', JSON.stringify(achievements));
-    localStorage.setItem('upgradeCosts', JSON.stringify(upgradeCosts));
-    localStorage.setItem('upgradeBenefits', JSON.stringify(upgradeBenefits));
-    localStorage.setItem('startTime', startTime.toString());
-    localStorage.setItem('adShown', JSON.stringify(adShown));
-    localStorage.setItem('clicksAcumulados', JSON.stringify(clicksAcumulados));
+/* -------------------------------------------- Manejo de Publicidad y Bonificaciones -------------------------------------------- */
+
+function showAdContainer() {
+    const adContainer = document.getElementById('ad-container');
+    adContainer.style.display = 'flex';
 }
 
-function loadGame() {
-    clicks = localStorage.getItem('clicks') !== null ? parseInt(localStorage.getItem('clicks')) : 5000000;
-    coins = localStorage.getItem('coins') !== null ? parseInt(localStorage.getItem('coins')) : 0;
-    achievements = localStorage.getItem('achievements') !== null ? JSON.parse(localStorage.getItem('achievements')) : [];
-    upgradeCosts = localStorage.getItem('upgradeCosts') !== null ? JSON.parse(localStorage.getItem('upgradeCosts')) : { coinsPerClick: 10, coinsPerSecond: 15, clickReduction: 20, autoClick: 50 };
-    upgradeBenefits = localStorage.getItem('upgradeBenefits') !== null ? JSON.parse(localStorage.getItem('upgradeBenefits')) : { coinsPerClick: 1, coinsPerSecond: 0, clickReduction: 1, autoClick: 0, specialCoin: 0, specialClick: 0 };
-    startTime = localStorage.getItem('startTime') !== null ? new Date(localStorage.getItem('startTime')) : new Date();
-    adShown = localStorage.getItem('adShown') !== null ? JSON.parse(localStorage.getItem('adShown')) : false;
-    clicksAcumulados = localStorage.getItem('clicksAcumulados') !== null ? JSON.parse(localStorage.getItem('clicksAcumulados')) : 0;
+function hideAdContainer() {
+    const adContainer = document.getElementById('ad-container');
+    adContainer.style.display = 'none';
 }
 
-function startTimer() {
-    setInterval(updateTimer, 1000);
-}
-
-function updateTimer() {
-    const currentTime = new Date();
-    const timeDiff = currentTime - startTime;
-    const timeElapsed = new Date(timeDiff);
-    const hours = timeElapsed.getUTCHours().toString().padStart(2, '0');
-    const minutes = timeElapsed.getUTCMinutes().toString().padStart(2, '0');
-    const seconds = timeElapsed.getUTCSeconds().toString().padStart(2, '0');
-    document.getElementById('time').innerText = `${hours}:${minutes}:${seconds}`;
-}
-
-function rejectAd() {
-    hideAdContainer();
-    adShown = false;
-    saveGame();
+function showAd() {
+    if (!adShown) {
+        showAdContainer();
+        adShown = false;
+        saveGame();
+    }
 }
 
 function watchAd() {
@@ -412,6 +362,74 @@ function watchAd() {
     saveGame();
 }
 
+function rejectAd() {
+    hideAdContainer();
+    adShown = false;
+    saveGame();
+}
+
+/* -------------------------------------------- Manejo de Almacenamiento -------------------------------------------- */
+
+function saveGame() {
+    localStorage.setItem('clicks', clicks);
+    localStorage.setItem('coins', coins);
+    localStorage.setItem('achievements', JSON.stringify(achievements));
+    localStorage.setItem('upgradeCosts', JSON.stringify(upgradeCosts));
+    localStorage.setItem('upgradeBenefits', JSON.stringify(upgradeBenefits));
+    localStorage.setItem('startTime', startTime.toString());
+    localStorage.setItem('adShown', JSON.stringify(adShown));
+    localStorage.setItem('clicksAcumulados', JSON.stringify(clicksAcumulados));
+}
+
+function loadGame() {
+    clicks = localStorage.getItem('clicks') !== null ? parseInt(localStorage.getItem('clicks')) : 5000000;
+    coins = localStorage.getItem('coins') !== null ? parseInt(localStorage.getItem('coins')) : 0;
+    achievements = localStorage.getItem('achievements') !== null ? JSON.parse(localStorage.getItem('achievements')) : [];
+    upgradeCosts = localStorage.getItem('upgradeCosts') !== null ? JSON.parse(localStorage.getItem('upgradeCosts')) : { coinsPerClick: 10, coinsPerSecond: 15, clickReduction: 20, autoClick: 50 };
+    upgradeBenefits = localStorage.getItem('upgradeBenefits') !== null ? JSON.parse(localStorage.getItem('upgradeBenefits')) : { coinsPerClick: 1, coinsPerSecond: 0, clickReduction: 1, autoClick: 0, specialCoin: 0, specialClick: 0 };
+    startTime = localStorage.getItem('startTime') !== null ? new Date(localStorage.getItem('startTime')) : new Date();
+    adShown = localStorage.getItem('adShown') !== null ? JSON.parse(localStorage.getItem('adShown')) : false;
+    clicksAcumulados = localStorage.getItem('clicksAcumulados') !== null ? JSON.parse(localStorage.getItem('clicksAcumulados')) : 0;
+}
+
+function resetGame() {
+    if (confirm('Are you sure you want to restart the game?')) {
+        clicks = 5000000;
+        coins = 0;
+        achievements = [];
+        upgradeCosts = { coinsPerClick: 10, coinsPerSecond: 15, clickReduction: 20, autoClick: 50 };
+        upgradeBenefits = { coinsPerClick: 1, coinsPerSecond: 0, clickReduction: 1, autoClick: 0, specialCoin: 0, specialClick: 0 };
+        startTime = new Date();
+        adShown = false;
+        clicksAcumulados = 0;
+        document.getElementById('clickReductionUpgrade').classList.remove('bonus-active'); 
+        document.getElementById('bonus-time-remaining').style.animation = 'none';  
+        hideBonusTimer();
+        updateClicks();
+        updateCoins();
+        updateAchievements();
+        updateUpgrades();
+        updateGlassImage();
+        saveGame();
+    }
+}
+
+/* -------------------------------------------- Control del Temporizador -------------------------------------------- */
+
+function startTimer() {
+    setInterval(updateTimer, 1000);
+}
+
+function updateTimer() {
+    const currentTime = new Date();
+    const timeDiff = currentTime - startTime;
+    const timeElapsed = new Date(timeDiff);
+    const hours = timeElapsed.getUTCHours().toString().padStart(2, '0');
+    const minutes = timeElapsed.getUTCMinutes().toString().padStart(2, '0');
+    const seconds = timeElapsed.getUTCSeconds().toString().padStart(2, '0');
+    document.getElementById('time').innerText = `${hours}:${minutes}:${seconds}`;
+}
+
 function updateBonusTimer(remainingTime) {
     const bonusTimeRemaining = document.getElementById('bonus-time-remaining');
     bonusTimeRemaining.innerText = `${remainingTime} s`;
@@ -419,14 +437,6 @@ function updateBonusTimer(remainingTime) {
         requestAnimationFrame(() => {
             bonusTimeRemaining.style.animation = 'jump 0.5s';
         });
-}
-
-function showAd() {
-    if (!adShown) {
-        showAdContainer();
-        adShown = false;
-        saveGame();
-    }
 }
 
 function showBonusTimer() {
@@ -441,35 +451,24 @@ function hideBonusTimer() {
     timerProgress.style.animation = 'none';
 }
 
-function showAdContainer() {
-    const adContainer = document.getElementById('ad-container');
-    adContainer.style.display = 'flex';
+/* -------------------------------------------- Funciones de Utilidad -------------------------------------------- */
+
+function formatNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
-function hideAdContainer() {
-    const adContainer = document.getElementById('ad-container');
-    adContainer.style.display = 'none';
-}
+/* -------------------------------------------- Inicialización del Juego -------------------------------------------- */
 
-function resetGame() {
-    if (confirm('Are you sure you want to restart the game?')) {
-        clicks = 5000000;
-        coins = 0;
-        achievements = [];
-        upgradeCosts = { coinsPerClick: 10, coinsPerSecond: 15, clickReduction: 20, autoClick: 50 };
-        upgradeBenefits = { coinsPerClick: 1, coinsPerSecond: 0, clickReduction: 1, autoClick: 0, specialCoin: 0, specialClick: 0 };
-        startTime = new Date();
-        adShown = false;
-        bonusDuration = 60;
-        clicksAcumulados = 0;
-        document.getElementById('clickReductionUpgrade').classList.remove('bonus-active'); 
-        document.getElementById('bonus-time-remaining').style.animation = 'none';  
-        hideBonusTimer();
-        updateClicks();
-        updateCoins();
-        updateAchievements();
-        updateUpgrades();
-        updateGlassImage();
-        saveGame();
-    }
+window.onload = function() {
+    loadGame();
+    updateClicks();
+    updateCoins();
+    updateAchievements();
+    updateUpgrades();
+    updateUpgradeButtons(coins);
+    updateGlassImage();
+    startTimer();
+    setInterval(showAd, adInterval);
+    setInterval(autoClick, 1000);
+    setInterval(autoCoin, 10000);
 }
