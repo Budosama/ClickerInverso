@@ -2,18 +2,22 @@ let clicks;
 let coins;
 let achievements = [];
 let upgradeCosts = { coinsPerClick: 10, coinsPerSecond: 15, clickReduction: 20, autoClick: 50};
-let upgradeBenefits = { coinsPerClick: 1, coinsPerSecond: 0, clickReduction: 1, autoClick: 0, special: 0 };
+let upgradeBenefits = { coinsPerClick: 1, coinsPerSecond: 0, clickReduction: 1, autoClick: 0, specialCoin: 0 , specialClick: 0};
 let startTime;
-let adInterval = 5 * 60 * 1000; // 5 minutos
+let adInterval = 60 * 1000; // 1 minuto
 let adShown = false;
 let clicksAcumulados = 0;
-const achievementSound = new Audio('sounds/logro.mp3');
+let bonusInterval;
+let bonusDuration = 60; 
+
+let achievementSound = new Audio('sounds/logro.mp3');
 achievementSound.muted = true;
-const coinSound = new Audio('sounds/coin.mp3');
+let coinSound = new Audio('sounds/coin.mp3');
 coinSound.muted = true;
-const glassSound = new Audio('sounds/glass.wav');
+let glassSound = new Audio('sounds/glass.wav');
 glassSound.muted = true;
 let backgroundMusic = new Audio('sounds/fondo.wav');
+
 backgroundMusic.loop = true;
 backgroundMusic.muted = true;
 backgroundMusic.volume = 0.5;
@@ -178,10 +182,10 @@ function animacionGlass(){
 function breakGlass() {
     if (clicks > 0) {
         clicksAcumulados += 1;
-        let clickReduction = upgradeBenefits.clickReduction * 1 + upgradeBenefits.special * 10;
+        let clickReduction = upgradeBenefits.clickReduction * (1 + upgradeBenefits.specialClick);
         clicks = Math.max(0, clicks - clickReduction);
 
-        let coinsEarned = upgradeBenefits.coinsPerClick * 1;
+        let coinsEarned = upgradeBenefits.coinsPerClick * (1 + upgradeBenefits.specialCoin);
 
         if(clicksAcumulados % 10 === 0) {
             coins += coinsEarned;
@@ -333,7 +337,7 @@ function loadGame() {
     coins = localStorage.getItem('coins') !== null ? parseInt(localStorage.getItem('coins')) : 0;
     achievements = localStorage.getItem('achievements') !== null ? JSON.parse(localStorage.getItem('achievements')) : [];
     upgradeCosts = localStorage.getItem('upgradeCosts') !== null ? JSON.parse(localStorage.getItem('upgradeCosts')) : { coinsPerClick: 10, coinsPerSecond: 15, clickReduction: 20, autoClick: 50 };
-    upgradeBenefits = localStorage.getItem('upgradeBenefits') !== null ? JSON.parse(localStorage.getItem('upgradeBenefits')) : { coinsPerClick: 1, coinsPerSecond: 0, clickReduction: 1, autoClick: 0, special: 0 };
+    upgradeBenefits = localStorage.getItem('upgradeBenefits') !== null ? JSON.parse(localStorage.getItem('upgradeBenefits')) : { coinsPerClick: 1, coinsPerSecond: 0, clickReduction: 1, autoClick: 0, specialCoin: 0, specialClick: 0 };
     startTime = localStorage.getItem('startTime') !== null ? new Date(localStorage.getItem('startTime')) : new Date();
     adShown = localStorage.getItem('adShown') !== null ? JSON.parse(localStorage.getItem('adShown')) : false;
     clicksAcumulados = localStorage.getItem('clicksAcumulados') !== null ? JSON.parse(localStorage.getItem('clicksAcumulados')) : 0;
@@ -353,6 +357,51 @@ function updateTimer() {
     document.getElementById('time').innerText = `${hours}:${minutes}:${seconds}`;
 }
 
+function rejectAd() {
+    hideAdContainer();
+    adShown = false;
+    saveGame();
+}
+
+function watchAd() {
+    hideAdContainer();
+    adShown = true;
+    upgradeBenefits.specialClick = 1;
+    document.getElementById('clickReductionUpgrade').innerText = `Reduction/click: ${formatNumber(upgradeBenefits.clickReduction)} (x2)`;
+    showBonusTimer();
+    let remainingTime = bonusDuration;
+
+    bonusTimerInterval = setInterval(() => {
+        remainingTime--;
+        updateBonusTimer(remainingTime);
+        
+        if (remainingTime <= 0) {
+            clearInterval(bonusTimerInterval);
+            hideBonusTimer();
+            adShown = false;
+            upgradeBenefits.specialClick = 0;
+            document.getElementById('clickReductionUpgrade').innerText = `Reduction/click: ${formatNumber(upgradeBenefits.clickReduction)}`;          
+            // alert('The temporary special upgrade has ended.');
+        }
+    }, 1000);   
+    saveGame();
+}
+
+function updateBonusTimer(remainingTime) {
+    const timerProgress = document.getElementById('timer-progress');
+    const bonusTimeRemaining = document.getElementById('bonus-time-remaining');
+    
+    // Calculate the new dash offset
+    const totalLength = 283; // 2 * Math.PI * 45 (radius of the circle)
+    const dashOffset = totalLength * (remainingTime / bonusDuration);
+    
+    // Update the stroke dash offset to show progress
+    timerProgress.style.strokeDashoffset = dashOffset;
+    
+    // Update the text showing the remaining time
+    bonusTimeRemaining.innerText = `${remainingTime} s`;
+}
+
 function showAd() {
     if (!adShown) {
         showAdContainer();
@@ -361,35 +410,26 @@ function showAd() {
     }
 }
 
-function watchAd() {
-    setTimeout(() => {
-        hideAdContainer();
-        upgradeBenefits.special = 1;
-        setTimeout(() => {
-            upgradeBenefits.special = 0;
-            alert('The temporary special upgrade has ended.');
-        }, 60000); // 1 minuto
-    }, 5000); // Simula un anuncio de 5 segundos
-    adShown = false; // Reiniciar adShown después de ver el anuncio
-    saveGame();
+function showBonusTimer() {
+    const bonusTimerContainer = document.getElementById('bonus-timer-container');
+    bonusTimerContainer.style.display = 'flex';
 }
 
-function rejectAd() {
-    hideAdContainer();
-    adShown = false;
-    saveGame();
-}
-
-function hideAdContainer() {
-    const adContainer = document.getElementById('ad-container');
-    adContainer.style.display = 'none'; // Establece el estilo de visualización a 'none'
+function hideBonusTimer() {
+    const bonusTimerContainer = document.getElementById('bonus-timer-container');
+    bonusTimerContainer.style.display = 'none';
 }
 
 function showAdContainer() {
     const adContainer = document.getElementById('ad-container');
-    adContainer.style.display = 'block'; // Establece el estilo de visualización a 'block' (o 'flex', 'inline', etc., según corresponda)
+    adContainer.style.display = 'flex';
 }
 
+function hideAdContainer() {
+    const adContainer = document.getElementById('ad-container');
+    adContainer.style.display = 'none';
+
+}
 
 function resetGame() {
     if (confirm('Are you sure you want to restart the game?')) {
@@ -397,7 +437,7 @@ function resetGame() {
         coins = 0;
         achievements = [];
         upgradeCosts = { coinsPerClick: 10, coinsPerSecond: 15, clickReduction: 20, autoClick: 50 };
-        upgradeBenefits = { coinsPerClick: 1, coinsPerSecond: 0, clickReduction: 1, autoClick: 0, special: 0 };
+        upgradeBenefits = { coinsPerClick: 1, coinsPerSecond: 0, clickReduction: 1, autoClick: 0, specialCoin: 0, specialClick: 0 };
         startTime = new Date();
         adShown = false;
         clicksAcumulados = 0;

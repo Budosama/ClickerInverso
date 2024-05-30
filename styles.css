@@ -14,7 +14,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Alinea el contenido al inicio del eje principal (horizontal) */
+    justify-content: flex-start; 
     height: 100vh;
     margin: 0;
     overflow-y: flex;
@@ -23,7 +23,7 @@ body {
 #header {
     display: flex;
     align-items: center;
-    justify-content: center; /* Centra el contenido horizontalmente */
+    justify-content: center; 
     width: 100%;
 }
 
@@ -51,7 +51,7 @@ body {
 }
 
 #upgrades, #achievements {
-    width: 400px; /* Ancho deseado */
+    width: 400px; 
     background-color: #444;
     border-radius: 10px;
     padding: 20px;
@@ -70,6 +70,7 @@ body {
     background-color: #ffffffe0;
     border-radius: 20px;
     padding: 20px;
+    position: relative;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     text-align: center;
     margin-bottom: 20px;
@@ -91,32 +92,24 @@ body {
 @keyframes glassBreak {
     0% {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1.2);
     }
-    20% {
-        opacity: 0.9;
-        transform: scale(1.1) rotate(5deg);
-    }
-    40% {
-        opacity: 0.8;
-        transform: scale(0.9) rotate(-5deg);
-    }
-    60% {
+    35% {
         opacity: 0.7;
-        transform: scale(1.2) rotate(3deg);
+        transform: scale(0.8) rotate(3deg);
     }
-    80% {
+    70% {
         opacity: 0.5;
-        transform: scale(0.8) rotate(-3deg);
+        transform: scale(1.1) rotate(-3deg);
     }
     100% {
         opacity: 0;
-        transform: scale(1.5) rotate(0deg);
+        transform: scale(0.9) rotate(0deg);
     }
 }
 
 #glass.breaking {
-    animation: glassBreak 0.5s ease-in-out;
+    animation: glassBreak 0.3s ease-in-out;
 }
 
 #glass:hover {
@@ -126,12 +119,12 @@ body {
 
 #glass-container {
     position: relative;
-    margin-top: 20px; /* Ajusta el valor según sea necesario */
-    margin-bottom: 20px; /* Ajusta el valor según sea necesario */
+    margin-top: 20px; 
+    margin-bottom: 20px; 
 }
 
 #reset {
-    margin-top: 20px; /* Ajusta el valor según sea necesario */
+    margin-top: 20px;
     text-align: center;
 }
 
@@ -193,11 +186,11 @@ body {
 }
 
 #shards-container {
-    position: fixed; /* Cambia la posición a fija para que se mantenga en la ventana */
+    position: fixed; 
     top: 0;
     left: 0;
-    width: 100vw; /* Ancho igual al ancho de la ventana del navegador */
-    height: 100vh; /* Altura igual a la altura de la ventana del navegador */
+    width: 100vw;
+    height: 100vh; 
     pointer-events: none;
     overflow: hidden;
 }
@@ -229,42 +222,39 @@ body {
     font-size: 1.2em;
     margin: 10px 0;
     color: #0c0202; 
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra de texto para destacar */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
 }
 
 #timer span {
     font-weight: bold;
-    font-size: 1.4em; /* Tamaño de fuente un poco más grande para destacar */
-    color: #1521cf; /* Color amarillo */
+    font-size: 1.4em; 
+    color: #1521cf; 
 }
 
 #currency span {
     font-weight: bold;
-    font-size: 1.4em; /* Tamaño de fuente un poco más grande para destacar */
-    color: #ffcc00; /* Color amarillo */
+    font-size: 1.4em; 
+    color: #ffcc00; 
 }
 
 #clicks-container span {
     font-weight: bold;
-    font-size: 1.4em; /* Tamaño de fuente un poco más grande para destacar */
-    color: #a70513; /* Color amarillo */
+    font-size: 1.4em;
+    color: #a70513; 
 }
 
-/* Animación de cambio de color */
 @keyframes colorChange {
-    0% { color: #ffcc00; } /* Color inicial */
-    50% { color: #ff5722; } /* Color intermedio */
-    100% { color: #ffcc00; } /* Color final */
+    0% { color: #ffcc00; } 
+    50% { color: #ff5722; } 
+    100% { color: #ffcc00; } 
 }
 
-/* Animación de cambio de color */
 @keyframes colorChangeDurability {
-    0% { color: #a70513; } /* Color inicial */
-    50% { color: #6a0577; } /* Color intermedio */
-    100% { color: #a70513; } /* Color final */
+    0% { color: #a70513; } 
+    50% { color: #6a0577; } 
+    100% { color: #a70513; } 
 }
 
-/* Aplicar la animación a los spans */
 #timer span.change-animation {
     animation: colorChange 1s;
 }
@@ -275,6 +265,25 @@ body {
 
 #clicks-container span {
     animation: colorChangeDurability 1s infinite;
+}
+
+#bonus-timer-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+#bonus-time-remaining {
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#timer-progress {
+    transition: stroke-dashoffset 1s linear;
 }
 
 .hidden {
