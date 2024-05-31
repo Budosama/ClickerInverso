@@ -14,12 +14,34 @@ let costFactor = 2.5;
 let benefictFactor = 2; 
 
 let achieved = [];
-let achievements = [
-    { id: '100-clicks', description: 'First 100 clicks', conditionDmg: 4999900, reward: '100 coins' },
-    { id: '1000-clicks', description: 'First 1.000 clicks', conditionDmg: 4999000, reward: '1000 coins' },
-    { id: '5000-clicks', description: 'First 5.000 clicks', conditionDmg: 4995000, reward: '2x multiplier' },
-    { id: '10000-clicks', description: 'First 10.000 clicks', conditionDmg: 4990000, reward: '5000 coins' },
+const achievements = [
+    { id: '100-clicks', description: 'First 100 clicks', conditionDmg: 9999900, reward: '10 coins' },
+    { id: '500-clicks', description: 'First 500 clicks', conditionDmg: 9999500, reward: '50 coins' },
+    { id: '1000-clicks', description: 'First 1000 clicks', conditionDmg: 9999000, reward: '100 coins' },
+    { id: '2500-clicks', description: 'First 2500 clicks', conditionDmg: 9997500, reward: '250 coins' },
+    { id: '5000-clicks', description: 'First 5000 clicks', conditionDmg: 9995000, reward: '500 coins' },
+    { id: '10000-clicks', description: 'First 10.000 clicks', conditionDmg: 9990000, reward: 'x2 coinsPerClick' },
+    { id: '50000-clicks', description: 'First 50.000 clicks', conditionDmg: 9950000, reward: 'x2 coinsPerSecond' },
+    { id: '100000-clicks', description: 'First 100.000 clicks', conditionDmg: 9900000, reward: 'x2 reductionPerClick' },
+    { id: '250000-clicks', description: 'First 250.000 clicks', conditionDmg: 9750000, reward: 'x2 reductionPerSecond' },
+    { id: '500000-clicks', description: 'First 500.000 clicks', conditionDmg: 9500000, reward: '5000 coins' },
+    { id: '1000000-clicks', description: 'First 1.000.000 clicks', conditionDmg: 9000000, reward: 'x3 coinsPerClick' },
+    { id: '1500000-clicks', description: 'First 1.500.000 clicks', conditionDmg: 8500000, reward: 'x3 coinsPerSecond' },
+    { id: '2000000-clicks', description: 'First 2.000.000 clicks', conditionDmg: 8000000, reward: 'x3 reductionPerClick' },
+    { id: '2500000-clicks', description: 'First 2.500.000 clicks', conditionDmg: 7500000, reward: 'x3 reductionPerSecond' },
+    { id: '3000000-clicks', description: 'First 3.000.000 clicks', conditionDmg: 7000000, reward: 'x3 coinsAll' },
+    { id: '3500000-clicks', description: 'First 3.500.000 clicks', conditionDmg: 6500000, reward: 'x3 reductionAll' },
+    { id: '4000000-clicks', description: 'First 4.000.000 clicks', conditionDmg: 6000000, reward: 'x3 all' },
+    { id: '4500000-clicks', description: 'First 4.500.000 clicks', conditionDmg: 5500000, reward: 'x3 all & 45000 coins' },
+    { id: '5000000-clicks', description: 'First 5.000.000 clicks', conditionDmg: 5000000, reward: '50000 coins' },
+    { id: '5500000-clicks', description: 'First 5.500.000 clicks', conditionDmg: 4500000, reward: 'x5 reductionAll' },
+    { id: '6000000-clicks', description: 'First 6.000.000 clicks', conditionDmg: 4000000, reward: 'x5 coinsAll' },
+    { id: '7000000-clicks', description: 'First 7.000.000 clicks', conditionDmg: 3000000, reward: 'x5 all' },
+    { id: '8000000-clicks', description: 'First 8.000.000 clicks', conditionDmg: 2000000, reward: 'x10 all' },
+    { id: '9000000-clicks', description: 'First 9.000.000 clicks', conditionDmg: 1000000, reward: 'x10 all & 90000 coins' },
+    { id: '10000000-clicks', description: 'First 10.000.000 clicks', conditionDmg: 0, reward: 'end game' },
 ];
+
 
 let achievementSound = new Audio('sounds/logro.mp3');
 achievementSound.muted = true;
@@ -275,7 +297,7 @@ function autoCoin() {
 
 function updateGlassImage() {
     const glass = document.getElementById('glass');
-    if (clicks <= 5000000) {
+    if (clicks <= 10000000) {
         glass.src = 'img/glass.png';
     }
     if (clicks < 4000000) {
@@ -320,48 +342,323 @@ function checkAchievements() {
     });
 }
 
+function endGame() {
+    const message = document.getElementById('end-game-message');
+    message.style.display = 'block';
+    saveGame();
+    // Opcional: detener otras actividades del juego, por ejemplo:
+    // clearInterval(gameInterval);
+    // deshabilitar botones, etc.
+}
+
 function getReward(achievementId) {
     const achievement = achievements.find(a => a.id === achievementId);
     if (achievement) {
         switch (achievement.reward) {
+            case '10 coins':
+                coins += 10;
+                updateCoins();
+                animacionCoin();
+                break;
+            case '50 coins':
+                coins += 50;
+                updateCoins();
+                animacionCoin();
+                break;
             case '100 coins':
                 coins += 100;
                 updateCoins();
                 animacionCoin();
-                achieved.push(achievement.id);
-                playAchievementSound(); 
                 break;
-            case '1000 coins':
-                coins += 1000;
+            case '250 coins':
+                coins += 250;
                 updateCoins();
                 animacionCoin();
-                achieved.push(achievement.id);
-                playAchievementSound(); 
                 break;
-            case '2x multiplier':
-                upgradeBenefits.specialCoinPerClick = 1;
+            case '500 coins':
+                coins += 500;
+                updateCoins();
+                animacionCoin();
+                break;
+            case 'x2 coinsPerClick':
+                upgradeBenefits.specialCoinPerClick += 1;
                 updateUpgrades();
-                let remainingTime = bonusDuration;
+                let remainingTimeCPC = bonusDuration;
                 bonusTimerInterval = setInterval(() => {
-                    remainingTime--;
-                    if (remainingTime <= 0) {
+                    remainingTimeCPC--;
+                    if (remainingTimeCPC <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialCoinPerClick = 0;
+                        upgradeBenefits.specialCoinPerClick -= 1;
                         updateUpgrades();
-                        // alert('The temporary special upgrade has ended.');
                     }
                 }, 1000);
-                achieved.push(achievement.id);
-                playAchievementSound(); 
+                break;
+            case 'x2 coinsPerSecond':
+                upgradeBenefits.specialCoinPerSecond += 1;
+                updateUpgrades();
+                let remainingTimeCPS = bonusDuration;
+                bonusTimerInterval = setInterval(() => {
+                    remainingTimeCPS--;
+                    if (remainingTimeCPS <= 0) {
+                        clearInterval(bonusTimerInterval);
+                        upgradeBenefits.specialCoinPerSecond -= 1;
+                        updateUpgrades();
+                    }
+                }, 1000);
+                break;
+            case 'x2 reductionPerClick':
+                upgradeBenefits.specialReductionPerClick += 1;
+                updateUpgrades();
+                let remainingTimeRPC = bonusDuration;
+                bonusTimerInterval = setInterval(() => {
+                    remainingTimeRPC--;
+                    if (remainingTimeRPC <= 0) {
+                        clearInterval(bonusTimerInterval);
+                        upgradeBenefits.specialReductionPerClick -= 1;
+                        updateUpgrades();
+                    }
+                }, 1000);
+                break;
+            case 'x2 reductionPerSecond':
+                upgradeBenefits.specialReductionPerSecond += 1;
+                updateUpgrades();
+                let remainingTimeRPS = bonusDuration;
+                bonusTimerInterval = setInterval(() => {
+                    remainingTimeRPS--;
+                    if (remainingTimeRPS <= 0) {
+                        clearInterval(bonusTimerInterval);
+                        upgradeBenefits.specialReductionPerSecond -= 1;
+                        updateUpgrades();
+                    }
+                }, 1000);
                 break;
             case '5000 coins':
                 coins += 5000;
-                updateCoins();              
+                updateCoins();
                 animacionCoin();
-                achieved.push(achievement.id);
-                playAchievementSound(); 
+                break;
+            case 'x3 coinsPerClick':
+                upgradeBenefits.specialCoinPerClick += 2;
+                updateUpgrades();
+                let remainingTime3CPC = bonusDuration;
+                bonusTimerInterval = setInterval(() => {
+                    remainingTime3CPC--;
+                    if (remainingTime3CPC <= 0) {
+                        clearInterval(bonusTimerInterval);
+                        upgradeBenefits.specialCoinPerClick -= 2;
+                        updateUpgrades();
+                    }
+                }, 1000);
+                break;
+            case 'x3 coinsPerSecond':
+                upgradeBenefits.specialCoinPerSecond += 2;
+                updateUpgrades();
+                let remainingTime3CPS = bonusDuration;
+                bonusTimerInterval = setInterval(() => {
+                    remainingTime3CPS--;
+                    if (remainingTime3CPS <= 0) {
+                        clearInterval(bonusTimerInterval);
+                        upgradeBenefits.specialCoinPerSecond -= 2;
+                        updateUpgrades();
+                    }
+                }, 1000);
+                break;
+            case 'x3 reductionPerClick':
+                upgradeBenefits.specialReductionPerClick += 2;
+                updateUpgrades();
+                let remainingTime3RPC = bonusDuration;
+                bonusTimerInterval = setInterval(() => {
+                    remainingTime3RPC--;
+                    if (remainingTime3RPC <= 0) {
+                        clearInterval(bonusTimerInterval);
+                        upgradeBenefits.specialReductionPerClick -= 2;
+                        updateUpgrades();
+                    }
+                }, 1000);
+                break;
+            case 'x3 reductionPerSecond':
+                upgradeBenefits.specialReductionPerSecond += 2;
+                updateUpgrades();
+                let remainingTime3RPS = bonusDuration;
+                bonusTimerInterval = setInterval(() => {
+                    remainingTime3RPS--;
+                    if (remainingTime3RPS <= 0) {
+                        clearInterval(bonusTimerInterval);
+                        upgradeBenefits.specialReductionPerSecond -= 2;
+                        updateUpgrades();
+                    }
+                }, 1000);
+                break;
+            case 'x3 coinsAll':
+                upgradeBenefits.specialCoinPerClick += 2;
+                upgradeBenefits.specialCoinPerSecond += 2;
+                updateUpgrades();
+                let remainingTime3All = bonusDuration;
+                bonusTimerInterval = setInterval(() => {
+                    remainingTime3All--;
+                    if (remainingTime3All <= 0) {
+                        clearInterval(bonusTimerInterval);
+                        upgradeBenefits.specialCoinPerClick -= 2;
+                        upgradeBenefits.specialCoinPerSecond -= 2;
+                        updateUpgrades();
+                    }
+                }, 1000);
+                break;
+            case 'x3 reductionAll':
+                upgradeBenefits.specialReductionPerClick += 2;
+                upgradeBenefits.specialReductionPerSecond += 2;
+                updateUpgrades();
+                let remainingTime3RAll = bonusDuration;
+                bonusTimerInterval = setInterval(() => {
+                    remainingTime3RAll--;
+                    if (remainingTime3RAll <= 0) {
+                        clearInterval(bonusTimerInterval);
+                        upgradeBenefits.specialReductionPerClick -= 2;
+                        upgradeBenefits.specialReductionPerSecond -= 2;
+                        updateUpgrades();
+                    }
+                }, 1000);
+                break;
+            case 'x3 all':
+                upgradeBenefits.specialCoinPerClick += 2;
+                upgradeBenefits.specialCoinPerSecond += 2;
+                upgradeBenefits.specialReductionPerClick += 2;
+                upgradeBenefits.specialReductionPerSecond += 2;
+                updateUpgrades();
+                let remainingTime3AllBoost = bonusDuration;
+                bonusTimerInterval = setInterval(() => {
+                    remainingTime3AllBoost--;
+                    if (remainingTime3AllBoost <= 0) {
+                        clearInterval(bonusTimerInterval);
+                        upgradeBenefits.specialCoinPerClick -= 2;
+                        upgradeBenefits.specialCoinPerSecond -= 2;
+                        upgradeBenefits.specialReductionPerClick -= 2;
+                        upgradeBenefits.specialReductionPerSecond -= 2;
+                        updateUpgrades();
+                    }
+                }, 1000);
+                break;
+            case 'x3 all & 45000 coins':
+                upgradeBenefits.specialCoinPerClick += 2;
+                upgradeBenefits.specialCoinPerSecond += 2;
+                upgradeBenefits.specialReductionPerClick += 2;
+                upgradeBenefits.specialReductionPerSecond += 2;
+                coins += 45000;
+                updateCoins();
+                updateUpgrades();
+                let remainingTime3AllCoins = bonusDuration;
+                bonusTimerInterval = setInterval(() => {
+                    remainingTime3AllCoins--;
+                    if (remainingTime3AllCoins <= 0) {
+                        clearInterval(bonusTimerInterval);
+                        upgradeBenefits.specialCoinPerClick -= 2;
+                        upgradeBenefits.specialCoinPerSecond -= 2;
+                        upgradeBenefits.specialReductionPerClick -= 2;
+                        upgradeBenefits.specialReductionPerSecond -= 2;
+                        updateUpgrades();
+                    }
+                }, 1000);
+                break;
+            case '50000 coins':
+                coins += 50000;
+                updateCoins();
+                animacionCoin();
+                break;
+            case 'x5 reductionAll':
+                upgradeBenefits.specialReductionPerClick += 4;
+                upgradeBenefits.specialReductionPerSecond += 4;
+                updateUpgrades();
+                let remainingTime5RAll = bonusDuration;
+                bonusTimerInterval = setInterval(() => {
+                    remainingTime5RAll--;
+                    if (remainingTime5RAll <= 0) {
+                        clearInterval(bonusTimerInterval);
+                        upgradeBenefits.specialReductionPerClick -= 4;
+                        upgradeBenefits.specialReductionPerSecond -= 4;
+                        updateUpgrades();
+                    }
+                }, 1000);
+                break;
+            case 'x5 coinsAll':
+                upgradeBenefits.specialCoinPerClick += 4;
+                upgradeBenefits.specialCoinPerSecond += 4;
+                updateUpgrades();
+                let remainingTime5CAll = bonusDuration;
+                bonusTimerInterval = setInterval(() => {
+                    remainingTime5CAll--;
+                    if (remainingTime5CAll <= 0) {
+                        clearInterval(bonusTimerInterval);
+                        upgradeBenefits.specialCoinPerClick -= 4;
+                        upgradeBenefits.specialCoinPerSecond -= 4;
+                        updateUpgrades();
+                    }
+                }, 1000);
+                break;
+            case 'x5 all':
+                upgradeBenefits.specialCoinPerClick += 4;
+                upgradeBenefits.specialCoinPerSecond += 4;
+                upgradeBenefits.specialReductionPerClick += 4;
+                upgradeBenefits.specialReductionPerSecond += 4;
+                updateUpgrades();
+                let remainingTime5All = bonusDuration;
+                bonusTimerInterval = setInterval(() => {
+                    remainingTime5All--;
+                    if (remainingTime5All <= 0) {
+                        clearInterval(bonusTimerInterval);
+                        upgradeBenefits.specialCoinPerClick -= 4;
+                        upgradeBenefits.specialCoinPerSecond -= 4;
+                        upgradeBenefits.specialReductionPerClick -= 4;
+                        upgradeBenefits.specialReductionPerSecond -= 4;
+                        updateUpgrades();
+                    }
+                }, 1000);
+                break;
+            case 'x10 all':
+                upgradeBenefits.specialCoinPerClick += 9;
+                upgradeBenefits.specialCoinPerSecond += 9;
+                upgradeBenefits.specialReductionPerClick += 9;
+                upgradeBenefits.specialReductionPerSecond += 9;
+                updateUpgrades();
+                let remainingTime10All = bonusDuration;
+                bonusTimerInterval = setInterval(() => {
+                    remainingTime10All--;
+                    if (remainingTime10All <= 0) {
+                        clearInterval(bonusTimerInterval);
+                        upgradeBenefits.specialCoinPerClick -= 9;
+                        upgradeBenefits.specialCoinPerSecond -= 9;
+                        upgradeBenefits.specialReductionPerClick -= 9;
+                        upgradeBenefits.specialReductionPerSecond -= 9;
+                        updateUpgrades();
+                    }
+                }, 1000);
+                break;
+            case 'x10 all & 90000 coins':
+                upgradeBenefits.specialCoinPerClick += 9;
+                upgradeBenefits.specialCoinPerSecond += 9;
+                upgradeBenefits.specialReductionPerClick += 9;
+                upgradeBenefits.specialReductionPerSecond += 9;
+                coins += 90000;
+                updateCoins();
+                updateUpgrades();
+                let remainingTime10AllCoins = bonusDuration;
+                bonusTimerInterval = setInterval(() => {
+                    remainingTime10AllCoins--;
+                    if (remainingTime10AllCoins <= 0) {
+                        clearInterval(bonusTimerInterval);
+                        upgradeBenefits.specialCoinPerClick -= 9;
+                        upgradeBenefits.specialCoinPerSecond -= 9;
+                        upgradeBenefits.specialReductionPerClick -= 9;
+                        upgradeBenefits.specialReductionPerSecond -= 9;
+                        updateUpgrades();
+                    }
+                }, 1000);
+                break;
+            case 'end game':
+                endGame();
                 break;
         }
+        achieved.push(achievement.id);
+        playAchievementSound();
         const rewardButton = document.getElementById(`reward-${achievementId}`);
         rewardButton.disabled = true;
         rewardButton.textContent = 'Checked';
@@ -407,7 +704,7 @@ function showAd() {
 function watchAd() {
     hideAdContainer();
     adShown = true;
-    upgradeBenefits.specialReductionPerClick = 1;
+    upgradeBenefits.specialReductionPerClick += 1;
     updateUpgrades();
 
     document.getElementById('bonus-time-remaining').innerText = '60 s';
@@ -423,7 +720,7 @@ function watchAd() {
             clearInterval(bonusTimerInterval);
             hideBonusTimer();
             adShown = false;
-            upgradeBenefits.specialReductionPerClick = 0;
+            upgradeBenefits.specialReductionPerClick -= 1;
             updateUpgrades();
             // alert('The temporary special upgrade has ended.');
         }
@@ -451,7 +748,7 @@ function saveGame() {
 }
 
 function loadGame() {
-    clicks = localStorage.getItem('clicks') !== null ? parseInt(localStorage.getItem('clicks')) : 5000000;
+    clicks = localStorage.getItem('clicks') !== null ? parseInt(localStorage.getItem('clicks')) : 10000000;
     coins = localStorage.getItem('coins') !== null ? parseInt(localStorage.getItem('coins')) : 0;
     achieved = localStorage.getItem('achieved') !== null ? JSON.parse(localStorage.getItem('achieved')) : [];
     for (let i = 0; i < achieved.length; i++) {
@@ -472,7 +769,7 @@ function loadGame() {
 
 function resetGame() {
     if (confirm('Are you sure you want to restart the game?')) {
-        clicks = 5000000;
+        clicks = 10000000;
         coins = 0;
         for (let i = 0; i < achieved.length; i++) {
             const achievementId = achieved[i];
