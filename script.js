@@ -316,7 +316,7 @@ function updateGlassImage() {
     if (clicks <= 10000000) {
         glass.src = 'img/glass.png';
     }
-    if (clicks < 4000000) {
+    if (clicks < 5000000) {
         glass.src = 'img/glass_broken1.png';
     }
     if (clicks < 2000000) {
@@ -404,7 +404,11 @@ function getReward(achievementId) {
                     remainingTimeCPC--;
                     if (remainingTimeCPC <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialCoinPerClick -= 1;
+                        if (upgradeBenefits.specialCoinPerClick >= 1){
+                            upgradeBenefits.specialCoinPerClick -= 1;
+                        } else {
+                            upgradeBenefits.specialCoinPerClick = 0;
+                        }
                         updateUpgrades();
                     }
                 }, 1000);
@@ -417,7 +421,11 @@ function getReward(achievementId) {
                     remainingTimeCPS--;
                     if (remainingTimeCPS <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialCoinPerSecond -= 1;
+                        if (upgradeBenefits.specialCoinPerSecond >= 1){
+                            upgradeBenefits.specialCoinPerSecond -= 1;
+                        } else {
+                            upgradeBenefits.specialCoinPerSecond = 0;
+                        }                     
                         updateUpgrades();
                     }
                 }, 1000);
@@ -430,7 +438,11 @@ function getReward(achievementId) {
                     remainingTimeRPC--;
                     if (remainingTimeRPC <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialReductionPerClick -= 1;
+                        if (upgradeBenefits.specialReductionPerClick >= 1){
+                            upgradeBenefits.specialReductionPerClick -= 1;
+                        } else {
+                            upgradeBenefits.specialReductionPerClick = 0;
+                        }                            
                         updateUpgrades();
                     }
                 }, 1000);
@@ -443,7 +455,11 @@ function getReward(achievementId) {
                     remainingTimeRPS--;
                     if (remainingTimeRPS <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialReductionPerSecond -= 1;
+                        if (upgradeBenefits.specialReductionPerSecond >= 1){
+                            upgradeBenefits.specialReductionPerSecond -= 1;
+                        } else {
+                            upgradeBenefits.specialReductionPerSecond = 0;
+                        }        
                         updateUpgrades();
                     }
                 }, 1000);
@@ -461,7 +477,11 @@ function getReward(achievementId) {
                     remainingTime3CPC--;
                     if (remainingTime3CPC <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialCoinPerClick -= 2;
+                        if (upgradeBenefits.specialCoinPerClick >= 2){
+                            upgradeBenefits.specialCoinPerClick -= 2;
+                        } else {
+                            upgradeBenefits.specialCoinPerClick = 0;
+                        }  
                         updateUpgrades();
                     }
                 }, 1000);
@@ -474,7 +494,11 @@ function getReward(achievementId) {
                     remainingTime3CPS--;
                     if (remainingTime3CPS <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialCoinPerSecond -= 2;
+                        if (upgradeBenefits.specialCoinPerSecond >= 2){
+                            upgradeBenefits.specialCoinPerSecond -= 2;
+                        } else {
+                            upgradeBenefits.specialCoinPerSecond = 0;
+                        }  
                         updateUpgrades();
                     }
                 }, 1000);
@@ -487,7 +511,11 @@ function getReward(achievementId) {
                     remainingTime3RPC--;
                     if (remainingTime3RPC <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialReductionPerClick -= 2;
+                        if (upgradeBenefits.specialReductionPerClick >= 2){
+                            upgradeBenefits.specialReductionPerClick -= 2;
+                        } else {
+                            upgradeBenefits.specialReductionPerClick = 0;
+                        }  
                         updateUpgrades();
                     }
                 }, 1000);
@@ -500,7 +528,11 @@ function getReward(achievementId) {
                     remainingTime3RPS--;
                     if (remainingTime3RPS <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialReductionPerSecond -= 2;
+                        if (upgradeBenefits.specialReductionPerSecond >= 2){
+                            upgradeBenefits.specialReductionPerSecond -= 2;
+                        } else {
+                            upgradeBenefits.specialReductionPerSecond = 0;
+                        }  
                         updateUpgrades();
                     }
                 }, 1000);
@@ -514,8 +546,16 @@ function getReward(achievementId) {
                     remainingTime3All--;
                     if (remainingTime3All <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialCoinPerClick -= 2;
-                        upgradeBenefits.specialCoinPerSecond -= 2;
+                        if (upgradeBenefits.specialCoinPerClick >= 2){
+                            upgradeBenefits.specialCoinPerClick -= 2;
+                        } else {
+                            upgradeBenefits.specialCoinPerClick = 0;
+                        }  
+                        if (upgradeBenefits.specialCoinPerSecond >= 2){
+                            upgradeBenefits.specialCoinPerSecond -= 2;
+                        } else {
+                            upgradeBenefits.specialCoinPerSecond = 0;
+                        }  
                         updateUpgrades();
                     }
                 }, 1000);
@@ -529,8 +569,16 @@ function getReward(achievementId) {
                     remainingTime3RAll--;
                     if (remainingTime3RAll <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialReductionPerClick -= 2;
-                        upgradeBenefits.specialReductionPerSecond -= 2;
+                        if (upgradeBenefits.specialReductionPerClick >= 2){
+                            upgradeBenefits.specialReductionPerClick -= 2;
+                        } else {
+                            upgradeBenefits.specialReductionPerClick = 0;
+                        }  
+                        if (upgradeBenefits.specialReductionPerSecond >= 2){
+                            upgradeBenefits.specialReductionPerSecond -= 2;
+                        } else {
+                            upgradeBenefits.specialReductionPerSecond = 0;
+                        }
                         updateUpgrades();
                     }
                 }, 1000);
@@ -546,10 +594,26 @@ function getReward(achievementId) {
                     remainingTime3AllBoost--;
                     if (remainingTime3AllBoost <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialCoinPerClick -= 2;
-                        upgradeBenefits.specialCoinPerSecond -= 2;
-                        upgradeBenefits.specialReductionPerClick -= 2;
-                        upgradeBenefits.specialReductionPerSecond -= 2;
+                        if (upgradeBenefits.specialCoinPerClick >= 2){
+                            upgradeBenefits.specialCoinPerClick -= 2;
+                        } else {
+                            upgradeBenefits.specialCoinPerClick = 0;
+                        }  
+                        if (upgradeBenefits.specialCoinPerSecond >= 2){
+                            upgradeBenefits.specialCoinPerSecond -= 2;
+                        } else {
+                            upgradeBenefits.specialCoinPerSecond = 0;
+                        }
+                        if (upgradeBenefits.specialReductionPerClick >= 2){
+                            upgradeBenefits.specialReductionPerClick -= 2;
+                        } else {
+                            upgradeBenefits.specialReductionPerClick = 0;
+                        }  
+                        if (upgradeBenefits.specialReductionPerSecond >= 2){
+                            upgradeBenefits.specialReductionPerSecond -= 2;
+                        } else {
+                            upgradeBenefits.specialReductionPerSecond = 0;
+                        }
                         updateUpgrades();
                     }
                 }, 1000);
@@ -567,10 +631,26 @@ function getReward(achievementId) {
                     remainingTime3AllCoins--;
                     if (remainingTime3AllCoins <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialCoinPerClick -= 2;
-                        upgradeBenefits.specialCoinPerSecond -= 2;
-                        upgradeBenefits.specialReductionPerClick -= 2;
-                        upgradeBenefits.specialReductionPerSecond -= 2;
+                        if (upgradeBenefits.specialCoinPerClick >= 2){
+                            upgradeBenefits.specialCoinPerClick -= 2;
+                        } else {
+                            upgradeBenefits.specialCoinPerClick = 0;
+                        }  
+                        if (upgradeBenefits.specialCoinPerSecond >= 2){
+                            upgradeBenefits.specialCoinPerSecond -= 2;
+                        } else {
+                            upgradeBenefits.specialCoinPerSecond = 0;
+                        }
+                        if (upgradeBenefits.specialReductionPerClick >= 2){
+                            upgradeBenefits.specialReductionPerClick -= 2;
+                        } else {
+                            upgradeBenefits.specialReductionPerClick = 0;
+                        }  
+                        if (upgradeBenefits.specialReductionPerSecond >= 2){
+                            upgradeBenefits.specialReductionPerSecond -= 2;
+                        } else {
+                            upgradeBenefits.specialReductionPerSecond = 0;
+                        }
                         updateUpgrades();
                     }
                 }, 1000);
@@ -589,8 +669,16 @@ function getReward(achievementId) {
                     remainingTime5RAll--;
                     if (remainingTime5RAll <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialReductionPerClick -= 4;
-                        upgradeBenefits.specialReductionPerSecond -= 4;
+                        if (upgradeBenefits.specialReductionPerClick >= 4){
+                            upgradeBenefits.specialReductionPerClick -= 4;
+                        } else {
+                            upgradeBenefits.specialReductionPerClick = 0;
+                        }  
+                        if (upgradeBenefits.specialReductionPerSecond >= 4){
+                            upgradeBenefits.specialReductionPerSecond -= 4;
+                        } else {
+                            upgradeBenefits.specialReductionPerSecond = 0;
+                        }
                         updateUpgrades();
                     }
                 }, 1000);
@@ -604,8 +692,16 @@ function getReward(achievementId) {
                     remainingTime5CAll--;
                     if (remainingTime5CAll <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialCoinPerClick -= 4;
-                        upgradeBenefits.specialCoinPerSecond -= 4;
+                        if (upgradeBenefits.specialCoinPerClick >= 4){
+                            upgradeBenefits.specialCoinPerClick -= 4;
+                        } else {
+                            upgradeBenefits.specialCoinPerClick = 0;
+                        }  
+                        if (upgradeBenefits.specialCoinPerSecond >= 4){
+                            upgradeBenefits.specialCoinPerSecond -= 4;
+                        } else {
+                            upgradeBenefits.specialCoinPerSecond = 0;
+                        }
                         updateUpgrades();
                     }
                 }, 1000);
@@ -621,10 +717,26 @@ function getReward(achievementId) {
                     remainingTime5All--;
                     if (remainingTime5All <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialCoinPerClick -= 4;
-                        upgradeBenefits.specialCoinPerSecond -= 4;
-                        upgradeBenefits.specialReductionPerClick -= 4;
-                        upgradeBenefits.specialReductionPerSecond -= 4;
+                        if (upgradeBenefits.specialCoinPerClick >= 4){
+                            upgradeBenefits.specialCoinPerClick -= 4;
+                        } else {
+                            upgradeBenefits.specialCoinPerClick = 0;
+                        }  
+                        if (upgradeBenefits.specialCoinPerSecond >= 4){
+                            upgradeBenefits.specialCoinPerSecond -= 4;
+                        } else {
+                            upgradeBenefits.specialCoinPerSecond = 0;
+                        }
+                        if (upgradeBenefits.specialReductionPerClick >= 4){
+                            upgradeBenefits.specialReductionPerClick -= 4;
+                        } else {
+                            upgradeBenefits.specialReductionPerClick = 0;
+                        }  
+                        if (upgradeBenefits.specialReductionPerSecond >= 4){
+                            upgradeBenefits.specialReductionPerSecond -= 4;
+                        } else {
+                            upgradeBenefits.specialReductionPerSecond = 0;
+                        }
                         updateUpgrades();
                     }
                 }, 1000);
@@ -640,10 +752,26 @@ function getReward(achievementId) {
                     remainingTime10All--;
                     if (remainingTime10All <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialCoinPerClick -= 9;
-                        upgradeBenefits.specialCoinPerSecond -= 9;
-                        upgradeBenefits.specialReductionPerClick -= 9;
-                        upgradeBenefits.specialReductionPerSecond -= 9;
+                        if (upgradeBenefits.specialCoinPerClick >= 9){
+                            upgradeBenefits.specialCoinPerClick -= 9;
+                        } else {
+                            upgradeBenefits.specialCoinPerClick = 0;
+                        }  
+                        if (upgradeBenefits.specialCoinPerSecond >= 9){
+                            upgradeBenefits.specialCoinPerSecond -= 9;
+                        } else {
+                            upgradeBenefits.specialCoinPerSecond = 0;
+                        }
+                        if (upgradeBenefits.specialReductionPerClick >= 9){
+                            upgradeBenefits.specialReductionPerClick -= 9;
+                        } else {
+                            upgradeBenefits.specialReductionPerClick = 0;
+                        }  
+                        if (upgradeBenefits.specialReductionPerSecond >= 9){
+                            upgradeBenefits.specialReductionPerSecond -= 9;
+                        } else {
+                            upgradeBenefits.specialReductionPerSecond = 0;
+                        }
                         updateUpgrades();
                     }
                 }, 1000);
@@ -661,10 +789,26 @@ function getReward(achievementId) {
                     remainingTime10AllCoins--;
                     if (remainingTime10AllCoins <= 0) {
                         clearInterval(bonusTimerInterval);
-                        upgradeBenefits.specialCoinPerClick -= 9;
-                        upgradeBenefits.specialCoinPerSecond -= 9;
-                        upgradeBenefits.specialReductionPerClick -= 9;
-                        upgradeBenefits.specialReductionPerSecond -= 9;
+                        if (upgradeBenefits.specialCoinPerClick >= 9){
+                            upgradeBenefits.specialCoinPerClick -= 9;
+                        } else {
+                            upgradeBenefits.specialCoinPerClick = 0;
+                        }  
+                        if (upgradeBenefits.specialCoinPerSecond >= 9){
+                            upgradeBenefits.specialCoinPerSecond -= 9;
+                        } else {
+                            upgradeBenefits.specialCoinPerSecond = 0;
+                        }
+                        if (upgradeBenefits.specialReductionPerClick >= 9){
+                            upgradeBenefits.specialReductionPerClick -= 9;
+                        } else {
+                            upgradeBenefits.specialReductionPerClick = 0;
+                        }  
+                        if (upgradeBenefits.specialReductionPerSecond >= 9){
+                            upgradeBenefits.specialReductionPerSecond -= 9;
+                        } else {
+                            upgradeBenefits.specialReductionPerSecond = 0;
+                        }
                         updateUpgrades();
                     }
                 }, 1000);
@@ -736,7 +880,11 @@ function watchAd() {
             clearInterval(bonusTimerInterval);
             hideBonusTimer();
             adShown = false;
-            upgradeBenefits.specialReductionPerClick -= 1;
+            if (upgradeBenefits.specialReductionPerClick >= 1){
+                upgradeBenefits.specialReductionPerClick -= 1;
+            } else {
+                upgradeBenefits.specialReductionPerClick = 0;
+            }
             updateUpgrades();
             // alert('The temporary special upgrade has ended.');
         }
@@ -874,6 +1022,7 @@ window.onload = function() {
     updateUpgradeButtons(coins);
     updateGlassImage();
     checkAchievements();
+    hideBonusTimer();
     startTimer();
     setInterval(showAd, adInterval);
     setInterval(reductionPerSecond, 1000);
