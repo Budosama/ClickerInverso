@@ -78,18 +78,24 @@ function toggleMute() {
 }
 
 function playAchievementSound() {
-    achievementSound.play();
+    achievementSound.play().catch(error => {
+        console.log('Autoplay was prevented:', error);
+    });
 }
 
 function playCoinSound() {
     coinSound.volume = 0.4;
-    coinSound.play();
+    coinSound.play().catch(error => {
+        console.log('Autoplay was prevented:', error);
+    });
 }
 
 function playGlassSound() {
     glassSound.volume = 0.2;
     glassSound.currentTime = 0;
-    glassSound.play();
+    glassSound.play().catch(error => {
+        console.log('Autoplay was prevented:', error);
+    });
 }
 
 /* -------------------------------------------- Funciones de Actualización de UI -------------------------------------------- */
@@ -734,6 +740,13 @@ function rejectAd() {
     saveGame();
 }
 
+function resetBoost(){
+    upgradeBenefits.specialCoinPerClick = 0;
+    upgradeBenefits.specialCoinPerSecond = 0;
+    upgradeBenefits.specialReductionPerClick = 0;
+    upgradeBenefits.specialReductionPerSecond = 0;
+}
+
 /* -------------------------------------------- Manejo de Almacenamiento -------------------------------------------- */
 
 function saveGame() {
@@ -845,6 +858,7 @@ window.onload = function() {
     loadGame();
     updateClicks();
     updateCoins();
+    resetBoost();
     updateUpgrades();
     updateUpgradeButtons(coins);
     updateGlassImage();
