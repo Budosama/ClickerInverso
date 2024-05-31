@@ -242,15 +242,22 @@ body {
 
 .damage-display {
     position: absolute;
-    font-size: 24px; /* Tamaño de fuente más grande */
-    color: rgba(17, 152, 206, 0.8); /* Un color naranja más llamativo */
-    text-shadow: 2px 2px 6px #ffffff; /* Sombra blanca más pronunciada */
-    font-family: "Impact", sans-serif; /* Fuente en negrita */
-    animation: moveUpAndFade 1s ease-out forwards; /* Animación de subida y desvanecimiento */
-    user-select: none; /* Hacer el elemento no seleccionable */
-    padding: 5px 10px; /* Añadir espacio alrededor del texto */
-    border-radius: 10px; /* Agregar bordes redondeados */
-    /* background-color: rgba(190, 204, 209, 0.8);  */
+    font-size: 24px; 
+    color: rgba(17, 152, 206, 0.8); 
+    text-shadow: 2px 2px 6px #ffffff; 
+    font-family: "Impact", sans-serif; 
+    animation: moveUpAndFade 1s ease-out forwards; 
+    user-select: none; 
+    padding: 5px 10px; 
+    border-radius: 10px; 
+    pointer-events: none;
+}
+
+.critical {
+    color: red;
+    font-size: 30px;
+    animation: criticalFadeOut 1s forwards;
+    background-color: rgba(219, 53, 47, 0.8); 
 }
 
 /* -------------------------------------------- Reset Button -------------------------------------------- */
@@ -458,6 +465,11 @@ body {
 @keyframes fadeIn {
     0% { opacity: 0; }
     100% { opacity: 1; }
+}
+
+@keyframes criticalFadeOut {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.5); }
 }
 
 /* -------------------------------------------- Classes -------------------------------------------- */

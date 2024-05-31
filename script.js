@@ -12,6 +12,7 @@ let bonusInterval;
 let bonusDuration = 60; 
 let costFactor = 2.5; 
 let benefictFactor = 2; 
+let criticalRate = 0.05;
 
 let achieved = [];
 const achievements = [
@@ -269,13 +270,22 @@ function breakGlass() {
 function showDamage(damage) {
     const glassContainer = document.getElementById('glass-container');
     const damageDisplay = document.createElement('div');
-    damageDisplay.classList.add('damage-display');
+    const isCritical = Math.random() < criticalRate;
+
+    if (isCritical) {
+        damage *= 2; 
+        damageDisplay.classList.add('damage-display', 'critical');
+    } else {
+        damageDisplay.classList.add('damage-display');
+    }
+
     const randomX = Math.random() * (glassContainer.offsetWidth); 
     const randomY = Math.random() * (glassContainer.offsetHeight); 
     damageDisplay.style.left = `${randomX}px`;
     damageDisplay.style.top = `${randomY}px`;
     damageDisplay.innerText = `-${damage}`;
     glassContainer.appendChild(damageDisplay);
+
     damageDisplay.addEventListener('animationend', () => {
         damageDisplay.remove(); 
     });
@@ -756,7 +766,7 @@ function saveGame() {
     localStorage.setItem('upgradeCosts', JSON.stringify(upgradeCosts));
     localStorage.setItem('upgradeBenefits', JSON.stringify(upgradeBenefits));
     localStorage.setItem('startTime', startTime.toString());
-    localStorage.setItem('adShown', JSON.stringify(adShown));
+    // localStorage.setItem('adShown', JSON.stringify(adShown));
     localStorage.setItem('clicksAcumulados', JSON.stringify(clicksAcumulados));
 }
 
@@ -776,7 +786,8 @@ function loadGame() {
     upgradeCosts = localStorage.getItem('upgradeCosts') !== null ? JSON.parse(localStorage.getItem('upgradeCosts')) : { coinsPerClick: 10, coinsPerSecond: 15, reductionPerClick: 20, reductionPerSecond: 50 };
     upgradeBenefits = localStorage.getItem('upgradeBenefits') !== null ? JSON.parse(localStorage.getItem('upgradeBenefits')) : { coinsPerClick: 1, coinsPerSecond: 0, reductionPerClick: 1, reductionPerSecond: 0, specialCoinPerClick: 0 , specialReductionPerClick: 0, specialCoinPerSecond: 0, specialReductionPerSecond: 0};
     startTime = localStorage.getItem('startTime') !== null ? new Date(localStorage.getItem('startTime')) : new Date();
-    adShown = localStorage.getItem('adShown') !== null ? JSON.parse(localStorage.getItem('adShown')) : false;
+    // adShown = localStorage.getItem('adShown') !== null ? JSON.parse(localStorage.getItem('adShown')) : false;
+    adShown = false;
     clicksAcumulados = localStorage.getItem('clicksAcumulados') !== null ? JSON.parse(localStorage.getItem('clicksAcumulados')) : 0;
 }
 
