@@ -28,7 +28,7 @@
                 <div id="timer" class="col">
                     <p>
                         <img src="img/reloj.gif" alt="Clock" style="width:20px; vertical-align:middle; margin-right:5px;">
-                        Time: <span id="time">00:00:00</span>
+                        Time: <span id="time"></span>
                     </p>
                 </div>
                 <div id="currency" class="col">
@@ -40,27 +40,27 @@
                 <div id="coinsPerClickUpgrade" class="col">
                     <p>
                         <img src="img/coin.png" alt="Coin Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
-                        <span id="coinsPerClickUpgradeText"></span>
+                        <span id="coinsPerClickTimer" class="timer"></span>
                     </p>
                 </div>
                 <div id="coinsPerSecondUpgrade" class="col">
                     <p>
                         <img src="img/coin.png" alt="Coin Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
-                        <span id="coinsPerSecondUpgradeText"></span>
+                        <span id="coinsPerSecondTimer" class="timer"></span>
                     </p>
                 </div>
                 <div id="reductionPerClickUpgrade" class="col">
                     <p>
                         <img src="img/Hammer.cur" alt="Reduction Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
-                        <span id="reductionPerClickUpgradeText"></span>
+                        <span id="reductionPerClickTimer" class="timer"></span>
                     </p>
                 </div>
                 <div id="reductionPerSecondUpgrade" class="col">
                     <p>
                         <img src="img/Hammer.cur" alt="Reduction Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
-                        <span id="reductionPerSecondUpgradeText"></span>
+                        <span id="reductionPerSecondTimer" class="timer"></span>
                     </p>
-                </div>
+                </div>                
             </div>
 
             <div id="clicks-container">
@@ -84,14 +84,14 @@
                 </div>
             </div>
 
-            <div id="bonus-timer-container" style="display: none;">
+            <!-- <div id="bonus-timer-container" style="display: none;">
                 <svg id="bonus-timer" width="80" height="80" viewBox="0 0 100 100">
                     <circle cx="50" cy="50" r="45" stroke="black" stroke-width="5" fill="none" />
                     <circle id="timer-background" cx="50" cy="50" r="45" fill="black" />
                     <circle id="timer-progress" cx="50" cy="50" r="45" fill="none" stroke="red" stroke-width="10" stroke-dasharray="283" stroke-dashoffset="283" />
                 </svg>
                 <div id="bonus-time-remaining">60 s</div>
-            </div>                          
+            </div> -->
              
             <div id="end-game-message">Congratulations!! You have finished the game :)</div>
         </div>

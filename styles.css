@@ -368,6 +368,13 @@ body {
     animation: none;
 }
 
+.timer {
+    display: inline; /* Asegura que el temporizador esté en línea con la imagen */
+    margin-left: 5px; /* Añade un pequeño espacio entre la imagen y el temporizador */
+    font-size: 14px; /* Tamaño de fuente para el temporizador */
+    color: inherit;
+}
+
 /* -------------------------------------------- Animations -------------------------------------------- */
 
 @keyframes glassBreak {
@@ -483,9 +490,9 @@ body {
     display: none;
 }
 
-#timer span.change-animation {
+/* #timer span.change-animation {
     animation: colorChange 1s;
-}
+} */
 
 #currency span.change-animation {
     animation: colorChange 1s;
