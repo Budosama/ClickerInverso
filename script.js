@@ -13,10 +13,10 @@ let criticalRate = 0.05;
 let achieved = [];
 
 let bonusGame = [
-    { id: 'coinsPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Clicks:", benefit: 1, cost: 10},
-    { id: 'coinsPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Seconds:", benefit: 1, cost: 15 },
-    { id: 'reductionPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "ReductionUpgrade", txt: "Reduction/Click:", benefit: 1, cost: 20 },
-    { id: 'reductionPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "ReductionUpgrade", txt: "Reduction/Second:", benefit: 1, cost: 50 }
+    { id: 'coinsPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Clicks:", benefit: 1, cost: 10, level: 1},
+    { id: 'coinsPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Seconds:", benefit: 1, cost: 15, level: 1 },
+    { id: 'reductionPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Click:", benefit: 1, cost: 20, level: 1 },
+    { id: 'reductionPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Second:", benefit: 1, cost: 50, level: 1 }
 ];
 const achievements = [
     { id: '100-clicks', description: 'First 100 clicks', conditionDmg: 9999900, coins: 10, boost: '', multiplicador: 0 },
@@ -133,10 +133,10 @@ function updateUpgrades() {
 }
 
 function updateUpgradeButtons(coins) {
-    document.getElementById('coinsPerClickButton').innerText = `Upgrade Coins/10 Clicks: (${formatNumber(bonusGame[0].cost)} coins)`;
-    document.getElementById('coinsPerSecondButton').innerText = `Upgrade Coins/10 Seconds: (${formatNumber(bonusGame[1].cost)} coins)`;
-    document.getElementById('reductionPerClickButton').innerText = `Upgrade Reduction/Click: (${formatNumber(bonusGame[2].cost)} coins)`;
-    document.getElementById('reductionPerSecondButton').innerText = `Upgrade Reduction/Second: (${formatNumber(bonusGame[3].cost)} coins)`;
+    document.getElementById('coinsPerClickButton').innerText = `Coins/10 Clicks - Level: ${(bonusGame[0].level)} - Cost: ${formatNumber(bonusGame[0].cost)} coins`;
+    document.getElementById('coinsPerSecondButton').innerText = `Coins/10 Seconds - Level: ${(bonusGame[1].level)} - Cost: ${formatNumber(bonusGame[1].cost)} coins`;
+    document.getElementById('reductionPerClickButton').innerText = `Damage/Click - Level: ${(bonusGame[2].level)} - Cost: ${formatNumber(bonusGame[2].cost)} coins`;
+    document.getElementById('reductionPerSecondButton').innerText = `Damage/Second - Level: ${(bonusGame[3].level)} - Cost: ${formatNumber(bonusGame[3].cost)} coins`;
 
     document.getElementById('coinsPerClickButton').setAttribute('data-cost', bonusGame[0].cost);
     document.getElementById('coinsPerSecondButton').setAttribute('data-cost', bonusGame[1].cost);
@@ -320,6 +320,7 @@ function buyUpgrade(id) {
         coins -= bonus.cost;
         bonus.cost = Math.ceil(bonus.cost * costFactor);
         bonus.benefit *= benefictFactor;
+        bonus.level += 1;
         animacionCoin();  
     }
     updateCoins();
@@ -509,10 +510,10 @@ function loadGame() {
         }
     }
     bonusGame = localStorage.getItem('bonusGame') !== null ? JSON.parse(localStorage.getItem('bonusGame')) : [
-        { id: 'coinsPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Clicks:", benefit: 1, cost: 10},
-        { id: 'coinsPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Seconds:", benefit: 1, cost: 15 },
-        { id: 'reductionPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "ReductionUpgrade", txt: "Reduction/Click:", benefit: 1, cost: 20 },
-        { id: 'reductionPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "ReductionUpgrade", txt: "Reduction/Second:", benefit: 1, cost: 50 }
+        { id: 'coinsPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Clicks:", benefit: 1, cost: 10, level: 1},
+        { id: 'coinsPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Seconds:", benefit: 1, cost: 15, level: 1 },
+        { id: 'reductionPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Click:", benefit: 1, cost: 20, level: 1 },
+        { id: 'reductionPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Second:", benefit: 1, cost: 50, level: 1 }
     ];
     startTime = localStorage.getItem('startTime') !== null ? new Date(localStorage.getItem('startTime')) : new Date();
     adShown = false;
@@ -534,10 +535,10 @@ function resetGame() {
         }
         achieved = [];
         bonusGame = [
-            { id: 'coinsPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Clicks:", benefit: 1, cost: 10},
-            { id: 'coinsPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Seconds:", benefit: 1, cost: 15 },
-            { id: 'reductionPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "ReductionUpgrade", txt: "Reduction/Click:", benefit: 1, cost: 20 },
-            { id: 'reductionPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "ReductionUpgrade", txt: "Reduction/Second:", benefit: 1, cost: 50 }
+            { id: 'coinsPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Clicks:", benefit: 1, cost: 10, level: 1},
+            { id: 'coinsPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Seconds:", benefit: 1, cost: 15, level: 1 },
+            { id: 'reductionPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Click:", benefit: 1, cost: 20, level: 1 },
+            { id: 'reductionPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Second:", benefit: 1, cost: 50, level: 1 }
         ];
         startTime = new Date();
         adShown = false;
