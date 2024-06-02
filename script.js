@@ -547,6 +547,7 @@ function resetGame() {
         updateUpgrades();
         updateUpgradeButtons(coins);
         updateGlassImage('');
+        updateAchivementCounter();
         checkAchievements();
         saveGame();
     }
