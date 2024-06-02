@@ -286,6 +286,7 @@ function reductionPerSecond() {
         clicks = Math.max(0, clicks - reduction);
         updateClicks();
         updateGlassImage('');
+        checkAchievements();
         saveGame();
     }
 }
@@ -416,11 +417,12 @@ function getReward(achievementId) {
             }
         }
 
-        achieved.push(achievement.id);
-        playAchievementSound();
+        achieved.push(achievement.id);    
         const rewardButton = document.getElementById(`reward-${achievementId}`);
         rewardButton.disabled = true;
         rewardButton.textContent = 'Checked';
+        updateAchivementCounter();
+        playAchievementSound();
         markAchievementAsCompleted(achievementId);
         saveGame();
     }
@@ -438,6 +440,11 @@ function markAchievementAsNonCompleted(achievementId) {
     if (achievementElement) {
         achievementElement.classList.remove('completed');
     }
+}
+
+function updateAchivementCounter() {
+    const achievementCounter = document.getElementById('achievement-counter');
+    achievementCounter.textContent = `Achievements (${achieved.length}/${achievements.length})`;
 }
 
 /* -------------------------------------------- Manejo de Publicidad y Bonificaciones -------------------------------------------- */
@@ -606,6 +613,7 @@ window.onload = function() {
     updateUpgrades();
     updateUpgradeButtons(coins);
     updateGlassImage('');
+    updateAchivementCounter();
     checkAchievements();
     startTimer();
     setInterval(showAd, adInterval);
