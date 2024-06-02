@@ -193,8 +193,12 @@ body {
 #glass {
     width: 200px;
     height: 200px;
-    cursor: url('img/Hammer.cur'), auto;
+    cursor: url('img/hammer.png'), auto;
     transition: transform 0.2s ease;
+}
+
+#glass.hammer2 {
+    cursor: url('img/hammer2.png'), auto;
 }
 
 #glass:hover {

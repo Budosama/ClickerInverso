@@ -15,8 +15,8 @@ let achieved = [];
 let bonusGame = [
     { id: 'coinsPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Clicks:", benefit: 1, cost: 10},
     { id: 'coinsPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Seconds:", benefit: 1, cost: 15 },
-    { id: 'reductionPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/Hammer.cur", alt: "ReductionUpgrade", txt: "Reduction/Click:", benefit: 1, cost: 20 },
-    { id: 'reductionPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/Hammer.cur", alt: "ReductionUpgrade", txt: "Reduction/Second:", benefit: 1, cost: 50 }
+    { id: 'reductionPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "ReductionUpgrade", txt: "Reduction/Click:", benefit: 1, cost: 20 },
+    { id: 'reductionPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "ReductionUpgrade", txt: "Reduction/Second:", benefit: 1, cost: 50 }
 ];
 const achievements = [
     { id: '100-clicks', description: 'First 100 clicks', conditionDmg: 9999900, coins: 10, boost: '', multiplicador: 0 },
@@ -172,6 +172,10 @@ function animacionCoin(){
 
 function animacionGlass(){
     const glass = document.getElementById('glass');
+    // glass.classList.add('hammer2');
+    // setTimeout(() => {
+    //     glass.classList.remove('hammer2');
+    // }, 1000);
     const shardsContainer = document.getElementById('shards-container');
     glass.classList.add('breaking');
     glass.addEventListener('animationend', () => {
@@ -296,10 +300,10 @@ function coinPerSecond() {
 function updateGlassImage() {
     const glass = document.getElementById('glass');
     if (clicks <= 10000000) {
-        glass.src = 'img/glass.png';
+        glass.src = 'img/window6.png';
     }
-    if (clicks < 5000000) {
-        glass.src = 'img/glass_broken1.png';
+    if (clicks <= 9999900) {
+        glass.src = 'img/window7.png';
     }
     if (clicks < 2000000) {
         glass.src = 'img/glass_broken2.png';
@@ -328,8 +332,11 @@ function buyUpgrade(id) {
 
 function checkAchievements() {
     achievements.forEach(achievement => {
+        const rewardButton = document.getElementById(`reward-${achievement.id}`);     
         if (clicks <= achievement.conditionDmg && !achieved.includes(achievement.id)) {
-            document.getElementById(`reward-${achievement.id}`).disabled = false;
+            rewardButton.disabled = false;
+        } else {
+            rewardButton.disabled = true;
         }
     });
 }
@@ -498,8 +505,8 @@ function loadGame() {
     bonusGame = localStorage.getItem('bonusGame') !== null ? JSON.parse(localStorage.getItem('bonusGame')) : [
         { id: 'coinsPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Clicks:", benefit: 1, cost: 10},
         { id: 'coinsPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Seconds:", benefit: 1, cost: 15 },
-        { id: 'reductionPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/Hammer.cur", alt: "ReductionUpgrade", txt: "Reduction/Click:", benefit: 1, cost: 20 },
-        { id: 'reductionPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/Hammer.cur", alt: "ReductionUpgrade", txt: "Reduction/Second:", benefit: 1, cost: 50 }
+        { id: 'reductionPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "ReductionUpgrade", txt: "Reduction/Click:", benefit: 1, cost: 20 },
+        { id: 'reductionPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "ReductionUpgrade", txt: "Reduction/Second:", benefit: 1, cost: 50 }
     ];
     startTime = localStorage.getItem('startTime') !== null ? new Date(localStorage.getItem('startTime')) : new Date();
     adShown = false;
@@ -523,8 +530,8 @@ function resetGame() {
         bonusGame = [
             { id: 'coinsPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Clicks:", benefit: 1, cost: 10},
             { id: 'coinsPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Seconds:", benefit: 1, cost: 15 },
-            { id: 'reductionPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/Hammer.cur", alt: "ReductionUpgrade", txt: "Reduction/Click:", benefit: 1, cost: 20 },
-            { id: 'reductionPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/Hammer.cur", alt: "ReductionUpgrade", txt: "Reduction/Second:", benefit: 1, cost: 50 }
+            { id: 'reductionPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "ReductionUpgrade", txt: "Reduction/Click:", benefit: 1, cost: 20 },
+            { id: 'reductionPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "ReductionUpgrade", txt: "Reduction/Second:", benefit: 1, cost: 50 }
         ];
         startTime = new Date();
         adShown = false;
