@@ -176,11 +176,39 @@ function animacionGlass(){
     setTimeout(() => {
         glass.classList.remove('hammer2');
     }, 100);
+
     const shardsContainer = document.getElementById('shards-container');
     glass.classList.add('breaking');
+
+    if (clicks <= 10000000) {
+        glass.src = 'img/windowHit.png'; 
+    }
+    if (clicks <= 9999900) {
+        glass.src = 'img/window3Hit.png'; 
+    }
+    if (clicks < 2000000) {
+        glass.src = 'img/window3Hit.png'; 
+    }
+    if (clicks === 0) {
+        glass.src = 'img/window3Hit.png'; 
+    }
+
     glass.addEventListener('animationend', () => {
         glass.classList.remove('breaking');
-    });
+        if (clicks <= 10000000) {
+            glass.src = 'img/window.png';
+        }
+        if (clicks <= 9999900) {
+            glass.src = 'img/window3.png';
+        }
+        if (clicks < 2000000) {
+            glass.src = 'img/window3.png';
+        }
+        if (clicks === 0) {
+            glass.src = 'img/window3.png';
+        } 
+    }, { once: true });
+
     for (let i = 0; i < 20; i++) {
         const shard = document.createElement('div');
         shard.classList.add('shard');
@@ -191,13 +219,15 @@ function animacionGlass(){
         shard.style.left = `${Math.random() * 100}%`;
         shard.style.top = `${Math.random() * 100}%`;
         shardsContainer.appendChild(shard);
+
         requestAnimationFrame(() => {
             shard.style.opacity = '1';
             shard.style.transform = `translate(${translateX}px, ${translateY}px) scale(0.5)`;
         });
-        shard.addEventListener('animationend', () => {
+
+        shard.addEventListener('transitionend', () => {
             shard.remove();
-        });
+        }, { once: true });
     }
 }
 
@@ -236,10 +266,10 @@ function breakGlass() {
             animacionCoin();
         }
         showDamage(reductionPerClick);
+        // updateGlassImage();
         animacionGlass();
         updateClicks();
-        updateCoins();
-        updateGlassImage();
+        updateCoins(); 
         checkAchievements();
         saveGame();
         createShards();
@@ -300,18 +330,17 @@ function coinPerSecond() {
 function updateGlassImage() {
     const glass = document.getElementById('glass');
     if (clicks <= 10000000) {
-        glass.src = 'img/window6.png';
+        glass.src = 'img/window.png';
     }
     if (clicks <= 9999900) {
-        glass.src = 'img/window7.png';
+        glass.src = 'img/window3.png';
     }
     if (clicks < 2000000) {
-        glass.src = 'img/glass_broken2.png';
+        glass.src = 'img/window3.png';
     }
     if (clicks === 0) {
-        glass.src = 'img/glass_shattered.png';
-        alert('Congratulations, you broke the glass!');
-    }
+        glass.src = 'img/window3.png';
+    } 
 }
 
 function buyUpgrade(id) {
