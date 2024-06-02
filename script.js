@@ -179,34 +179,11 @@ function animacionGlass(){
 
     const shardsContainer = document.getElementById('shards-container');
     glass.classList.add('breaking');
-
-    if (clicks <= 10000000) {
-        glass.src = 'img/windowHit.png'; 
-    }
-    if (clicks <= 9999900) {
-        glass.src = 'img/window3Hit.png'; 
-    }
-    if (clicks < 2000000) {
-        glass.src = 'img/window3Hit.png'; 
-    }
-    if (clicks === 0) {
-        glass.src = 'img/window3Hit.png'; 
-    }
+    updateGlassImage('Hit');
 
     glass.addEventListener('animationend', () => {
         glass.classList.remove('breaking');
-        if (clicks <= 10000000) {
-            glass.src = 'img/window.png';
-        }
-        if (clicks <= 9999900) {
-            glass.src = 'img/window3.png';
-        }
-        if (clicks < 2000000) {
-            glass.src = 'img/window3.png';
-        }
-        if (clicks === 0) {
-            glass.src = 'img/window3.png';
-        } 
+        updateGlassImage('');
     }, { once: true });
 
     for (let i = 0; i < 20; i++) {
@@ -266,7 +243,6 @@ function breakGlass() {
             animacionCoin();
         }
         showDamage(reductionPerClick);
-        // updateGlassImage();
         animacionGlass();
         updateClicks();
         updateCoins(); 
@@ -309,7 +285,7 @@ function reductionPerSecond() {
         }
         clicks = Math.max(0, clicks - reduction);
         updateClicks();
-        updateGlassImage();
+        updateGlassImage('');
         saveGame();
     }
 }
@@ -327,19 +303,19 @@ function coinPerSecond() {
     }
 }
 
-function updateGlassImage() {
+function updateGlassImage(hit) {
     const glass = document.getElementById('glass');
     if (clicks <= 10000000) {
-        glass.src = 'img/window.png';
+        glass.src = `img/window${hit}.png`;
     }
     if (clicks <= 9999900) {
-        glass.src = 'img/window3.png';
+        glass.src = `img/window3${hit}.png`;
     }
     if (clicks < 2000000) {
-        glass.src = 'img/window3.png';
+        glass.src = `img/window3${hit}.png`;
     }
     if (clicks === 0) {
-        glass.src = 'img/window3.png';
+        glass.src = `img/window3${hit}.png`;
     } 
 }
 
@@ -569,7 +545,7 @@ function resetGame() {
         updateCoins();
         updateUpgrades();
         updateUpgradeButtons(coins);
-        updateGlassImage();
+        updateGlassImage('');
         checkAchievements();
         saveGame();
     }
@@ -635,7 +611,7 @@ window.onload = function() {
     updateCoins();
     updateUpgrades();
     updateUpgradeButtons(coins);
-    updateGlassImage();
+    updateGlassImage('');
     checkAchievements();
     startTimer();
     setInterval(showAd, adInterval);
