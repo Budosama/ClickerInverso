@@ -172,10 +172,10 @@ function animacionCoin(){
 
 function animacionGlass(){
     const glass = document.getElementById('glass');
-    // glass.classList.add('hammer2');
-    // setTimeout(() => {
-    //     glass.classList.remove('hammer2');
-    // }, 1000);
+    glass.classList.add('hammer2');
+    setTimeout(() => {
+        glass.classList.remove('hammer2');
+    }, 100);
     const shardsContainer = document.getElementById('shards-container');
     glass.classList.add('breaking');
     glass.addEventListener('animationend', () => {
