@@ -305,18 +305,12 @@ function coinPerSecond() {
 
 function updateGlassImage(hit) {
     const glass = document.getElementById('glass');
-    if (clicks <= 10000000) {
-        glass.src = `img/window${hit}.png`;
+    for (let i = 0; i < achievements.length - 21; i++) {
+        if (clicks > achievements[i].conditionDmg) {
+            glass.src = `img/window${i}${hit}.png`;
+            break;
+        }
     }
-    if (clicks <= 9999900) {
-        glass.src = `img/window3${hit}.png`;
-    }
-    if (clicks < 2000000) {
-        glass.src = `img/window3${hit}.png`;
-    }
-    if (clicks === 0) {
-        glass.src = `img/window3${hit}.png`;
-    } 
 }
 
 function buyUpgrade(id) {
