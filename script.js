@@ -1,10 +1,12 @@
 /* -------------------------------------------- Variables y Configuración Inicial -------------------------------------------- */
 
-let clicks;
+let initialDurability = 10000000;
+let durability = 10000000;
 let totalClicks = 0;
-let coins;
+let coins = 0;
 let totalCoins = 0;
 let totalAdWatched = 0;
+let totalCriticalHits = 0;
 let startTime;
 let adInterval = 2 * 60 * 1000; // 2 minutos
 let bonusDuration = 60;
@@ -22,31 +24,31 @@ let bonusGame = [
     { id: 'reductionPerSecond', activeBonuses: [], bonusTimerInterval: null, duration: 0, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Second:", benefit: 1, cost: 50, level: 1 }
 ];
 const achievements = [
-    { id: '100-clicks', description: 'First 100 clicks', conditionDmg: 9999900, coins: 10, boost: '', multiplicador: 0 },
-    { id: '500-clicks', description: 'First 500 clicks', conditionDmg: 9999500, coins: 50, boost: '', multiplicador: 0 },
-    { id: '1000-clicks', description: 'First 1000 clicks', conditionDmg: 9999000, coins: 100, boost: '', multiplicador: 0 },
-    { id: '2500-clicks', description: 'First 2500 clicks', conditionDmg: 9997500, coins: 250, boost: '', multiplicador: 0 },
-    { id: '5000-clicks', description: 'First 5000 clicks', conditionDmg: 9995000, coins: 500, boost: '', multiplicador: 0 },
-    { id: '10000-clicks', description: 'First 10.000 clicks', conditionDmg: 9990000, coins: 0, boost: 'coinsPerClick', multiplicador: 2 },
-    { id: '50000-clicks', description: 'First 50.000 clicks', conditionDmg: 9950000, coins: 0, boost: 'coinsPerSecond', multiplicador: 2 },
-    { id: '100000-clicks', description: 'First 100.000 clicks', conditionDmg: 9900000, coins: 0, boost: 'reductionPerClick', multiplicador: 2 },
-    { id: '250000-clicks', description: 'First 250.000 clicks', conditionDmg: 9750000, coins: 0, boost: 'reductionPerSecond', multiplicador: 2 },
-    { id: '500000-clicks', description: 'First 500.000 clicks', conditionDmg: 9500000, coins: 5000, boost: '', multiplicador: 0 },
-    { id: '1000000-clicks', description: 'First 1.000.000 clicks', conditionDmg: 9000000, coins: 0, boost: 'coinsPerClick', multiplicador: 3 },
-    { id: '1500000-clicks', description: 'First 1.500.000 clicks', conditionDmg: 8500000, coins: 0, boost: 'coinsPerSecond', multiplicador: 3 },
-    { id: '2000000-clicks', description: 'First 2.000.000 clicks', conditionDmg: 8000000, coins: 0, boost: 'reductionPerClick', multiplicador: 3 },
-    { id: '2500000-clicks', description: 'First 2.500.000 clicks', conditionDmg: 7500000, coins: 0, boost: 'reductionPerSecond', multiplicador: 3 },
-    { id: '3000000-clicks', description: 'First 3.000.000 clicks', conditionDmg: 7000000, coins: 0, boost: 'coinsAll', multiplicador: 3 },
-    { id: '3500000-clicks', description: 'First 3.500.000 clicks', conditionDmg: 6500000, coins: 0, boost: 'reductionAll', multiplicador: 3 },
-    { id: '4000000-clicks', description: 'First 4.000.000 clicks', conditionDmg: 6000000, coins: 0, boost: 'all', multiplicador: 3 },
-    { id: '4500000-clicks', description: 'First 4.500.000 clicks', conditionDmg: 5500000, coins: 45000, boost: 'all', multiplicador: 3 },
-    { id: '5000000-clicks', description: 'First 5.000.000 clicks', conditionDmg: 5000000, coins: 50000, boost: '', multiplicador: 0 },
-    { id: '5500000-clicks', description: 'First 5.500.000 clicks', conditionDmg: 4500000, coins: 0, boost: 'reductionAll', multiplicador: 5 },
-    { id: '6000000-clicks', description: 'First 6.000.000 clicks', conditionDmg: 4000000, coins: 0, boost: 'coinsAll', multiplicador: 5 },
-    { id: '7000000-clicks', description: 'First 7.000.000 clicks', conditionDmg: 3000000, coins: 0, boost: 'all', multiplicador: 5 },
-    { id: '8000000-clicks', description: 'First 8.000.000 clicks', conditionDmg: 2000000, coins: 0, boost: 'all', multiplicador: 10 },
-    { id: '9000000-clicks', description: 'First 9.000.000 clicks', conditionDmg: 1000000, coins: 90000, boost: 'all', multiplicador: 10 },
-    { id: '10000000-clicks', description: 'First 10.000.000 clicks', conditionDmg: 0, coins: 0, boost: '', multiplicador: 0 },
+    { id: '100-damage', description: '100 damage', conditionDmg: 9999900, coins: 10, boost: '', multiplicador: 0 },
+    { id: '500-damage', description: '500 damage', conditionDmg: 9999500, coins: 50, boost: '', multiplicador: 0 },
+    { id: '1000-damage', description: '1000 damage', conditionDmg: 9999000, coins: 100, boost: '', multiplicador: 0 },
+    { id: '2500-damage', description: '2500 damage', conditionDmg: 9997500, coins: 250, boost: '', multiplicador: 0 },
+    { id: '5000-damage', description: '5000 damage', conditionDmg: 9995000, coins: 500, boost: '', multiplicador: 0 },
+    { id: '10000-damage', description: '10.000 damage', conditionDmg: 9990000, coins: 0, boost: 'coinsPerClick', multiplicador: 2 },
+    { id: '50000-damage', description: '50.000 damage', conditionDmg: 9950000, coins: 0, boost: 'coinsPerSecond', multiplicador: 2 },
+    { id: '100000-damage', description: '100.000 damage', conditionDmg: 9900000, coins: 0, boost: 'reductionPerClick', multiplicador: 2 },
+    { id: '250000-damage', description: '250.000 damage', conditionDmg: 9750000, coins: 0, boost: 'reductionPerSecond', multiplicador: 2 },
+    { id: '500000-damage', description: '500.000 damage', conditionDmg: 9500000, coins: 5000, boost: '', multiplicador: 0 },
+    { id: '1000000-damage', description: '1.000.000 damage', conditionDmg: 9000000, coins: 0, boost: 'coinsPerClick', multiplicador: 3 },
+    { id: '1500000-damage', description: '1.500.000 damage', conditionDmg: 8500000, coins: 0, boost: 'coinsPerSecond', multiplicador: 3 },
+    { id: '2000000-damage', description: '2.000.000 damage', conditionDmg: 8000000, coins: 0, boost: 'reductionPerClick', multiplicador: 3 },
+    { id: '2500000-damage', description: '2.500.000 damage', conditionDmg: 7500000, coins: 0, boost: 'reductionPerSecond', multiplicador: 3 },
+    { id: '3000000-damage', description: '3.000.000 damage', conditionDmg: 7000000, coins: 0, boost: 'coinsAll', multiplicador: 3 },
+    { id: '3500000-damage', description: '3.500.000 damage', conditionDmg: 6500000, coins: 0, boost: 'reductionAll', multiplicador: 3 },
+    { id: '4000000-damage', description: '4.000.000 damage', conditionDmg: 6000000, coins: 0, boost: 'all', multiplicador: 3 },
+    { id: '4500000-damage', description: '4.500.000 damage', conditionDmg: 5500000, coins: 45000, boost: 'all', multiplicador: 3 },
+    { id: '5000000-damage', description: '5.000.000 damage', conditionDmg: 5000000, coins: 50000, boost: '', multiplicador: 0 },
+    { id: '5500000-damage', description: '5.500.000 damage', conditionDmg: 4500000, coins: 0, boost: 'reductionAll', multiplicador: 5 },
+    { id: '6000000-damage', description: '6.000.000 damage', conditionDmg: 4000000, coins: 0, boost: 'coinsAll', multiplicador: 5 },
+    { id: '7000000-damage', description: '7.000.000 damage', conditionDmg: 3000000, coins: 0, boost: 'all', multiplicador: 5 },
+    { id: '8000000-damage', description: '8.000.000 damage', conditionDmg: 2000000, coins: 0, boost: 'all', multiplicador: 10 },
+    { id: '9000000-damage', description: '9.000.000 damage', conditionDmg: 1000000, coins: 90000, boost: 'all', multiplicador: 10 },
+    { id: '10000000-damage', description: '10.000.000 damage', conditionDmg: 0, coins: 0, boost: '', multiplicador: 0 },
 ];
 
 let achievementSound = new Audio('sounds/logro.mp3');
@@ -106,8 +108,9 @@ function playGlassSound() {
 
 /* -------------------------------------------- Funciones de Actualización de UI -------------------------------------------- */
 
-function updateClicks() {
-    document.getElementById('clicks').innerText = formatNumber(clicks);
+function updateDurability() {
+    document.getElementById('durability').innerText = formatNumber(durability);
+    document.getElementById('total-damage').innerText = formatNumber(initialDurability - durability);
 }
 
 function updateCoins() {
@@ -119,7 +122,8 @@ function updateStats(totalSeconds) {
     document.getElementById('total-coins').innerText = formatNumber(totalCoins);
     document.getElementById('total-clicks').innerText = formatNumber(totalClicks);
     document.getElementById('ads-watched').innerText = formatNumber(totalAdWatched);
-    document.getElementById('damage-second').innerText = ((10000000 - clicks) / totalSeconds).toFixed(2);
+    document.getElementById('total-critical-hits').innerText = formatNumber(totalCriticalHits);
+    document.getElementById('damage-second').innerText = ((initialDurability - durability) / totalSeconds).toFixed(2);
     document.getElementById('clicks-second').innerText = (totalClicks / totalSeconds).toFixed(2);
     document.getElementById('coins-second').innerText = (totalCoins / totalSeconds + bonusGame[1].benefit).toFixed(2);    
 }
@@ -239,15 +243,15 @@ function createShards() {
 /* -------------------------------------------- Funcionalidad del Juego -------------------------------------------- */
 
 function breakGlass() {
-    if (clicks > 0) {
+    if (durability > 0) {
         totalClicks += 1;
-        document.getElementById('total-clicks').innerText = `${formatNumber(totalClicks)}`;
+        document.getElementById('total-clicks').innerText = formatNumber(totalClicks);
         clicksAcumulados += 1;
         let reductionPerClick = bonusGame[2].benefit;
         if (bonusGame[2].activeBonuses.length > 0 && bonusGame[2].multiplicador > 0) {
             reductionPerClick *= bonusGame[2].multiplicador;
         }
-        clicks = Math.max(0, clicks - reductionPerClick);
+        durability = Math.max(0, durability - reductionPerClick);
         let coinsEarned = bonusGame[0].benefit;
         if (bonusGame[0].activeBonuses.length > 0 && bonusGame[0].multiplicador > 0) {
             coinsEarned *= bonusGame[0].multiplicador;
@@ -255,12 +259,12 @@ function breakGlass() {
         if(clicksAcumulados % 10 === 0) {
             coins += coinsEarned;
             totalCoins += coinsEarned;
-            document.getElementById('total-coins').innerText = `${formatNumber(totalCoins)}`;
+            document.getElementById('total-coins').innerText = formatNumber(totalCoins);
             animacionCoin();
         }
         showDamage(reductionPerClick);
         animacionGlass();
-        updateClicks();
+        updateDurability();
         updateCoins(); 
         checkAchievements();
         saveGame();
@@ -277,6 +281,8 @@ function showDamage(damage) {
     if (isCritical) {
         damage *= 2; 
         damageDisplay.classList.add('damage-display', 'critical');
+        totalCriticalHits += 1;
+        document.getElementById('total-critical-hits').innerText = formatNumber(totalCriticalHits);
     } else {
         damageDisplay.classList.add('damage-display');
     }
@@ -294,13 +300,13 @@ function showDamage(damage) {
 }
 
 function reductionPerSecond() {
-    if (clicks > 0) {
+    if (durability > 0) {
         let reduction = bonusGame[3].benefit;
         if (bonusGame[3].activeBonuses > 0 && bonusGame[3].multiplicador > 0) {
             reduction *= bonusGame[3].multiplicador;
         }
-        clicks = Math.max(0, clicks - reduction);
-        updateClicks();
+        durability = Math.max(0, durability - reduction);
+        updateDurability();
         updateGlassImage('');
         checkAchievements();
         saveGame();
@@ -308,7 +314,7 @@ function reductionPerSecond() {
 }
 
 function coinPerSecond() {
-    if (clicks > 0) {
+    if (durability > 0) {
         let beneficio = bonusGame[1].benefit;
         if (bonusGame[1].activeBonuses > 0 && bonusGame[1].multiplicador > 0) {
             beneficio *= bonusGame[1].multiplicador;
@@ -325,7 +331,7 @@ function coinPerSecond() {
 function updateGlassImage(hit) {
     const glass = document.getElementById('glass');
     for (let i = 0; i < achievements.length - 21; i++) {
-        if (clicks > achievements[i].conditionDmg) {
+        if (durability > achievements[i].conditionDmg) {
             glass.src = `img/window${i}${hit}.png`;
             break;
         }
@@ -352,7 +358,7 @@ function buyUpgrade(id) {
 function checkAchievements() {
     achievements.forEach(achievement => {
         const rewardButton = document.getElementById(`reward-${achievement.id}`);     
-        if (clicks <= achievement.conditionDmg && !achieved.includes(achievement.id)) {
+        if (durability <= achievement.conditionDmg && !achieved.includes(achievement.id)) {
             rewardButton.disabled = false;
         } else {
             rewardButton.disabled = true;
@@ -518,11 +524,12 @@ function rejectAd() {
 /* -------------------------------------------- Manejo de Almacenamiento -------------------------------------------- */
 
 function saveGame() {
-    localStorage.setItem('clicks', clicks);
+    localStorage.setItem('durability', durability);
     localStorage.setItem('totalClicks', totalClicks);
     localStorage.setItem('coins', coins);
     localStorage.setItem('totalCoins', totalCoins);
     localStorage.setItem('totalAdWatched', totalAdWatched);
+    localStorage.setItem('totalCriticalHits', totalCriticalHits);
     localStorage.setItem('achieved', JSON.stringify(achieved));
     localStorage.setItem('bonusGame', JSON.stringify(bonusGame));
     localStorage.setItem('startTime', startTime.toString());
@@ -531,11 +538,12 @@ function saveGame() {
 }
 
 function loadGame() {
-    clicks = localStorage.getItem('clicks') !== null ? parseInt(localStorage.getItem('clicks')) : 10000000;
+    durability = localStorage.getItem('durability') !== null ? parseInt(localStorage.getItem('durability')) : initialDurability;
     totalClicks = localStorage.getItem('totalClicks') !== null ? parseInt(localStorage.getItem('totalClicks')) : 0;
     coins = localStorage.getItem('coins') !== null ? parseInt(localStorage.getItem('coins')) : 0;
     totalCoins = localStorage.getItem('totalCoins') !== null ? parseInt(localStorage.getItem('totalCoins')) : 0;
     totalAdWatched = localStorage.getItem('totalAdWatched') !== null ? parseInt(localStorage.getItem('totalAdWatched')) : 0;
+    totalCriticalHits = localStorage.getItem('totalCriticalHits') !== null ? parseInt(localStorage.getItem('totalCriticalHits')) : 0;
     achieved = localStorage.getItem('achieved') !== null ? JSON.parse(localStorage.getItem('achieved')) : [];
     for (let i = 0; i < achieved.length; i++) {
         const achievementId = achieved[i];
@@ -559,11 +567,12 @@ function loadGame() {
 
 function resetGame() {
     if (confirm('Are you sure you want to restart the game?')) {
-        clicks = 10000000;
+        durability = initialDurability;
         totalClicks = 0;
         coins = 0;
         totalCoins = 0;
         totalAdWatched = 0;
+        totalCriticalHits = 0;
         for (let i = 0; i < achieved.length; i++) {
             const achievementId = achieved[i];
             const rewardButton = document.getElementById(`reward-${achievementId}`);
@@ -583,7 +592,7 @@ function resetGame() {
         startTime = new Date();
         adShown = false;
         clicksAcumulados = 0; 
-        updateClicks();
+        updateDurability();
         updateCoins();
         updateStats(1);
         updateUpgrades();
@@ -654,7 +663,7 @@ function formatNumber(num) {
 
 window.onload = function() {
     loadGame();
-    updateClicks();
+    updateDurability();
     updateCoins();
     updateUpgrades();
     updateUpgradeButtons(coins);

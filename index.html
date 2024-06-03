@@ -14,8 +14,10 @@
             <h3>Statistics</h3>
             <hr/>
             <p>Time Played: <span id="total-time">0</span></p>
+            <p>Total Damage: <span id="total-damage">0</span></p>
             <p>Total Clicks: <span id="total-clicks">0</span></p>       
             <p>Total Coins: <span id="total-coins">0</span></p>
+            <p>Total Critical Hits: <span id="total-critical-hits">0</span></p>
             <p>Ads Watched: <span id="ads-watched">0</span></p>
             <p>Promedio Damage/Second: <span id="damage-second">0</span></p>
             <p>Promedio Clicks/Second: <span id="clicks-second">0</span></p>
@@ -77,8 +79,8 @@
                     </div>                
                 </div>
 
-                <div id="clicks-container">
-                    <p>Durability: <span id="clicks"></span></p>
+                <div id="durability-container">
+                    <p>Durability: <span id="durability"></span></p>
                 </div>
 
                 <div id="glass-container">
@@ -115,105 +117,105 @@
             <h3 id="achievement-counter">Achievements (0/25)</h3>
             <hr/>
             <ul id="achievements-list">
-                <li id="achievement-100-clicks">
-                    1 - 100 Clicks - Reward: 10 Coins
-                    <button class="reward-button" id="reward-100-clicks" disabled onclick="getReward('100-clicks')">Get Reward</button>
+                <li id="achievement-100-damage">
+                    1.- 100 Damage - Reward: 10 Coins
+                    <button class="reward-button" id="reward-100-damage" disabled onclick="getReward('100-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-500-clicks">
-                    2 - 500 Clicks - Reward: 50 Coins
-                    <button class="reward-button" id="reward-500-clicks" disabled onclick="getReward('500-clicks')">Get Reward</button>
+                <li id="achievement-500-damage">
+                    2.- 500 Damage - Reward: 50 Coins
+                    <button class="reward-button" id="reward-500-damage" disabled onclick="getReward('500-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-1000-clicks">
-                    3 - 1.000 Clicks - Reward: 100 Coins
-                    <button class="reward-button" id="reward-1000-clicks" disabled onclick="getReward('1000-clicks')">Get Reward</button>
+                <li id="achievement-1000-damage">
+                    3.- 1.000 Damage - Reward: 100 Coins
+                    <button class="reward-button" id="reward-1000-damage" disabled onclick="getReward('1000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-2500-clicks">
-                    4 - 2.500 Clicks - Reward: 250 Coins
-                    <button class="reward-button" id="reward-2500-clicks" disabled onclick="getReward('2500-clicks')">Get Reward</button>
+                <li id="achievement-2500-damage">
+                    4.- 2.500 Damage - Reward: 250 Coins
+                    <button class="reward-button" id="reward-2500-damage" disabled onclick="getReward('2500-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-5000-clicks">
-                    5 - 5.000 Clicks - Reward: 500 Coins
-                    <button class="reward-button" id="reward-5000-clicks" disabled onclick="getReward('5000-clicks')">Get Reward</button>
+                <li id="achievement-5000-damage">
+                    5.- 5.000 Damage - Reward: 500 Coins
+                    <button class="reward-button" id="reward-5000-damage" disabled onclick="getReward('5000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-10000-clicks">
-                    6 - 10.000 Clicks - Reward: Boost x2 Coins/10 clicks
-                    <button class="reward-button" id="reward-10000-clicks" disabled onclick="getReward('10000-clicks')">Get Reward</button>
+                <li id="achievement-10000-damage">
+                    6.- 10.000 Damage - Reward: Boost x2 Coins/10 clicks
+                    <button class="reward-button" id="reward-10000-damage" disabled onclick="getReward('10000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-50000-clicks">
-                    7 - 50.000 Clicks - Reward: Boost x2 Coins/10 seconds
-                    <button class="reward-button" id="reward-50000-clicks" disabled onclick="getReward('50000-clicks')">Get Reward</button>
+                <li id="achievement-50000-damage">
+                    7.- 50.000 Damage - Reward: Boost x2 Coins/10 seconds
+                    <button class="reward-button" id="reward-50000-damage" disabled onclick="getReward('50000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-100000-clicks">
-                    8 - 100.000 Clicks - Reward: Boost x2 Reduction/click
-                    <button class="reward-button" id="reward-100000-clicks" disabled onclick="getReward('100000-clicks')">Get Reward</button>
+                <li id="achievement-100000-damage">
+                    8.- 100.000 Damage - Reward: Boost x2 Reduction/click
+                    <button class="reward-button" id="reward-100000-damage" disabled onclick="getReward('100000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-250000-clicks">
-                    9 - 250.000 Clicks - Reward: Boost x2 Reduction/second
-                    <button class="reward-button" id="reward-250000-clicks" disabled onclick="getReward('250000-clicks')">Get Reward</button>
+                <li id="achievement-250000-damage">
+                    9.- 250.000 Damage - Reward: Boost x2 Reduction/second
+                    <button class="reward-button" id="reward-250000-damage" disabled onclick="getReward('250000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-500000-clicks">
-                    10 - 500.000 Clicks - Reward: 5.000 Coins
-                    <button class="reward-button" id="reward-500000-clicks" disabled onclick="getReward('500000-clicks')">Get Reward</button>
+                <li id="achievement-500000-damage">
+                    10.- 500.000 Damage - Reward: 5.000 Coins
+                    <button class="reward-button" id="reward-500000-damage" disabled onclick="getReward('500000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-1000000-clicks">
-                    11 - 1.000.000 Clicks - Reward: Boost x3 Coins/10 clicks
-                    <button class="reward-button" id="reward-1000000-clicks" disabled onclick="getReward('1000000-clicks')">Get Reward</button>
+                <li id="achievement-1000000-damage">
+                    11.- 1.000.000 Damage - Reward: Boost x3 Coins/10 clicks
+                    <button class="reward-button" id="reward-1000000-damage" disabled onclick="getReward('1000000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-1500000-clicks">
-                    12 - 1.500.000 Clicks - Reward: Boost x3 Coins/10 seconds
-                    <button class="reward-button" id="reward-1500000-clicks" disabled onclick="getReward('1500000-clicks')">Get Reward</button>
+                <li id="achievement-1500000-damage">
+                    12.- 1.500.000 Damage - Reward: Boost x3 Coins/10 seconds
+                    <button class="reward-button" id="reward-1500000-damage" disabled onclick="getReward('1500000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-2000000-clicks">
-                    13 - 2.000.000 Clicks - Reward: Boost x3 Reduction/click
-                    <button class="reward-button" id="reward-2000000-clicks" disabled onclick="getReward('2000000-clicks')">Get Reward</button>
+                <li id="achievement-2000000-damage">
+                    13.- 2.000.000 Damage - Reward: Boost x3 Reduction/click
+                    <button class="reward-button" id="reward-2000000-damage" disabled onclick="getReward('2000000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-2500000-clicks">
-                    14 - 2.500.000 Clicks - Reward: Boost x3 Reduction/second
-                    <button class="reward-button" id="reward-2500000-clicks" disabled onclick="getReward('2500000-clicks')">Get Reward</button>
+                <li id="achievement-2500000-damage">
+                    14.- 2.500.000 Damage - Reward: Boost x3 Reduction/second
+                    <button class="reward-button" id="reward-2500000-damage" disabled onclick="getReward('2500000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-3000000-clicks">
-                    15 - 3.000.000 Clicks - Reward: Boost x3 Coins
-                    <button class="reward-button" id="reward-3000000-clicks" disabled onclick="getReward('3000000-clicks')">Get Reward</button>
+                <li id="achievement-3000000-damage">
+                    15.- 3.000.000 Damage - Reward: Boost x3 Coins
+                    <button class="reward-button" id="reward-3000000-damage" disabled onclick="getReward('3000000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-3500000-clicks">
-                    16 - 3.500.000 Clicks - Reward: Boost x3 Reduction
-                    <button class="reward-button" id="reward-3500000-clicks" disabled onclick="getReward('3500000-clicks')">Get Reward</button>
+                <li id="achievement-3500000-damage">
+                    16.- 3.500.000 Damage - Reward: Boost x3 Reduction
+                    <button class="reward-button" id="reward-3500000-damage" disabled onclick="getReward('3500000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-4000000-clicks">
-                    17 - 4.000.000 Clicks - Reward: Boost x3 All
-                    <button class="reward-button" id="reward-4000000-clicks" disabled onclick="getReward('4000000-clicks')">Get Reward</button>
+                <li id="achievement-4000000-damage">
+                    17.- 4.000.000 Damage - Reward: Boost x3 All
+                    <button class="reward-button" id="reward-4000000-damage" disabled onclick="getReward('4000000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-4500000-clicks">
-                    18 - 4.500.000 Clicks - Reward: Boost x3 All & 45.000 Coins
-                    <button class="reward-button" id="reward-4500000-clicks" disabled onclick="getReward('4500000-clicks')">Get Reward</button>
+                <li id="achievement-4500000-damage">
+                    18.- 4.500.000 Damage - Reward: Boost x3 All & 45.000 Coins
+                    <button class="reward-button" id="reward-4500000-damage" disabled onclick="getReward('4500000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-5000000-clicks">
-                    19 - 5.000.000 Clicks - Reward: 50.000 Coins
-                    <button class="reward-button" id="reward-5000000-clicks" disabled onclick="getReward('5000000-clicks')">Get Reward</button>
+                <li id="achievement-5000000-damage">
+                    19.- 5.000.000 Damage - Reward: 50.000 Coins
+                    <button class="reward-button" id="reward-5000000-damage" disabled onclick="getReward('5000000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-5500000-clicks">
-                    20 - 5.500.000 Clicks - Reward: Boost x5 Reduction
-                    <button class="reward-button" id="reward-5500000-clicks" disabled onclick="getReward('5500000-clicks')">Get Reward</button>
+                <li id="achievement-5500000-damage">
+                    20.- 5.500.000 Damage - Reward: Boost x5 Reduction
+                    <button class="reward-button" id="reward-5500000-damage" disabled onclick="getReward('5500000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-6000000-clicks">
-                    21 - 6.000.000 Clicks - Reward: Boost x5 Coins
-                    <button class="reward-button" id="reward-6000000-clicks" disabled onclick="getReward('6000000-clicks')">Get Reward</button>
+                <li id="achievement-6000000-damage">
+                    21.- 6.000.000 Damage - Reward: Boost x5 Coins
+                    <button class="reward-button" id="reward-6000000-damage" disabled onclick="getReward('6000000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-7000000-clicks">
-                    22 - 7.000.000 Clicks - Reward: Boost x5 All
-                    <button class="reward-button" id="reward-7000000-clicks" disabled onclick="getReward('7000000-clicks')">Get Reward</button>
+                <li id="achievement-7000000-damage">
+                    22.- 7.000.000 Damage - Reward: Boost x5 All
+                    <button class="reward-button" id="reward-7000000-damage" disabled onclick="getReward('7000000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-8000000-clicks">
-                    23 - 8.000.000 Clicks - Reward: Boost x10 All
-                    <button class="reward-button" id="reward-8000000-clicks" disabled onclick="getReward('8000000-clicks')">Get Reward</button>
+                <li id="achievement-8000000-damage">
+                    23.- 8.000.000 Damage - Reward: Boost x10 All
+                    <button class="reward-button" id="reward-8000000-damage" disabled onclick="getReward('8000000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-9000000-clicks">
-                    24 - 9.000.000 Clicks - Reward: Boost x10 All & 90.000 Coins
-                    <button class="reward-button" id="reward-9000000-clicks" disabled onclick="getReward('9000000-clicks')">Get Reward</button>
+                <li id="achievement-9000000-damage">
+                    24.- 9.000.000 Damage - Reward: Boost x10 All & 90.000 Coins
+                    <button class="reward-button" id="reward-9000000-damage" disabled onclick="getReward('9000000-damage')">Get Reward</button>
                 </li>
-                <li id="achievement-10000000-clicks">
-                    25 - 10.000.000 Clicks - Reward: ?????
-                    <button class="reward-button" id="reward-10000000-clicks" disabled onclick="getReward('10000000-clicks')">Get Reward</button>
+                <li id="achievement-10000000-damage">
+                    25.- 10.000.000 Damage - Reward: ?????
+                    <button class="reward-button" id="reward-10000000-damage" disabled onclick="getReward('10000000-damage')">Get Reward</button>
                 </li>
             </ul>            
         </div>

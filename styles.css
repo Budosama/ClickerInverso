@@ -262,7 +262,7 @@ hr {
     margin-bottom: 20px; 
 }
 
-#clicks-container p, #currency p, #timer p {
+#durability-container p, #currency p, #timer p {
     font-size: 1.2em;
     margin: 10px 0;
     color: #0c0202; 
@@ -281,13 +281,13 @@ hr {
     color: #ffcc00; 
 }
 
-#clicks-container span {
+#durability-container span {
     font-weight: bold;
     font-size: 1.4em;
     color: #a70513; 
 }
 
-#clicks-container span {
+#durability-container span {
     animation: colorChangeDurability 1s infinite;
 }
 
@@ -549,6 +549,6 @@ hr {
     animation: colorChange 1s;
 }
 
-#clicks-container span {
+#durability-container span {
     animation: colorChangeDurability 1s infinite;
 }
