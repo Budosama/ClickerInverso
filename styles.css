@@ -8,18 +8,42 @@ body {
     background-color: #303030;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     height: 100vh;
-    margin: 0;
-    overflow: flex;
+    overflow: auto;
 }
 
 .container {
     display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: flex-start;
+    width: 300px;
+    margin: 20px 20px;
+}
+
+.main-content {
+    display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; 
-    height: 100vh;
-    margin: 0;
-    overflow-y: flex;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ffffff; /* Cambia el color según tu necesidad */
+    margin: 10px 0;
+    width: 100%;
 }
 
 /* -------------------------------------------- Header Styles -------------------------------------------- */
@@ -37,7 +61,7 @@ body {
     color: #fff;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     margin-bottom: 20px;
-    margin-top: 30px;
+    margin-top: 0px;
 }
 
 #mute-button {
@@ -47,7 +71,7 @@ body {
     cursor: pointer;
     color: #fff;
     outline: none;
-    margin-top: 15px;
+    margin-top: -15px;
 }
 
 #mute-button:hover {
@@ -68,7 +92,7 @@ body {
 }
 
 #upgrades h3 {
-    margin-bottom: 10px;
+    margin-bottom: 20;
     text-align: center;
 }
 
@@ -93,10 +117,33 @@ body {
     background-color: #04374e;
 }
 
+/* -------------------------------------------- Stats -------------------------------------------- */
+
+#stats {
+    width: 600px;
+    height: auto;
+    background-color: #444;
+    border-radius: 10px;
+    padding: 10px;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+#stats h3 {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#stats p {
+    margin-bottom: 0px; /* Ajusta este valor según sea necesario */
+}
+
 /* -------------------------------------------- Logros -------------------------------------------- */
 
 #achievements {
-    width: 600px; 
+    width: 600px;
     background-color: #444;
     border-radius: 10px;
     padding: 20px;
@@ -192,7 +239,7 @@ body {
 
 #glass {
     width: 200px;
-    height: 200px;
+    height: 300px;
     cursor: url('img/hammer.png'), auto;
     transition: transform 0.2s ease;
 }

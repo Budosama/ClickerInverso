@@ -1,7 +1,10 @@
 /* -------------------------------------------- Variables y Configuración Inicial -------------------------------------------- */
 
 let clicks;
+let totalClicks = 0;
 let coins;
+let totalCoins = 0;
+let totalAdWatched = 0;
 let startTime;
 let adInterval = 2 * 60 * 1000; // 2 minutos
 let bonusDuration = 60;
@@ -110,6 +113,15 @@ function updateClicks() {
 function updateCoins() {
     document.getElementById('coins').innerText = formatNumber(coins);
     updateUpgradeButtons(coins);
+}
+
+function updateStats(totalSeconds) {
+    document.getElementById('total-coins').innerText = formatNumber(totalCoins);
+    document.getElementById('total-clicks').innerText = formatNumber(totalClicks);
+    document.getElementById('ads-watched').innerText = formatNumber(totalAdWatched);
+    document.getElementById('damage-second').innerText = ((10000000 - clicks) / totalSeconds).toFixed(2);
+    document.getElementById('clicks-second').innerText = (totalClicks / totalSeconds).toFixed(2);
+    document.getElementById('coins-second').innerText = (totalCoins / totalSeconds + bonusGame[1].benefit).toFixed(2);    
 }
 
 function updateUpgrades() {
@@ -228,6 +240,8 @@ function createShards() {
 
 function breakGlass() {
     if (clicks > 0) {
+        totalClicks += 1;
+        document.getElementById('total-clicks').innerText = `${formatNumber(totalClicks)}`;
         clicksAcumulados += 1;
         let reductionPerClick = bonusGame[2].benefit;
         if (bonusGame[2].activeBonuses.length > 0 && bonusGame[2].multiplicador > 0) {
@@ -240,6 +254,8 @@ function breakGlass() {
         }
         if(clicksAcumulados % 10 === 0) {
             coins += coinsEarned;
+            totalCoins += coinsEarned;
+            document.getElementById('total-coins').innerText = `${formatNumber(totalCoins)}`;
             animacionCoin();
         }
         showDamage(reductionPerClick);
@@ -269,7 +285,7 @@ function showDamage(damage) {
     const randomY = Math.random() * (glassContainer.offsetHeight); 
     damageDisplay.style.left = `${randomX}px`;
     damageDisplay.style.top = `${randomY}px`;
-    damageDisplay.innerText = `-${damage}`;
+    damageDisplay.innerText = `-${formatNumber(damage)}`;
     glassContainer.appendChild(damageDisplay);
 
     damageDisplay.addEventListener('animationend', () => {
@@ -280,7 +296,7 @@ function showDamage(damage) {
 function reductionPerSecond() {
     if (clicks > 0) {
         let reduction = bonusGame[3].benefit;
-        if (bonusGame[3].activo && bonusGame[3].multiplicador > 0) {
+        if (bonusGame[3].activeBonuses > 0 && bonusGame[3].multiplicador > 0) {
             reduction *= bonusGame[3].multiplicador;
         }
         clicks = Math.max(0, clicks - reduction);
@@ -294,10 +310,12 @@ function reductionPerSecond() {
 function coinPerSecond() {
     if (clicks > 0) {
         let beneficio = bonusGame[1].benefit;
-        if (bonusGame[1].activo && bonusGame[1].multiplicador > 0) {
+        if (bonusGame[1].activeBonuses > 0 && bonusGame[1].multiplicador > 0) {
             beneficio *= bonusGame[1].multiplicador;
         }
         coins = Math.max(0, coins + beneficio);
+        totalCoins += beneficio;
+        document.getElementById('total-coins').innerText = `${formatNumber(totalCoins)}`;
         updateCoins();
         animacionCoin();
         saveGame();
@@ -402,6 +420,7 @@ function getReward(achievementId) {
         // Sumar monedas si corresponde
         if (achievement.coins > 0) {
             coins += achievement.coins;
+            totalCoins += achievement.coins;
             updateCoins();
         }
 
@@ -479,6 +498,8 @@ function showAd() {
 
 function watchAd() {
     let bonus = bonusGame.find(i => i.id === 'reductionPerClick');
+    totalAdWatched += 1;
+    document.getElementById('ads-watched').innerText = formatNumber(totalAdWatched);
     setBonusInterval(bonus, 2, true);
     hideAdContainer();
 
@@ -498,7 +519,10 @@ function rejectAd() {
 
 function saveGame() {
     localStorage.setItem('clicks', clicks);
+    localStorage.setItem('totalClicks', totalClicks);
     localStorage.setItem('coins', coins);
+    localStorage.setItem('totalCoins', totalCoins);
+    localStorage.setItem('totalAdWatched', totalAdWatched);
     localStorage.setItem('achieved', JSON.stringify(achieved));
     localStorage.setItem('bonusGame', JSON.stringify(bonusGame));
     localStorage.setItem('startTime', startTime.toString());
@@ -508,7 +532,10 @@ function saveGame() {
 
 function loadGame() {
     clicks = localStorage.getItem('clicks') !== null ? parseInt(localStorage.getItem('clicks')) : 10000000;
+    totalClicks = localStorage.getItem('totalClicks') !== null ? parseInt(localStorage.getItem('totalClicks')) : 0;
     coins = localStorage.getItem('coins') !== null ? parseInt(localStorage.getItem('coins')) : 0;
+    totalCoins = localStorage.getItem('totalCoins') !== null ? parseInt(localStorage.getItem('totalCoins')) : 0;
+    totalAdWatched = localStorage.getItem('totalAdWatched') !== null ? parseInt(localStorage.getItem('totalAdWatched')) : 0;
     achieved = localStorage.getItem('achieved') !== null ? JSON.parse(localStorage.getItem('achieved')) : [];
     for (let i = 0; i < achieved.length; i++) {
         const achievementId = achieved[i];
@@ -533,7 +560,10 @@ function loadGame() {
 function resetGame() {
     if (confirm('Are you sure you want to restart the game?')) {
         clicks = 10000000;
+        totalClicks = 0;
         coins = 0;
+        totalCoins = 0;
+        totalAdWatched = 0;
         for (let i = 0; i < achieved.length; i++) {
             const achievementId = achieved[i];
             const rewardButton = document.getElementById(`reward-${achievementId}`);
@@ -555,6 +585,7 @@ function resetGame() {
         clicksAcumulados = 0; 
         updateClicks();
         updateCoins();
+        updateStats(1);
         updateUpgrades();
         updateUpgradeButtons(coins);
         updateGlassImage('');
@@ -578,6 +609,9 @@ function updateTimer() {
     const minutes = timeElapsed.getUTCMinutes().toString().padStart(2, '0');
     const seconds = timeElapsed.getUTCSeconds().toString().padStart(2, '0');
     document.getElementById('time').innerText = `${hours}:${minutes}:${seconds}`;
+    document.getElementById('total-time').innerText = `${hours}:${minutes}:${seconds}`;
+    const totalSeconds = parseInt(seconds) + parseInt(minutes) * 60 + parseInt(hours) * 3600;
+    updateStats(totalSeconds);
 }
 
 /* -------------------------------------------- Control del Temporizador -------------------------------------------- */

@@ -9,94 +9,109 @@
 </head>
 <body>
     <div class="container">
-        <div id="header">
-            <h1 id="game-title">Glass Clicker</h1>
-            <button id="mute-button" onclick="toggleMute()">🔇</button>
-        </div>
-        
-        <div id="upgrades">
-            <h3>Upgrades</h3>
+
+        <div class="sidebar" id="stats">
+            <h3>Statistics</h3>
             <hr/>
-            <button id="coinsPerClickButton" onclick="buyUpgrade('coinsPerClick')" data-cost="10">Coins/10 clicks - Level: 1 - Cost: 10 coins</button>
-            <button id="coinsPerSecondButton" onclick="buyUpgrade('coinsPerSecond')" data-cost="15">Coins/10 seconds - Level 1 - Cost: 15 coins</button>
-            <button id="reductionPerClickButton" onclick="buyUpgrade('reductionPerClick')" data-cost="20">Damage/click - Level 1 - Cost: 20 coins</button>
-            <button id="reductionPerSecondButton" onclick="buyUpgrade('reductionPerSecond')" data-cost="50">Damage/second - Level 1 - Cost: 50 coins</button>
-        </div>        
-
-        <div id="game">
-            <div class="row">
-                <div id="timer" class="col">
-                    <p>
-                        <img src="img/reloj.gif" alt="Clock" style="width:20px; vertical-align:middle; margin-right:5px;">
-                        Time: <span id="time"></span>
-                    </p>
-                </div>
-                <div id="currency" class="col">
-                    <p>
-                        <img src="img/coin.png" alt="Coin" style="width:20px; vertical-align:middle; margin-right:5px;">
-                        Coins: <span id="coins"></span>
-                    </p>
-                </div>
-                <div id="coinsPerClickUpgrade" class="col">
-                    <p>
-                        <img src="img/coin.png" alt="Coin Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
-                        <span id="coinsPerClickTimer" class="timer"></span>
-                    </p>
-                </div>
-                <div id="coinsPerSecondUpgrade" class="col">
-                    <p>
-                        <img src="img/coin.png" alt="Coin Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
-                        <span id="coinsPerSecondTimer" class="timer"></span>
-                    </p>
-                </div>
-                <div id="reductionPerClickUpgrade" class="col">
-                    <p>
-                        <img src="img/hammer.png" alt="Reduction Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
-                        <span id="reductionPerClickTimer" class="timer"></span>
-                    </p>
-                </div>
-                <div id="reductionPerSecondUpgrade" class="col">
-                    <p>
-                        <img src="img/hammer.png" alt="Reduction Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
-                        <span id="reductionPerSecondTimer" class="timer"></span>
-                    </p>
-                </div>                
-            </div>
-
-            <div id="clicks-container">
-                <p>Durability: <span id="clicks"></span></p>
-            </div>
-
-            <div id="glass-container">
-                <img id="glass" src="img/window0.png" alt="Glass" onclick="breakGlass()">
-                <div id="shards-container"></div>
-            </div>
-
-            <div id="reset">
-                <button onclick="resetGame()">Reset Game</button>
-            </div>
-
-            <div id="ad-container" style="display: none;">
-                <div id="ad-content">
-                    <p>Watch an ad to get a special upgrade!</p>
-                    <button onclick="watchAd()">Watch ad</button>
-                    <button onclick="rejectAd()">Reject ad</button>
-                </div>
-            </div>
-
-            <!-- <div id="bonus-timer-container" style="display: none;">
-                <svg id="bonus-timer" width="80" height="80" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="45" stroke="black" stroke-width="5" fill="none" />
-                    <circle id="timer-background" cx="50" cy="50" r="45" fill="black" />
-                    <circle id="timer-progress" cx="50" cy="50" r="45" fill="none" stroke="red" stroke-width="10" stroke-dasharray="283" stroke-dashoffset="283" />
-                </svg>
-                <div id="bonus-time-remaining">60 s</div>
-            </div> -->
-             
-            <div id="end-game-message">Congratulations!! You have finished the game :)</div>
+            <p>Time Played: <span id="total-time">0</span></p>
+            <p>Total Clicks: <span id="total-clicks">0</span></p>       
+            <p>Total Coins: <span id="total-coins">0</span></p>
+            <p>Ads Watched: <span id="ads-watched">0</span></p>
+            <p>Promedio Damage/Second: <span id="damage-second">0</span></p>
+            <p>Promedio Clicks/Second: <span id="clicks-second">0</span></p>
+            <p>Promedio Coins/Second: <span id="coins-second">0</span></p>
         </div>
 
-        <div id="achievements">
+        <div class="main-content">
+            <div id="header">
+                <h1 id="game-title">Glass Clicker</h1>
+                <button id="mute-button" onclick="toggleMute()">🔇</button>
+            </div>
+            
+            <div id="upgrades">
+                <h3>Upgrades</h3>
+                <hr/>
+                <button id="coinsPerClickButton" onclick="buyUpgrade('coinsPerClick')" data-cost="10">Coins/10 clicks - Level: 1 - Cost: 10 coins</button>
+                <button id="coinsPerSecondButton" onclick="buyUpgrade('coinsPerSecond')" data-cost="15">Coins/10 seconds - Level 1 - Cost: 15 coins</button>
+                <button id="reductionPerClickButton" onclick="buyUpgrade('reductionPerClick')" data-cost="20">Damage/click - Level 1 - Cost: 20 coins</button>
+                <button id="reductionPerSecondButton" onclick="buyUpgrade('reductionPerSecond')" data-cost="50">Damage/second - Level 1 - Cost: 50 coins</button>
+            </div>        
+
+            <div id="game">
+                <div class="row">
+                    <div id="timer" class="col">
+                        <p>
+                            <img src="img/reloj.gif" alt="Clock" style="width:20px; vertical-align:middle; margin-right:5px;">
+                            Time: <span id="time"></span>
+                        </p>
+                    </div>
+                    <div id="currency" class="col">
+                        <p>
+                            <img src="img/coin.png" alt="Coin" style="width:20px; vertical-align:middle; margin-right:5px;">
+                            Coins: <span id="coins"></span>
+                        </p>
+                    </div>
+                    <div id="coinsPerClickUpgrade" class="col">
+                        <p>
+                            <img src="img/coin.png" alt="Coin Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
+                            <span id="coinsPerClickTimer" class="timer"></span>
+                        </p>
+                    </div>
+                    <div id="coinsPerSecondUpgrade" class="col">
+                        <p>
+                            <img src="img/coin.png" alt="Coin Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
+                            <span id="coinsPerSecondTimer" class="timer"></span>
+                        </p>
+                    </div>
+                    <div id="reductionPerClickUpgrade" class="col">
+                        <p>
+                            <img src="img/hammer.png" alt="Reduction Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
+                            <span id="reductionPerClickTimer" class="timer"></span>
+                        </p>
+                    </div>
+                    <div id="reductionPerSecondUpgrade" class="col">
+                        <p>
+                            <img src="img/hammer.png" alt="Reduction Upgrade" style="width:20px; vertical-align:middle; margin-right:5px;">
+                            <span id="reductionPerSecondTimer" class="timer"></span>
+                        </p>
+                    </div>                
+                </div>
+
+                <div id="clicks-container">
+                    <p>Durability: <span id="clicks"></span></p>
+                </div>
+
+                <div id="glass-container">
+                    <img id="glass" src="img/window0.png" alt="Glass" onclick="breakGlass()">
+                    <div id="shards-container"></div>
+                </div>
+
+                <div id="reset">
+                    <button onclick="resetGame()">Reset Game</button>
+                </div>
+
+                <div id="ad-container" style="display: none;">
+                    <div id="ad-content">
+                        <p>Watch an ad to get a special upgrade!</p>
+                        <button onclick="watchAd()">Watch ad</button>
+                        <button onclick="rejectAd()">Reject ad</button>
+                    </div>
+                </div>
+
+                <!-- <div id="bonus-timer-container" style="display: none;">
+                    <svg id="bonus-timer" width="80" height="80" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" stroke="black" stroke-width="5" fill="none" />
+                        <circle id="timer-background" cx="50" cy="50" r="45" fill="black" />
+                        <circle id="timer-progress" cx="50" cy="50" r="45" fill="none" stroke="red" stroke-width="10" stroke-dasharray="283" stroke-dashoffset="283" />
+                    </svg>
+                    <div id="bonus-time-remaining">60 s</div>
+                </div> -->
+                
+                <div id="end-game-message">Congratulations!! You have finished the game :)</div>
+            </div>
+        </div>
+
+        <div class="sidebar" id="achievements">
             <h3 id="achievement-counter">Achievements (0/25)</h3>
             <hr/>
             <ul id="achievements-list">
@@ -202,6 +217,7 @@
                 </li>
             </ul>            
         </div>
+
     </div>
     <script src="script.js"></script>
 </body>
