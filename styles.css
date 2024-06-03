@@ -373,9 +373,9 @@ body {
 }
 
 .timer {
-    display: inline; /* Asegura que el temporizador esté en línea con la imagen */
-    margin-left: 5px; /* Añade un pequeño espacio entre la imagen y el temporizador */
-    font-size: 14px; /* Tamaño de fuente para el temporizador */
+    display: inline;
+    margin-left: 5px; 
+    font-size: 14px;
     color: inherit;
 }
 

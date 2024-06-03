@@ -13,10 +13,10 @@ let criticalRate = 0.05;
 let achieved = [];
 
 let bonusGame = [
-    { id: 'coinsPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Clicks:", benefit: 1, cost: 10, level: 1},
-    { id: 'coinsPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Seconds:", benefit: 1, cost: 15, level: 1 },
-    { id: 'reductionPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Click:", benefit: 1, cost: 20, level: 1 },
-    { id: 'reductionPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Second:", benefit: 1, cost: 50, level: 1 }
+    { id: 'coinsPerClick', activeBonuses: [], bonusTimerInterval: null, duration: 0, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Clicks:", benefit: 1, cost: 10, level: 1 },
+    { id: 'coinsPerSecond', activeBonuses: [], bonusTimerInterval: null, duration: 0, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Seconds:", benefit: 1, cost: 15, level: 1 },
+    { id: 'reductionPerClick', activeBonuses: [], bonusTimerInterval: null, duration: 0, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Click:", benefit: 1, cost: 20, level: 1, adShown: false },
+    { id: 'reductionPerSecond', activeBonuses: [], bonusTimerInterval: null, duration: 0, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Second:", benefit: 1, cost: 50, level: 1 }
 ];
 const achievements = [
     { id: '100-clicks', description: 'First 100 clicks', conditionDmg: 9999900, coins: 10, boost: '', multiplicador: 0 },
@@ -115,7 +115,7 @@ function updateCoins() {
 function updateUpgrades() {
     bonusGame.forEach(bonus => {
         var boton = document.getElementById(`${bonus.id}Upgrade`);
-        if (bonus.activo && bonus.multiplicador > 0) {
+        if (bonus.activeBonuses.length > 0) {
             boton.classList.add('bonus-active');
             boton.innerHTML = `
                 <img src="${bonus.src}" alt="${bonus.alt}" style="width:20px; vertical-align:middle; margin-right:5px;">
@@ -230,12 +230,12 @@ function breakGlass() {
     if (clicks > 0) {
         clicksAcumulados += 1;
         let reductionPerClick = bonusGame[2].benefit;
-        if (bonusGame[2].activo && bonusGame[2].multiplicador > 0) {
+        if (bonusGame[2].activeBonuses.length > 0 && bonusGame[2].multiplicador > 0) {
             reductionPerClick *= bonusGame[2].multiplicador;
         }
         clicks = Math.max(0, clicks - reductionPerClick);
         let coinsEarned = bonusGame[0].benefit;
-        if (bonusGame[0].activo && bonusGame[0].multiplicador > 0) {
+        if (bonusGame[0].activeBonuses.length > 0 && bonusGame[0].multiplicador > 0) {
             coinsEarned *= bonusGame[0].multiplicador;
         }
         if(clicksAcumulados % 10 === 0) {
@@ -352,37 +352,47 @@ function endGame() {
 }
 
 function setBonusInterval(bonus, multiplicador, ad) {
-    // Mostrar el temporizador
-    adShown = ad;
+    const newBonus = { duration: 60, multiplicador: multiplicador};
+    bonus.activeBonuses.push(newBonus);
+
+    if(ad){
+        adShown = ad;
+        bonus.adShown = ad;
+    }
     showBonusTimer(bonus.id);
-    bonus.multiplicador += multiplicador;
-    bonus.startTime = Date.now();
-    if(bonus.activo){
-        bonus.duration += bonusDuration;
-    } else {
-        bonus.activo = true;
-        bonus.duration = bonusDuration;
+
+    // Si no hay un intervalo activo, crea uno
+    if (!bonus.bonusTimerInterval) {
         bonus.bonusTimerInterval = setInterval(() => {
-            bonus.duration--;
-            updateBonusTimer(bonus.id, bonus.duration);     
-            if (bonus.duration <= 0) {
+            // Filtra los bonos activos que aún no han expirado
+            bonus.activeBonuses = bonus.activeBonuses.filter(b => {
+                b.duration--;
+                return b.duration > 0;
+            });
+
+            // Actualiza el multiplicador
+            bonus.multiplicador = bonus.activeBonuses.reduce((total, b) => total + b.multiplicador, 0);
+
+            // Actualiza el temporizador visual
+            const remainingDuration = bonus.activeBonuses.length > 0 ? Math.max(...bonus.activeBonuses.map(b => b.duration)) : 0;
+            bonus.duration = remainingDuration;
+            updateBonusTimer(bonus.id, remainingDuration);
+
+            if (bonus.activeBonuses.length === 0) {
                 clearInterval(bonus.bonusTimerInterval);
-                bonus.duration = bonusDuration;
-                bonus.multiplicador -= multiplicador;
-                if (bonus.multiplicador === 0) {
-                    bonus.activo = false;
-                } else if (bonus.multiplicador < 0) {
-                    bonus.multiplicador = 0;
-                }
-                if(ad) {
+                bonus.bonusTimerInterval = null;
+                hideBonusTimer(bonus.id);
+                if(ad){
+                    bonus.adShown = false;
                     adShown = false;
                 }
-                hideBonusTimer(bonus.id);
             }
+
             updateUpgrades();
             saveGame();
         }, 1000);
     }
+
     saveGame();
 }
 
@@ -510,13 +520,13 @@ function loadGame() {
         }
     }
     bonusGame = localStorage.getItem('bonusGame') !== null ? JSON.parse(localStorage.getItem('bonusGame')) : [
-        { id: 'coinsPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Clicks:", benefit: 1, cost: 10, level: 1},
-        { id: 'coinsPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Seconds:", benefit: 1, cost: 15, level: 1 },
-        { id: 'reductionPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Click:", benefit: 1, cost: 20, level: 1 },
-        { id: 'reductionPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Second:", benefit: 1, cost: 50, level: 1 }
+        { id: 'coinsPerClick', activeBonuses: [], bonusTimerInterval: null, duration: 0, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Clicks:", benefit: 1, cost: 10, level: 1 },
+        { id: 'coinsPerSecond', activeBonuses: [], bonusTimerInterval: null, duration: 0, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Seconds:", benefit: 1, cost: 15, level: 1 },
+        { id: 'reductionPerClick', activeBonuses: [], bonusTimerInterval: null, duration: 0, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Click:", benefit: 1, cost: 20, level: 1, adShown: false },
+        { id: 'reductionPerSecond', activeBonuses: [], bonusTimerInterval: null, duration: 0, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Second:", benefit: 1, cost: 50, level: 1 }
     ];
     startTime = localStorage.getItem('startTime') !== null ? new Date(localStorage.getItem('startTime')) : new Date();
-    adShown = false;
+    adShown = localStorage.getItem('adShown') !== null ? JSON.parse(localStorage.getItem('adShown')) : false;
     clicksAcumulados = localStorage.getItem('clicksAcumulados') !== null ? JSON.parse(localStorage.getItem('clicksAcumulados')) : 0;
 }
 
@@ -535,10 +545,10 @@ function resetGame() {
         }
         achieved = [];
         bonusGame = [
-            { id: 'coinsPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Clicks:", benefit: 1, cost: 10, level: 1},
-            { id: 'coinsPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Seconds:", benefit: 1, cost: 15, level: 1 },
-            { id: 'reductionPerClick', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Click:", benefit: 1, cost: 20, level: 1 },
-            { id: 'reductionPerSecond', duration: 60, startTime: Date.now(), bonusTimerInterval: null, activo: false, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Second:", benefit: 1, cost: 50, level: 1 }
+            { id: 'coinsPerClick', activeBonuses: [], bonusTimerInterval: null, duration: 0, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Clicks:", benefit: 1, cost: 10, level: 1 },
+            { id: 'coinsPerSecond', activeBonuses: [], bonusTimerInterval: null, duration: 0, multiplicador: 0, src: "img/coin.png", alt: "CoinUpgrade", txt: "Coins/10 Seconds:", benefit: 1, cost: 15, level: 1 },
+            { id: 'reductionPerClick', activeBonuses: [], bonusTimerInterval: null, duration: 0, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Click:", benefit: 1, cost: 20, level: 1, adShown: false },
+            { id: 'reductionPerSecond', activeBonuses: [], bonusTimerInterval: null, duration: 0, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Second:", benefit: 1, cost: 50, level: 1 }
         ];
         startTime = new Date();
         adShown = false;
@@ -570,7 +580,7 @@ function updateTimer() {
     document.getElementById('time').innerText = `${hours}:${minutes}:${seconds}`;
 }
 
-/* -------------------------------------------- Control del Tiempo -------------------------------------------- */
+/* -------------------------------------------- Control del Temporizador -------------------------------------------- */
 
 function updateBonusTimer(bonusId, duration) {
     const timerElement = document.getElementById(`${bonusId}Timer`);
@@ -622,32 +632,43 @@ window.onload = function() {
     setInterval(reductionPerSecond, 1000);
     setInterval(coinPerSecond, 10000);
     bonusGame.forEach(bonus => {
-        if (bonus.activo && bonus.duration > 0) {
-            reinitializeBonus(bonus);
-        }
+        reinitializeBonus(bonus);
     });
 }
 
 function reinitializeBonus(bonus) {
-    if (bonus.activo && bonus.duration > 0) {
+    if (bonus.activeBonuses.length > 0) {
+        clearInterval(bonus.bonusTimerInterval);
         showBonusTimer(bonus.id);
+        if(bonus.adShown){
+            adShown = bonus.adShown;
+        }
         bonus.bonusTimerInterval = setInterval(() => {
-            bonus.duration--;
-            updateBonusTimer(bonus.id, bonus.duration); 
-            if (bonus.duration <= 0) {
+            // Filtra los bonos activos que aún no han expirado
+            bonus.activeBonuses = bonus.activeBonuses.filter(b => {
+                b.duration--;
+                return b.duration > 0;
+            });
+
+            // Actualiza el multiplicador
+            bonus.multiplicador = bonus.activeBonuses.reduce((total, b) => total + b.multiplicador, 0);
+
+            // Actualiza el temporizador visual
+            const remainingDuration = bonus.activeBonuses.length > 0 ? Math.max(...bonus.activeBonuses.map(b => b.duration)) : 0;
+            bonus.duration = remainingDuration;
+            updateBonusTimer(bonus.id, remainingDuration);
+
+            if (bonus.activeBonuses.length === 0) {
                 clearInterval(bonus.bonusTimerInterval);
-                adShown = false;
-                bonus.duration = bonusDuration;
-                bonus.multiplicador -= bonus.multiplicador;
-                if (bonus.multiplicador === 0) {
-                    bonus.activo = false;
-                } else if (bonus.multiplicador < 0) {
-                    bonus.multiplicador = 0;
-                }      
-                hideBonusTimer(bonus.id);           
+                bonus.bonusTimerInterval = null;
+                hideBonusTimer(bonus.id);
+                if(bonus.adShown){
+                    adShown = false;
+                }
             }
+
             updateUpgrades();
-            saveGame();  // Guarda el estado del juego periódicamente
+            saveGame();
         }, 1000);
     }
 }
