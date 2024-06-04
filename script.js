@@ -8,7 +8,7 @@ let totalCoins = 0;
 let totalAdWatched = 0;
 let totalCriticalHits = 0;
 let startTime;
-let adInterval = 1 * 10 * 1000; // 2 minutos
+let adInterval = 2 * 60 * 1000; // 2 minutos
 let bonusDuration = 60;
 let adShown = false;
 let clicksAcumulados = 0;
