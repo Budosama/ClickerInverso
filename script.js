@@ -24,31 +24,31 @@ let bonusGame = [
     { id: 'reductionPerSecond', activeBonuses: [], bonusTimerInterval: null, duration: 0, multiplicador: 0, src: "img/hammer.png", alt: "DamageUpgrade", txt: "Damage/Second:", benefit: 1, cost: 50, level: 1 }
 ];
 const achievements = [
-    { id: '100-damage', description: '100 damage', conditionDmg: 9999900, coins: 10, boost: '', multiplicador: 0 },
-    { id: '500-damage', description: '500 damage', conditionDmg: 9999500, coins: 50, boost: '', multiplicador: 0 },
-    { id: '1000-damage', description: '1000 damage', conditionDmg: 9999000, coins: 100, boost: '', multiplicador: 0 },
-    { id: '2500-damage', description: '2500 damage', conditionDmg: 9997500, coins: 250, boost: '', multiplicador: 0 },
-    { id: '5000-damage', description: '5000 damage', conditionDmg: 9995000, coins: 500, boost: '', multiplicador: 0 },
-    { id: '10000-damage', description: '10.000 damage', conditionDmg: 9990000, coins: 0, boost: 'coinsPerClick', multiplicador: 2 },
-    { id: '50000-damage', description: '50.000 damage', conditionDmg: 9950000, coins: 0, boost: 'coinsPerSecond', multiplicador: 2 },
-    { id: '100000-damage', description: '100.000 damage', conditionDmg: 9900000, coins: 0, boost: 'reductionPerClick', multiplicador: 2 },
-    { id: '250000-damage', description: '250.000 damage', conditionDmg: 9750000, coins: 0, boost: 'reductionPerSecond', multiplicador: 2 },
-    { id: '500000-damage', description: '500.000 damage', conditionDmg: 9500000, coins: 5000, boost: '', multiplicador: 0 },
-    { id: '1000000-damage', description: '1.000.000 damage', conditionDmg: 9000000, coins: 0, boost: 'coinsPerClick', multiplicador: 3 },
-    { id: '1500000-damage', description: '1.500.000 damage', conditionDmg: 8500000, coins: 0, boost: 'coinsPerSecond', multiplicador: 3 },
-    { id: '2000000-damage', description: '2.000.000 damage', conditionDmg: 8000000, coins: 0, boost: 'reductionPerClick', multiplicador: 3 },
-    { id: '2500000-damage', description: '2.500.000 damage', conditionDmg: 7500000, coins: 0, boost: 'reductionPerSecond', multiplicador: 3 },
-    { id: '3000000-damage', description: '3.000.000 damage', conditionDmg: 7000000, coins: 0, boost: 'coinsAll', multiplicador: 3 },
-    { id: '3500000-damage', description: '3.500.000 damage', conditionDmg: 6500000, coins: 0, boost: 'reductionAll', multiplicador: 3 },
-    { id: '4000000-damage', description: '4.000.000 damage', conditionDmg: 6000000, coins: 0, boost: 'all', multiplicador: 3 },
-    { id: '4500000-damage', description: '4.500.000 damage', conditionDmg: 5500000, coins: 45000, boost: 'all', multiplicador: 3 },
-    { id: '5000000-damage', description: '5.000.000 damage', conditionDmg: 5000000, coins: 50000, boost: '', multiplicador: 0 },
-    { id: '5500000-damage', description: '5.500.000 damage', conditionDmg: 4500000, coins: 0, boost: 'reductionAll', multiplicador: 5 },
-    { id: '6000000-damage', description: '6.000.000 damage', conditionDmg: 4000000, coins: 0, boost: 'coinsAll', multiplicador: 5 },
-    { id: '7000000-damage', description: '7.000.000 damage', conditionDmg: 3000000, coins: 0, boost: 'all', multiplicador: 5 },
-    { id: '8000000-damage', description: '8.000.000 damage', conditionDmg: 2000000, coins: 0, boost: 'all', multiplicador: 10 },
-    { id: '9000000-damage', description: '9.000.000 damage', conditionDmg: 1000000, coins: 90000, boost: 'all', multiplicador: 10 },
-    { id: '10000000-damage', description: '10.000.000 damage', conditionDmg: 0, coins: 0, boost: '', multiplicador: 0 },
+    { id: '100-damage', description: '100 damage', conditionDmg: 9999900, coins: 10, boost: '', multiplicador: 0, critical: 0 },
+    { id: '500-damage', description: '500 damage', conditionDmg: 9999500, coins: 50, boost: '', multiplicador: 0, critical: 0 },
+    { id: '1000-damage', description: '1000 damage', conditionDmg: 9999000, coins: 100, boost: '', multiplicador: 0, critical: 0 },
+    { id: '2500-damage', description: '2500 damage', conditionDmg: 9997500, coins: 250, boost: '', multiplicador: 0, critical: 0 },
+    { id: '5000-damage', description: '5000 damage', conditionDmg: 9995000, coins: 500, boost: '', multiplicador: 0, critical: 0 },
+    { id: '10000-damage', description: '10.000 damage', conditionDmg: 9990000, coins: 0, boost: 'coinsPerClick', multiplicador: 2, critical: 0 },
+    { id: '50000-damage', description: '50.000 damage', conditionDmg: 9950000, coins: 0, boost: 'coinsPerSecond', multiplicador: 2, critical: 0 },
+    { id: '100000-damage', description: '100.000 damage', conditionDmg: 9900000, coins: 0, boost: 'reductionPerClick', multiplicador: 2, critical: 0 },
+    { id: '250000-damage', description: '250.000 damage', conditionDmg: 9750000, coins: 0, boost: 'reductionPerSecond', multiplicador: 2, critical: 0 },
+    { id: '500000-damage', description: '500.000 damage', conditionDmg: 9500000, coins: 5000, boost: '', multiplicador: 0, critical: 0 },
+    { id: '1000000-damage', description: '1.000.000 damage', conditionDmg: 9000000, coins: 0, boost: 'coinsPerClick', multiplicador: 3, critical: 0 },
+    { id: '1500000-damage', description: '1.500.000 damage', conditionDmg: 8500000, coins: 0, boost: 'coinsPerSecond', multiplicador: 3, critical: 0 },
+    { id: '2000000-damage', description: '2.000.000 damage', conditionDmg: 8000000, coins: 0, boost: 'reductionPerClick', multiplicador: 3, critical: 0 },
+    { id: '2500000-damage', description: '2.500.000 damage', conditionDmg: 7500000, coins: 0, boost: 'reductionPerSecond', multiplicador: 3, critical: 0 },
+    { id: '3000000-damage', description: '3.000.000 damage', conditionDmg: 7000000, coins: 0, boost: 'coinsAll', multiplicador: 3, critical: 0 },
+    { id: '3500000-damage', description: '3.500.000 damage', conditionDmg: 6500000, coins: 0, boost: 'reductionAll', multiplicador: 3, critical: 0 },
+    { id: '4000000-damage', description: '4.000.000 damage', conditionDmg: 6000000, coins: 0, boost: 'all', multiplicador: 3, critical: 0 },
+    { id: '4500000-damage', description: '4.500.000 damage', conditionDmg: 5500000, coins: 0, boost: 'all', multiplicador: 3, critical: 0.25 },
+    { id: '5000000-damage', description: '5.000.000 damage', conditionDmg: 5000000, coins: 50000, boost: '', multiplicador: 0, critical: 0 },
+    { id: '5500000-damage', description: '5.500.000 damage', conditionDmg: 4500000, coins: 0, boost: 'reductionAll', multiplicador: 5, critical: 0 },
+    { id: '6000000-damage', description: '6.000.000 damage', conditionDmg: 4000000, coins: 0, boost: 'coinsAll', multiplicador: 5, critical: 0 },
+    { id: '7000000-damage', description: '7.000.000 damage', conditionDmg: 3000000, coins: 0, boost: 'all', multiplicador: 5, critical: 0 },
+    { id: '8000000-damage', description: '8.000.000 damage', conditionDmg: 2000000, coins: 0, boost: 'all', multiplicador: 7, critical: 0 },
+    { id: '9000000-damage', description: '9.000.000 damage', conditionDmg: 1000000, coins: 0, boost: 'all', multiplicador: 0, critical: 0.70 },
+    { id: '10000000-damage', description: '10.000.000 damage', conditionDmg: 0, coins: 0, boost: '', multiplicador: 0, critical: 0 },
 ];
 
 let achievementSound = new Audio('sounds/logro.mp3');
@@ -118,6 +118,10 @@ function updateCoins() {
     updateUpgradeButtons(coins);
 }
 
+function updateCriticalRate() {
+    document.getElementById('criticalRate').innerText = `${formatNumber(criticalRate*100)}%`;
+}
+
 function updateStats(totalSeconds) {
     document.getElementById('total-coins').innerText = formatNumber(totalCoins);
     document.getElementById('total-clicks').innerText = formatNumber(totalClicks);
@@ -136,7 +140,7 @@ function updateUpgrades() {
             boton.innerHTML = `
                 <img src="${bonus.src}" alt="${bonus.alt}" style="width:20px; vertical-align:middle; margin-right:5px;">
                 ${bonus.txt} ${formatNumber(bonus.benefit)} (x${bonus.multiplicador})
-                <span class="timer">${bonus.duration}s</span>
+                <span class="timer">${bonus.duration}s <img src="img/boost.png" alt="Boost" style="width:20px; vertical-align:middle; margin-left:5px;"></span>
             `;
         } else {
             boton.classList.remove('bonus-active');
@@ -430,6 +434,11 @@ function getReward(achievementId) {
             updateCoins();
         }
 
+        if (achievement.critical > 0) {
+            criticalRate += achievement.critical;         
+            updateCriticalRete();
+        }
+
         // Manejar actualizaciones específicas
         if (achievement.boost) {
             const bonus = bonusGame.find(b => b.id === achievement.boost);
@@ -508,11 +517,6 @@ function watchAd() {
     document.getElementById('ads-watched').innerText = formatNumber(totalAdWatched);
     setBonusInterval(bonus, 2, true);
     hideAdContainer();
-
-    // document.getElementById('bonus-time-remaining').innerText = bonusGame[2].duration.toString() + " s";
-    // const timerProgress = document.getElementById('timer-progress');
-    // timerProgress.style.animation = `countdown ${bonusGame[2].duration}s linear forwards`;
-    // showBonusTimer();
 }
 
 function rejectAd() {
@@ -535,6 +539,7 @@ function saveGame() {
     localStorage.setItem('startTime', startTime.toString());
     localStorage.setItem('adShown', JSON.stringify(adShown));
     localStorage.setItem('clicksAcumulados', JSON.stringify(clicksAcumulados));
+    localStorage.setItem('criticalRate', JSON.stringify(criticalRate));
 }
 
 function loadGame() {
@@ -563,6 +568,7 @@ function loadGame() {
     startTime = localStorage.getItem('startTime') !== null ? new Date(localStorage.getItem('startTime')) : new Date();
     adShown = localStorage.getItem('adShown') !== null ? JSON.parse(localStorage.getItem('adShown')) : false;
     clicksAcumulados = localStorage.getItem('clicksAcumulados') !== null ? JSON.parse(localStorage.getItem('clicksAcumulados')) : 0;
+    criticalRate = localStorage.getItem('criticalRate') !== null ? JSON.parse(localStorage.getItem('criticalRate')) : 0.05;
 }
 
 function resetGame() {
@@ -592,6 +598,7 @@ function resetGame() {
         startTime = new Date();
         adShown = false;
         clicksAcumulados = 0; 
+        criticalRate = 0.05;
         updateDurability();
         updateCoins();
         updateStats(1);
@@ -667,6 +674,7 @@ window.onload = function() {
     updateCoins();
     updateUpgrades();
     updateUpgradeButtons(coins);
+    updateCriticalRate();
     updateGlassImage('');
     updateAchivementCounter();
     checkAchievements();

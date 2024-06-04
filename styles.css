@@ -182,23 +182,43 @@ hr {
     background-color: #2622f0;
 }
 
+.achievement-text {
+    display: flex;
+    align-items: center;
+}
+
+.achievement-text img {
+    margin-right: 5px;
+}
+
 .reward-button {
-    background: #4caf50;
+    background: linear-gradient(135deg, #4caf50, #388e3c);
     border: none;
     border-radius: 5px;
     color: white;
     cursor: pointer;
-    padding: 5px 10px;
-    transition: background-color 0.3s;
+    padding: 10px 20px;
+    font-size: 1em;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    text-align: center;
 }
 
 .reward-button:disabled {
-    background: #ccc;
+    background: linear-gradient(135deg, #ccc, #aaa);
     cursor: not-allowed;
+    box-shadow: none;
 }
 
 .reward-button:hover:not(:disabled) {
-    background: #4caf50;
+    background: linear-gradient(135deg, #45a049, #357a38);
+    transform: translateY(-2px);
+}
+
+.reward-button:active:not(:disabled) {
+    background: linear-gradient(135deg, #388e3c, #2e7d32);
+    transform: translateY(1px);
 }
 
 .completed {
