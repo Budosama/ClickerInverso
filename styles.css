@@ -93,11 +93,12 @@ hr {
 }
 
 #upgrades h3 {
-    margin-bottom: 20;
+    margin-bottom: 20px; /* Añadí 'px' para corregir la propiedad */
     text-align: center;
 }
 
 #upgrades button, #reset button {
+    width: 100%; /* Añadido para extender el botón hasta el final del contenedor */
     background-color: #055275;
     color: #fff;
     border: none;
@@ -552,4 +553,27 @@ hr {
 
 #durability-container span {
     animation: colorChangeDurability 1s infinite;
+}
+
+/* -------------------------------------------- Objetos voladores -------------------------------------------- */
+
+@keyframes moveWindow {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(var(--randomX), var(--randomY)); }
+}
+
+#moving-window {
+    position: absolute;
+    z-index: 1000;
+    width: 100px; /* Ajusta el tamaño según tus necesidades */
+    height: 100px; /* Ajusta el tamaño según tus necesidades */
+    background-image: url('img/favicon.png'); /* Reemplaza con la ruta de tu imagen */
+    background-size: cover;
+    cursor: pointer;
+    display: none; /* Inicialmente oculto */
+}
+
+#moving-window img {
+    width: 100px; /* Ajusta el tamaño según tus necesidades */
+    cursor: pointer;
 }

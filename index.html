@@ -14,24 +14,24 @@
             <div id="upgrades">
                 <h3>Upgrades</h3>
                 <hr/>
-                <button id="coinsPerClickButton" onclick="buyUpgrade('coinsPerClick')" data-cost="10">Coins/10 clicks - Level: 1 - Cost: 10 coins</button>
-                <button id="coinsPerSecondButton" onclick="buyUpgrade('coinsPerSecond')" data-cost="15">Coins/10 seconds - Level 1 - Cost: 15 coins</button>
-                <button id="reductionPerClickButton" onclick="buyUpgrade('reductionPerClick')" data-cost="20">Damage/click - Level 1 - Cost: 20 coins</button>
-                <button id="reductionPerSecondButton" onclick="buyUpgrade('reductionPerSecond')" data-cost="50">Damage/second - Level 1 - Cost: 50 coins</button>
+                <button id="coinsPerClickButton" onclick="buyUpgrade('coinsPerClick')" data-cost="10">Coins/10 clicks - Level: 1 - Cost: 10 <img src="img/coin.png" alt="Coins" style="width:20px; vertical-align:middle; margin-right:5px;"></button>
+                <button id="coinsPerSecondButton" onclick="buyUpgrade('coinsPerSecond')" data-cost="15">Coins/10 seconds - Level 1 - Cost: 15 <img src="img/coin.png" alt="Coins" style="width:20px; vertical-align:middle; margin-right:5px;"></button>
+                <button id="reductionPerClickButton" onclick="buyUpgrade('reductionPerClick')" data-cost="20">Damage/click - Level 1 - Cost: 20 <img src="img/coin.png" alt="Coins" style="width:20px; vertical-align:middle; margin-right:5px;"></button>
+                <button id="reductionPerSecondButton" onclick="buyUpgrade('reductionPerSecond')" data-cost="50">Damage/second - Level 1 - Cost: 50 <img src="img/coin.png" alt="Coins" style="width:20px; vertical-align:middle; margin-right:5px;"></button>
             </div>    
 
             <div id="stats">
                 <h3>Statistics</h3>
                 <hr/>
-                <p>Time Played: <span id="total-time">0</span></p>
-                <p>Total Damage: <span id="total-damage">0</span></p>
-                <p>Total Clicks: <span id="total-clicks">0</span></p>       
-                <p>Total Coins: <span id="total-coins">0</span></p>
-                <p>Total Critical Hits: <span id="total-critical-hits">0</span></p>
-                <p>Ads Watched: <span id="ads-watched">0</span></p>
-                <p>Promedio Damage/Second: <span id="damage-second">0</span></p>
-                <p>Promedio Clicks/Second: <span id="clicks-second">0</span></p>
-                <p>Promedio Coins/Second: <span id="coins-second">0</span></p>
+                <p><img src="img/reloj.png" alt="Time" style="width:20px; vertical-align:middle; margin-right:5px;"> Time Played: <span id="total-time">0</span></p>
+                <p><img src="img/damage.png" alt="Damage" style="width:20px; vertical-align:middle; margin-right:5px;"> Total Damage: <span id="total-damage">0</span></p>
+                <p><img src="img/hammer2.png" alt="Clicks" style="width:20px; vertical-align:middle; margin-right:5px;"> Total Clicks: <span id="total-clicks">0</span></p>       
+                <p><img src="img/coin.png" alt="Coins" style="width:20px; vertical-align:middle; margin-right:5px;"> Total Coins: <span id="total-coins">0</span></p>
+                <p><img src="img/critical.png" alt="Critical" style="width:20px; vertical-align:middle; margin-right:5px;"> Total Critical Hits: <span id="total-critical-hits">0</span></p>
+                <p><img src="img/ad.png" alt="Ad" style="width:20px; vertical-align:middle; margin-right:5px;"> Ads Watched: <span id="ads-watched">0</span></p>
+                <p><img src="img/damage.png" alt="Damage" style="width:20px; vertical-align:middle; margin-right:5px;"> Promedio Damage/Second: <span id="damage-second">0</span></p>
+                <p><img src="img/hammer2.png" alt="Clicks" style="width:20px; vertical-align:middle; margin-right:5px;"> Promedio Clicks/Second: <span id="clicks-second">0</span></p>
+                <p><img src="img/coin.png" alt="Coins" style="width:20px; vertical-align:middle; margin-right:5px;"> Promedio Coins/Second: <span id="coins-second">0</span></p>
             </div>
         </div>    
 
@@ -88,6 +88,9 @@
                 <div id="glass-container">
                     <img id="glass" src="img/window0.png" alt="Glass" onclick="breakGlass()">
                     <div id="shards-container"></div>
+                    <div id="moving-window" style="display: none;">
+                        <img src="img/favicon.png" alt="Moving Window" id="moving-window-image">
+                    </div>                    
                 </div>
 
                 <div id="reset">

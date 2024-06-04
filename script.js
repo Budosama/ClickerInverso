@@ -149,10 +149,10 @@ function updateUpgrades() {
 }
 
 function updateUpgradeButtons(coins) {
-    document.getElementById('coinsPerClickButton').innerText = `Coins/10 Clicks - Level: ${(bonusGame[0].level)} - Cost: ${formatNumber(bonusGame[0].cost)} coins`;
-    document.getElementById('coinsPerSecondButton').innerText = `Coins/10 Seconds - Level: ${(bonusGame[1].level)} - Cost: ${formatNumber(bonusGame[1].cost)} coins`;
-    document.getElementById('reductionPerClickButton').innerText = `Damage/Click - Level: ${(bonusGame[2].level)} - Cost: ${formatNumber(bonusGame[2].cost)} coins`;
-    document.getElementById('reductionPerSecondButton').innerText = `Damage/Second - Level: ${(bonusGame[3].level)} - Cost: ${formatNumber(bonusGame[3].cost)} coins`;
+    document.getElementById('coinsPerClickButton').innerHTML = `Coins/10 Clicks - Level: ${(bonusGame[0].level)} - Cost: ${formatNumber(bonusGame[0].cost)} <img src="img/coin.png" alt="Coins" style="width:20px; vertical-align:middle; margin-right:5px;">`;
+    document.getElementById('coinsPerSecondButton').innerHTML = `Coins/10 Seconds - Level: ${(bonusGame[1].level)} - Cost: ${formatNumber(bonusGame[1].cost)} <img src="img/coin.png" alt="Coins" style="width:20px; vertical-align:middle; margin-right:5px;">`;
+    document.getElementById('reductionPerClickButton').innerHTML = `Damage/Click - Level: ${(bonusGame[2].level)} - Cost: ${formatNumber(bonusGame[2].cost)} <img src="img/coin.png" alt="Coins" style="width:20px; vertical-align:middle; margin-right:5px;">`;
+    document.getElementById('reductionPerSecondButton').innerHTML = `Damage/Second - Level: ${(bonusGame[3].level)} - Cost: ${formatNumber(bonusGame[3].cost)} <img src="img/coin.png" alt="Coins" style="width:20px; vertical-align:middle; margin-right:5px;">`;
 
     document.getElementById('coinsPerClickButton').setAttribute('data-cost', bonusGame[0].cost);
     document.getElementById('coinsPerSecondButton').setAttribute('data-cost', bonusGame[1].cost);
@@ -713,5 +713,61 @@ function reinitializeBonus(bonus) {
             updateUpgrades();
             saveGame();
         }, 1000);
+    }
+}
+
+/* -------------------------------------------- Objetos voladores -------------------------------------------- */
+
+let movingWindowClicks = 0;
+const movingWindow = document.createElement('div');
+movingWindow.id = 'moving-window';
+const mainContent = document.querySelector('.main-content');
+mainContent.appendChild(movingWindow);
+
+let posX = 0;
+let posY = 0;
+let velocityX = 2; // Velocidad en el eje X
+let velocityY = 2; // Velocidad en el eje Y
+
+function showMovingWindow() {
+    movingWindow.style.display = 'block';
+    movingWindowClicks = 0;
+    posX = Math.random() * (mainContent.clientWidth  - movingWindow.offsetWidth);
+    posY = Math.random() * (mainContent.clientHeight - movingWindow.offsetHeight);
+    moveWindowRandomly();
+
+    // Agregar el evento de clic
+    movingWindow.addEventListener('click', handleWindowClick);
+}
+
+function moveWindowRandomly() {
+    const limitX = mainContent.clientWidth - movingWindow.offsetWidth;
+    const limitY = mainContent.clientHeight - movingWindow.offsetHeight;
+
+    function updatePosition() {
+        posX += velocityX;
+        posY += velocityY;
+
+        // Cambio de dirección en los límites
+        if (posX <= 0 || posX >= limitX) {
+            velocityX = -velocityX;
+        }
+        if (posY <= 0 || posY >= limitY) {
+            velocityY = -velocityY;
+        }
+
+        movingWindow.style.transform = `translate(${posX}px, ${posY}px)`;
+    }
+
+    setInterval(updatePosition, 10); // Actualización cada 10ms para un movimiento suave
+}
+
+function handleWindowClick() {
+    movingWindowClicks += 1;
+    if (movingWindowClicks >= 10) {
+        movingWindow.style.display = 'none';
+        movingWindow.removeEventListener('click', handleWindowClick);
+        alert('Window broken! You got a reward!');
+        // Aquí puedes agregar la lógica para otorgar la recompensa
     }
 }
