@@ -192,6 +192,29 @@ function animacionCoin(){
 
 function animacionGlass(){
     const glass = document.getElementById('glass');
+    const hitAnimation = document.getElementById('hit-animation');
+    
+    // Obtener la posición del clic relativa al elemento glass
+    const rect = glass.getBoundingClientRect();
+    const clickX = (event.clientX - rect.left +50);
+    const clickY = (event.clientY - rect.top -10);
+
+    // Posicionar la animación del golpe en la posición del clic
+    hitAnimation.style.left = `${clickX - hitAnimation.offsetWidth / 2}px`;
+    hitAnimation.style.top = `${clickY - hitAnimation.offsetHeight / 2}px`;
+
+    // Mostrar la animación del golpe
+    hitAnimation.classList.remove('hidden');
+    hitAnimation.style.opacity = '1';
+
+    // Ocultar la animación del golpe después de 1 segundo
+    setTimeout(() => {
+        hitAnimation.style.opacity = '0';
+        hitAnimation.addEventListener('transitionend', () => {
+            hitAnimation.classList.add('hidden');
+        }, { once: true });
+    }, 100);
+
     glass.classList.add('hammer2');
     setTimeout(() => {
         glass.classList.remove('hammer2');
