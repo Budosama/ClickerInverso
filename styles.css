@@ -11,34 +11,6 @@ body {
     overflow: auto;
 }
 
-.container {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: flex-start;
-    width: 500px;
-    margin: 20px 20px;
-}
-
-.main-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-}
-
 hr {
     border: none;
     border-top: 1px solid #ffffff; /* Cambia el color según tu necesidad */
@@ -78,7 +50,7 @@ hr {
     color: #ff5722;
 }
 
-/* -------------------------------------------- Upgrades and Achievements Styles -------------------------------------------- */
+/* -------------------------------------------- Upgrades Styles -------------------------------------------- */
 
 #upgrades {
     width: 450px; 
@@ -119,7 +91,7 @@ hr {
     background-color: #04374e;
 }
 
-/* -------------------------------------------- Stats -------------------------------------------- */
+/* -------------------------------------------- Stats Styles -------------------------------------------- */
 
 #stats {
     width: 450px;
@@ -142,7 +114,7 @@ hr {
     margin-bottom: 0px; /* Ajusta este valor según sea necesario */
 }
 
-/* -------------------------------------------- Logros -------------------------------------------- */
+/* -------------------------------------------- Achievements Styles -------------------------------------------- */
 
 #achievements {
     width: 600px;
@@ -191,6 +163,8 @@ hr {
     margin-right: 5px;
 }
 
+/* -------------------------------------------- Reward Styles -------------------------------------------- */
+
 .reward-button {
     background: linear-gradient(135deg, #4caf50, #388e3c);
     border: none;
@@ -219,26 +193,6 @@ hr {
 .reward-button:active:not(:disabled) {
     background: linear-gradient(135deg, #388e3c, #2e7d32);
     transform: translateY(1px);
-}
-
-.completed {
-    text-decoration: line-through;
-    color: #4caf50;
-}
-
-#end-game-message {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 48px;
-    color: #fff;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    animation: fadeIn 2s ease-in-out;
 }
 
 /* -------------------------------------------- Game Styles -------------------------------------------- */
@@ -284,7 +238,22 @@ hr {
     margin-bottom: 20px; 
 }
 
-#durability-container p, #currency p, #timer p {
+#end-game-message {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    animation: fadeIn 2s ease-in-out;
+}
+
+#durability-container p, #currency p, #timer p, #critical p {
     font-size: 1.2em;
     margin: 10px 0;
     color: #0c0202; 
@@ -307,6 +276,10 @@ hr {
     font-weight: bold;
     font-size: 1.4em;
     color: #a70513; 
+}
+
+#currency span.change-animation {
+    animation: colorChange 1s;
 }
 
 #durability-container span {
@@ -341,7 +314,7 @@ hr {
 }
 
 #reset button {
-    background-color: #ff5722;
+    background-color: #ff2222;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -352,7 +325,7 @@ hr {
 }
 
 #reset button:hover {
-    background-color: #e64a19;
+    background-color: #e61919;
 }
 
 /* -------------------------------------------- Ad Container -------------------------------------------- */
@@ -371,11 +344,21 @@ hr {
 }
 
 #ad-content {
-    background-color: #fff;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+#ad-content button {
+    color: white;
+    background: linear-gradient(135deg, #4c7aaf, #384f8e);
+    border-radius: 5px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-left: 20px;
 }
 
 /* -------------------------------------------- Shards Container -------------------------------------------- */
@@ -563,16 +546,37 @@ hr {
     display: none;
 }
 
-/* #timer span.change-animation {
-    animation: colorChange 1s;
-} */
-
-#currency span.change-animation {
-    animation: colorChange 1s;
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-#durability-container span {
-    animation: colorChangeDurability 1s infinite;
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: flex-start;
+    width: 500px;
+    margin: 20px 20px;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #4caf50;
 }
 
 /* -------------------------------------------- Objetos voladores -------------------------------------------- */
